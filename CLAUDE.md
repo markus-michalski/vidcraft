@@ -21,6 +21,11 @@ When the user mentions or requests any of the following, route to the appropriat
 | "Synthesia" / "für Synthesia formatieren" | `/vidcraft:synthesia-engineer` |
 | "Pre-gen check" / "Ready to generate?" | `/vidcraft:pre-generation-check` |
 | "Neuer Video-Typ" / "New video type" | `/vidcraft:video-type-creator` |
+| "Doku analysieren" / "Analyze docs" | `/vidcraft:doc-analyzer` |
+| "Brief erstellen" / "Creative brief" | `/vidcraft:brief-creator` |
+| "Konzept entwickeln" / "Plan the project" | `/vidcraft:project-conceptualizer` |
+| "Recherche" / "Research" | `/vidcraft:researcher` |
+| "Zielgruppe" / "Audience" | `/vidcraft:audience-researcher` |
 | "Hilfe" / "Help" / "Was kann ich?" | `/vidcraft:help` |
 | "Setup" / "Einrichten" | `/vidcraft:setup` |
 | "Config" / "Konfiguration" | `/vidcraft:configure` |
@@ -33,6 +38,9 @@ Concept → Script → Review → Storyboard → Assets → Pre-Gen Check → Ge
 
 ### Standard Workflow
 1. `/vidcraft:new-project` — Create project structure
+1b. `/vidcraft:doc-analyzer` — (Optional) Analyze existing documentation
+1c. `/vidcraft:project-conceptualizer` — Develop concept and episode plan
+1d. `/vidcraft:brief-creator` — Create creative brief
 2. `/vidcraft:script-writer` — Write scripts per episode
 3. `/vidcraft:script-reviewer` — QC with 14-point checklist
 4. `/vidcraft:storyboard-creator` — Visual direction per scene
@@ -92,6 +100,9 @@ Each video type has specific conventions in `video-types/<type>/README.md`:
 - **tutorial** — Step-by-step instructional (3-15 min)
 - **installation-guide** — Software installation walkthrough (2-8 min)
 - **product-demo** — Feature showcase and benefits (2-5 min)
+- **explainer** — Concept/product explanation (60-120s)
+- **training** — Structured educational content (5-20 min)
+- **onboarding** — Welcome and first steps (3-10 min)
 
 More types can be created with `/vidcraft:video-type-creator`.
 

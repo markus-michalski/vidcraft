@@ -934,6 +934,211 @@ def validate_project_structure(project_slug: str) -> str:
 
 
 # ===========================================================================
+# DOCUMENT ANALYSIS TOOLS
+# ===========================================================================
+
+
+@mcp.tool()
+def analyze_document(file_path: str) -> str:
+    """Parse and analyze a document (PDF, DOCX, or Markdown) for video content extraction.
+
+    Returns structured sections with headings, word counts, content types
+    (code, lists, images), and metadata.
+
+    Args:
+        file_path: Absolute path to the document file (.md, .pdf, .docx).
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"File not found: {file_path}"
+
+    try:
+        from tools.analysis.document_parser import parse_document
+
+        doc = parse_document(path)
+        return _safe_json(doc.to_dict())
+    except ValueError as e:
+        return str(e)
+    except ImportError as e:
+        return f"Missing dependency: {e}"
+
+
+@mcp.tool()
+def extract_key_points(file_path: str, max_points: int = 10) -> str:
+    """Extract key points from a document for video script planning.
+
+    Identifies important content blocks based on headings, lists, code blocks,
+    and images. Each point includes a video relevance score and scene type suggestion.
+
+    Args:
+        file_path: Absolute path to the document file.
+        max_points: Maximum number of key points to extract (default 10).
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"File not found: {file_path}"
+
+    try:
+        from tools.analysis.document_parser import (
+            extract_key_points as _extract,
+            parse_document,
+        )
+
+        doc = parse_document(path)
+        points = _extract(doc, max_points=max_points)
+        return _safe_json(points)
+    except (ValueError, ImportError) as e:
+        return str(e)
+
+
+@mcp.tool()
+def suggest_video_structure(file_path: str, video_type: str = "tutorial") -> str:
+    """Analyze a document and suggest a video scene structure.
+
+    Maps document sections to video scenes with estimated timing,
+    visual type recommendations, and narration word counts.
+
+    Args:
+        file_path: Absolute path to the source document.
+        video_type: Target video type (tutorial, installation-guide, product-demo, etc.).
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"File not found: {file_path}"
+
+    try:
+        from tools.analysis.document_parser import parse_document, suggest_structure
+
+        doc = parse_document(path)
+        structure = suggest_structure(doc, video_type=video_type)
+        return _safe_json(structure)
+    except (ValueError, ImportError) as e:
+        return str(e)
+
+
+@mcp.tool()
+def analyze_complexity(file_path: str) -> str:
+    """Analyze document complexity and recommend video type and episode count.
+
+    Evaluates code density, list content, word count, and section depth
+    to suggest the optimal video format.
+
+    Args:
+        file_path: Absolute path to the document file.
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"File not found: {file_path}"
+
+    try:
+        from tools.analysis.document_parser import (
+            analyze_complexity as _analyze,
+            parse_document,
+        )
+
+        doc = parse_document(path)
+        result = _analyze(doc)
+        return _safe_json(result)
+    except (ValueError, ImportError) as e:
+        return str(e)
+
+
+@mcp.tool()
+def suggest_video_topics(file_path: str, max_topics: int = 5) -> str:
+    """Analyze a document and suggest video topics that could be derived from it.
+
+    Each topic includes a suggested title, video type, estimated duration,
+    and which document sections it would cover.
+
+    Args:
+        file_path: Absolute path to the source document.
+        max_topics: Maximum number of topic suggestions (default 5).
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return f"File not found: {file_path}"
+
+    try:
+        from tools.analysis.document_parser import parse_document
+
+        doc = parse_document(path)
+    except (ValueError, ImportError) as e:
+        return str(e)
+
+    topics: list[dict[str, Any]] = []
+
+    # Group sections by theme for topic suggestions
+    code_sections = [s for s in doc.sections if s.has_code]
+    list_sections = [s for s in doc.sections if s.has_list]
+    concept_sections = [
+        s for s in doc.sections if not s.has_code and not s.has_list and s.word_count > 50
+    ]
+
+    # Tutorial topic from code-heavy sections
+    if code_sections:
+        topics.append(
+            {
+                "title": f"Tutorial: {doc.title}",
+                "video_type": "tutorial",
+                "estimated_duration": f"{len(code_sections) * 2}-{len(code_sections) * 4} min",
+                "source_sections": [s.heading for s in code_sections],
+                "rationale": f"{len(code_sections)} code sections found — ideal for step-by-step tutorial",
+            }
+        )
+
+    # Installation guide from list-heavy sections
+    if list_sections:
+        topics.append(
+            {
+                "title": f"Installation Guide: {doc.title}",
+                "video_type": "installation-guide",
+                "estimated_duration": f"{len(list_sections)}-{len(list_sections) * 2} min",
+                "source_sections": [s.heading for s in list_sections],
+                "rationale": f"{len(list_sections)} step-list sections — good for installation walkthrough",
+            }
+        )
+
+    # Explainer from conceptual sections
+    if concept_sections:
+        topics.append(
+            {
+                "title": f"Explainer: {doc.title}",
+                "video_type": "explainer",
+                "estimated_duration": "1-3 min",
+                "source_sections": [s.heading for s in concept_sections[:3]],
+                "rationale": "Conceptual content — suits a concise explainer video",
+            }
+        )
+
+    # Product demo if mixed content
+    if code_sections and concept_sections:
+        topics.append(
+            {
+                "title": f"Product Demo: {doc.title}",
+                "video_type": "product-demo",
+                "estimated_duration": "2-5 min",
+                "source_sections": [s.heading for s in doc.sections[:5]],
+                "rationale": "Mix of concepts and code — good for feature showcase",
+            }
+        )
+
+    # FAQ video from short sections
+    short_sections = [s for s in doc.sections if 20 < s.word_count < 150 and s.heading]
+    if len(short_sections) >= 3:
+        topics.append(
+            {
+                "title": f"FAQ: {doc.title}",
+                "video_type": "faq-video",
+                "estimated_duration": f"{len(short_sections) * 30}s - {len(short_sections)} min",
+                "source_sections": [s.heading for s in short_sections[:5]],
+                "rationale": f"{len(short_sections)} short Q&A-style sections",
+            }
+        )
+
+    return _safe_json(topics[:max_topics])
+
+
+# ===========================================================================
 # BRAINSTORMING & IDEAS TOOLS
 # ===========================================================================
 
