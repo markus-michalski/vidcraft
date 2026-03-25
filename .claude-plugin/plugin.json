@@ -1,0 +1,14 @@
+{
+  "name": "vidcraft",
+  "version": "0.1.0-dev",
+  "description": "AI Video Production Plugin for Claude Code — Create professional videos with HeyGen & Synthesia",
+  "author": "Markus Michalski",
+  "license": "MIT",
+  "mcpServers": {
+    "vidcraft-mcp": {
+      "type": "stdio",
+      "command": "${HOME}/.vidcraft/venv/bin/python3",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/vidcraft-server/run.py"]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+# VidCraft Configuration
+# Copy to ~/.vidcraft/config.yaml and customize
+
+# Project paths
+paths:
+  # Root for project markdown files (version-controlled)
+  content_root: "~/video-projects"
+  # Root for generated video files (not in git)
+  video_root: "~/video-projects/videos"
+  # Root for assets (screenshots, images, logos)
+  assets_root: "~/video-projects/assets"
+  # User overrides (custom templates, brand guides)
+  overrides: "~/video-projects/overrides"
+
+# Default video settings
+defaults:
+  # Default language for scripts
+  language: "de"
+  # Words per minute for timing calculations (narration speed)
+  wpm: 140
+  # Default platform for generation
+  platform: "heygen"
+
+# HeyGen settings
+heygen:
+  # API key (optional, for future API integration)
+  # api_key: ""
+  # Default avatar ID
+  default_avatar: ""
+  # Default voice
+  default_voice: ""
+
+# Synthesia settings
+synthesia:
+  # API key (optional, for future API integration)
+  # api_key: ""
+  # Default avatar ID
+  default_avatar: ""
+  # Default voice
+  default_voice: ""
+
+# Brand settings (for brand-checker skill)
+brand:
+  # Company/brand name
+  name: ""
+  # Primary color hex
+  primary_color: ""
+  # Secondary color hex
+  secondary_color: ""
+  # Font family
+  font: ""
+  # Tone of voice keywords
+  tone: ["professional", "friendly"]
