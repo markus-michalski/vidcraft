@@ -174,7 +174,7 @@ def mock_config(tmp_content_root: Path) -> dict[str, Any]:
             "overrides": str(tmp_content_root / "overrides"),
         },
         "defaults": {
-            "language": "de",
+            "language": ["de"],
             "wpm": 140,
             "platform": "heygen",
         },

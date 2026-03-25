@@ -14,8 +14,11 @@ paths:
 
 # Default video settings
 defaults:
-  # Default language for scripts
-  language: "de"
+  # Primary language for scripts (single string or list for multi-language)
+  # Single: "de"
+  # Multi:  ["de", "en"]
+  # First language is primary, others are translations
+  language: ["de", "en"]
   # Words per minute for timing calculations (narration speed)
   wpm: 140
   # Default platform for generation

@@ -118,7 +118,7 @@ paths:
   video_root: "~/video-projects/videos"
   assets_root: "~/video-projects/assets"
 defaults:
-  language: "de"
+  language: ["de", "en"]   # single or list for multi-language
   wpm: 140
   platform: "heygen"
 ```

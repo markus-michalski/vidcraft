@@ -35,7 +35,30 @@ def load_config() -> dict[str, Any]:
             if isinstance(val, str):
                 config["paths"][key] = str(_expand_path(val))
 
+    # Normalize language to list
+    lang = config.get("defaults", {}).get("language", "de")
+    if isinstance(lang, str):
+        config["defaults"]["language"] = [lang]
+
     return config
+
+
+def get_languages(config: dict[str, Any]) -> list[str]:
+    """Return configured languages. First is primary."""
+    lang = config.get("defaults", {}).get("language", ["de"])
+    if isinstance(lang, str):
+        return [lang]
+    return lang
+
+
+def get_primary_language(config: dict[str, Any]) -> str:
+    """Return the primary (first) language."""
+    return get_languages(config)[0]
+
+
+def is_multilingual(config: dict[str, Any]) -> bool:
+    """Check if multiple languages are configured."""
+    return len(get_languages(config)) > 1
 
 
 def _default_config() -> dict[str, Any]:
@@ -48,7 +71,7 @@ def _default_config() -> dict[str, Any]:
             "overrides": str(Path.home() / "video-projects" / "overrides"),
         },
         "defaults": {
-            "language": "de",
+            "language": ["de"],
             "wpm": 140,
             "platform": "heygen",
         },
