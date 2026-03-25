@@ -814,6 +814,317 @@ def format_for_clipboard(
 
 
 # ===========================================================================
+# PLATFORM INTEGRATION TOOLS
+# ===========================================================================
+
+
+# Platform character limits
+_PLATFORM_LIMITS = {
+    "heygen": {
+        "max_chars_per_scene": 1500,
+        "max_scenes": 100,
+        "supported_formats": ["mp4"],
+        "min_resolution": "720p",
+        "max_resolution": "4k",
+        "supported_languages": 40,
+    },
+    "synthesia": {
+        "max_chars_per_scene": 1000,
+        "max_scenes": 50,
+        "supported_formats": ["mp4"],
+        "min_resolution": "720p",
+        "max_resolution": "1080p",
+        "supported_languages": 130,
+    },
+}
+
+
+@mcp.tool()
+def validate_platform_limits(
+    project_slug: str,
+    episode_slug: str,
+    platform: str = "",
+) -> str:
+    """Check if episode content fits within platform character and scene limits.
+
+    Args:
+        project_slug: The project slug.
+        episode_slug: The episode slug.
+        platform: Platform to check (heygen, synthesia). Auto-detected from project if empty.
+    """
+    state = _cache.get()
+    project = state.get("projects", {}).get(project_slug)
+    if not project:
+        return f"Project '{project_slug}' not found."
+
+    episode = project.get("episodes_data", {}).get(episode_slug)
+    if not episode:
+        return f"Episode '{episode_slug}' not found."
+
+    if not platform:
+        platform = project.get("platform", "heygen")
+
+    limits = _PLATFORM_LIMITS.get(platform)
+    if not limits:
+        return f"Unknown platform: {platform}. Supported: heygen, synthesia"
+
+    scenes = episode.get("scenes", {})
+    issues: list[str] = []
+    max_chars = limits["max_chars_per_scene"]
+
+    # Check scene count
+    if len(scenes) > limits["max_scenes"]:
+        issues.append(
+            f"FAIL: {len(scenes)} scenes exceeds {platform} limit of {limits['max_scenes']}"
+        )
+
+    # Check character limits per scene
+    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
+        narration = scene.get("narration", "")
+        char_count = len(narration)
+        if char_count > max_chars:
+            issues.append(
+                f"FAIL: Scene '{name}' has {char_count} chars "
+                f"(limit: {max_chars} for {platform}) — split this scene"
+            )
+        elif char_count > max_chars * 0.9:
+            issues.append(
+                f"WARN: Scene '{name}' at {char_count}/{max_chars} chars — close to limit"
+            )
+
+    if not issues:
+        return (
+            f"PASS: All {len(scenes)} scenes within {platform} limits "
+            f"(max {max_chars} chars/scene, max {limits['max_scenes']} scenes)"
+        )
+
+    return f"# Platform Limit Check: {platform}\n\n" + "\n".join(f"- {i}" for i in issues)
+
+
+@mcp.tool()
+def get_platform_capabilities(platform: str) -> str:
+    """Get the capabilities and limits of a video generation platform.
+
+    Args:
+        platform: Platform name (heygen, synthesia).
+    """
+    limits = _PLATFORM_LIMITS.get(platform)
+    if not limits:
+        return f"Unknown platform: {platform}. Supported: heygen, synthesia"
+
+    info = dict(limits)
+
+    if platform == "heygen":
+        info.update(
+            {
+                "features": [
+                    "Custom backgrounds (image/video/color)",
+                    "Avatar gestures and expressions",
+                    "Screen share overlay",
+                    "Multiple avatar positions (left/center/right)",
+                    "Background music layer",
+                    "API access for automation",
+                ],
+                "avatar_types": ["Stock avatars", "Photo avatars", "Studio avatars"],
+                "best_for": "Custom backgrounds, gesture control, API automation",
+            }
+        )
+    elif platform == "synthesia":
+        info.update(
+            {
+                "features": [
+                    "Slide-based scene structure",
+                    "130+ language support",
+                    "Screen recording overlay",
+                    "Text animation templates",
+                    "Split-screen layouts",
+                    "Built-in slide templates",
+                    "Auto-translation",
+                ],
+                "avatar_types": ["Express avatars", "Studio avatars", "Custom avatars"],
+                "best_for": "Multi-language, slide-based content, quick production",
+            }
+        )
+
+    return _safe_json(info)
+
+
+@mcp.tool()
+def heygen_format_script(
+    project_slug: str,
+    episode_slug: str,
+) -> str:
+    """Format episode content as HeyGen-optimized scene blocks.
+
+    Each scene block includes narration, avatar position, background,
+    and visual overlay instructions.
+
+    Args:
+        project_slug: The project slug.
+        episode_slug: The episode slug.
+    """
+    state = _cache.get()
+    project = state.get("projects", {}).get(project_slug)
+    if not project:
+        return f"Project '{project_slug}' not found."
+
+    episode = project.get("episodes_data", {}).get(episode_slug)
+    if not episode:
+        return f"Episode '{episode_slug}' not found."
+
+    scenes = episode.get("scenes", {})
+    if not scenes:
+        return "No scenes found."
+
+    blocks: list[str] = []
+    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
+        narration = scene.get("narration", "").strip()
+        visual_type = scene.get("visual_type", "avatar")
+        visual_dir = scene.get("visual_direction", "").strip()
+        on_screen = scene.get("on_screen_text", "").strip()
+
+        block = [
+            f"=== Scene {scene.get('number', '?')}: {scene.get('title', name)} ===",
+            f"Type: {visual_type}",
+        ]
+
+        if visual_type == "avatar":
+            block.append("Avatar: Center, facing camera")
+        elif visual_type == "screencast":
+            block.append("Avatar: Hidden (or small overlay bottom-right)")
+        elif visual_type == "split":
+            block.append("Avatar: Left third, screencast right two-thirds")
+
+        if visual_dir:
+            block.append(f"Background: {visual_dir[:100]}")
+
+        if on_screen:
+            block.append(f"Text Overlay: {on_screen}")
+
+        block.append(f"\nScript:\n{narration}")
+        block.append(f"\nChars: {len(narration)}/1500")
+        blocks.append("\n".join(block))
+
+    return "\n\n".join(blocks)
+
+
+@mcp.tool()
+def synthesia_format_script(
+    project_slug: str,
+    episode_slug: str,
+) -> str:
+    """Format episode content as Synthesia-optimized slide blocks.
+
+    Each slide includes narration, layout recommendation, and media instructions.
+
+    Args:
+        project_slug: The project slug.
+        episode_slug: The episode slug.
+    """
+    state = _cache.get()
+    project = state.get("projects", {}).get(project_slug)
+    if not project:
+        return f"Project '{project_slug}' not found."
+
+    episode = project.get("episodes_data", {}).get(episode_slug)
+    if not episode:
+        return f"Episode '{episode_slug}' not found."
+
+    scenes = episode.get("scenes", {})
+    if not scenes:
+        return "No scenes found."
+
+    slides: list[str] = []
+    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
+        narration = scene.get("narration", "").strip()
+        visual_type = scene.get("visual_type", "avatar")
+        on_screen = scene.get("on_screen_text", "").strip()
+        assets = scene.get("assets", "").strip()
+
+        # Map visual type to Synthesia layout
+        layout_map = {
+            "avatar": "Avatar center, solid background",
+            "screencast": "Screen recording full, avatar overlay corner",
+            "slides": "Text layout, avatar left",
+            "split": "Split screen: avatar left, media right",
+            "b-roll": "Full media, no avatar",
+        }
+        layout = layout_map.get(visual_type, "Avatar center")
+
+        slide = [
+            f"--- Slide {scene.get('number', '?')}: {scene.get('title', name)} ---",
+            f"Layout: {layout}",
+        ]
+
+        if on_screen:
+            slide.append(f"Text Elements: {on_screen}")
+
+        if assets:
+            slide.append(f"Media: {assets[:100]}")
+
+        slide.append(f"\nScript:\n{narration}")
+        slide.append(f"\nChars: {len(narration)}/1000")
+        slides.append("\n".join(slide))
+
+    return "\n\n".join(slides)
+
+
+@mcp.tool()
+def list_required_assets(
+    project_slug: str,
+    episode_slug: str,
+) -> str:
+    """List all assets referenced in episode scenes that need to be prepared.
+
+    Args:
+        project_slug: The project slug.
+        episode_slug: The episode slug.
+    """
+    state = _cache.get()
+    project = state.get("projects", {}).get(project_slug)
+    if not project:
+        return f"Project '{project_slug}' not found."
+
+    episode = project.get("episodes_data", {}).get(episode_slug)
+    if not episode:
+        return f"Episode '{episode_slug}' not found."
+
+    scenes = episode.get("scenes", {})
+    assets_needed: list[dict[str, str]] = []
+
+    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
+        assets_text = scene.get("assets", "").strip()
+        visual_type = scene.get("visual_type", "avatar")
+
+        if visual_type == "screencast":
+            assets_needed.append(
+                {
+                    "scene": name,
+                    "type": "screen_recording",
+                    "description": f"Screen recording for: {scene.get('title', name)}",
+                }
+            )
+
+        if assets_text and assets_text != "*List required assets: screenshots, images, logos, screen recordings.*":
+            assets_needed.append(
+                {
+                    "scene": name,
+                    "type": "referenced",
+                    "description": assets_text[:200],
+                }
+            )
+
+    if not assets_needed:
+        return "No specific assets referenced. All scenes may be avatar-only."
+
+    lines = ["# Required Assets\n"]
+    for a in assets_needed:
+        lines.append(f"- **Scene {a['scene']}** [{a['type']}]: {a['description']}")
+
+    return "\n".join(lines)
+
+
+# ===========================================================================
 # QUALITY GATE TOOLS
 # ===========================================================================
 

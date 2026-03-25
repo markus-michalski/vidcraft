@@ -19,6 +19,10 @@ When the user mentions or requests any of the following, route to the appropriat
 | "Storyboard erstellen" | `/vidcraft:storyboard-creator` |
 | "HeyGen" / "für HeyGen formatieren" | `/vidcraft:heygen-engineer` |
 | "Synthesia" / "für Synthesia formatieren" | `/vidcraft:synthesia-engineer` |
+| "Screenshots planen" / "Screenshot plan" | `/vidcraft:screenshot-planner` |
+| "Assets prüfen" / "Check assets" | `/vidcraft:asset-collector` |
+| "Shot list erstellen" | `/vidcraft:shot-list-creator` |
+| "Avatar auswählen" / "Select avatar" | `/vidcraft:avatar-selector` |
 | "Pre-gen check" / "Ready to generate?" | `/vidcraft:pre-generation-check` |
 | "Neuer Video-Typ" / "New video type" | `/vidcraft:video-type-creator` |
 | "Doku analysieren" / "Analyze docs" | `/vidcraft:doc-analyzer` |
@@ -44,8 +48,12 @@ Concept → Script → Review → Storyboard → Assets → Pre-Gen Check → Ge
 2. `/vidcraft:script-writer` — Write scripts per episode
 3. `/vidcraft:script-reviewer` — QC with 14-point checklist
 4. `/vidcraft:storyboard-creator` — Visual direction per scene
-5. `/vidcraft:pre-generation-check` — Quality gates
-6. `/vidcraft:heygen-engineer` or `/vidcraft:synthesia-engineer` — Platform formatting
+5. `/vidcraft:screenshot-planner` — Define required screenshots and recordings
+5b. `/vidcraft:asset-collector` — Verify all assets are ready
+5c. `/vidcraft:shot-list-creator` — Production-ready shot list
+6. `/vidcraft:avatar-selector` — Choose avatar and voice
+6b. `/vidcraft:pre-generation-check` — Quality gates
+7. `/vidcraft:heygen-engineer` or `/vidcraft:synthesia-engineer` — Platform formatting
 7. [Manual] Generate in HeyGen/Synthesia
 8. Review and publish
 
