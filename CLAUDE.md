@@ -30,6 +30,14 @@ When the user mentions or requests any of the following, route to the appropriat
 | "Konzept entwickeln" / "Plan the project" | `/vidcraft:project-conceptualizer` |
 | "Recherche" / "Research" | `/vidcraft:researcher` |
 | "Zielgruppe" / "Audience" | `/vidcraft:audience-researcher` |
+| "Video reviewen" / "Review" | `/vidcraft:video-reviewer` |
+| "Brand Check" / "Markencheck" | `/vidcraft:brand-checker` |
+| "Barrierefreiheit" / "Accessibility" | `/vidcraft:accessibility-checker` |
+| "AI Check" / "Voice Check" | `/vidcraft:voice-checker` |
+| "Timing prüfen" | `/vidcraft:timing-validator` |
+| "Release" / "Veröffentlichen" | `/vidcraft:release-director` |
+| "Promo Text" / "Social Media" | `/vidcraft:promo-writer` |
+| "Thumbnail" | `/vidcraft:thumbnail-director` |
 | "Hilfe" / "Help" / "Was kann ich?" | `/vidcraft:help` |
 | "Setup" / "Einrichten" | `/vidcraft:setup` |
 | "Config" / "Konfiguration" | `/vidcraft:configure` |
