@@ -1,14 +1,14 @@
 {
   "name": "vidcraft",
-  "version": "0.1.0-dev",
-  "displayName": "VidCraft — AI Video Production",
-  "description": "End-to-end AI video production pipeline: concept, script, storyboard, generation (HeyGen/Synthesia), review, and publishing.",
-  "author": "Markus Michalski",
-  "license": "MIT",
-  "repository": "https://github.com/markus-michalski/vidcraft",
-  "keywords": ["video", "heygen", "synthesia", "tutorial", "storyboard", "script", "ai-video"],
-  "categories": ["productivity", "content-creation"],
-  "engines": {
-    "claude-code": ">=1.0.0"
-  }
+  "owner": {
+    "name": "markus-michalski"
+  },
+  "plugins": [
+    {
+      "name": "vidcraft",
+      "description": "AI video production pipeline: concept, script, storyboard, generation (HeyGen/Synthesia), review, and publishing",
+      "version": "0.1.0-dev",
+      "source": "./"
+    }
+  ]
 }
