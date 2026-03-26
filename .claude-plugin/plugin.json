@@ -1,14 +1,26 @@
 {
   "name": "vidcraft",
+  "description": "AI video production pipeline: concept, script, storyboard, generation (HeyGen/Synthesia), review, and publishing",
   "version": "0.1.0-dev",
-  "description": "AI Video Production Plugin for Claude Code — Create professional videos with HeyGen & Synthesia",
-  "author": "Markus Michalski",
+  "author": {
+    "name": "markus-michalski"
+  },
+  "repository": "https://github.com/markus-michalski/vidcraft",
+  "homepage": "https://github.com/markus-michalski/vidcraft#readme",
   "license": "MIT",
-  "mcpServers": {
-    "vidcraft-mcp": {
-      "type": "stdio",
-      "command": "${HOME}/.vidcraft/venv/bin/python3",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/vidcraft-server/run.py"]
-    }
-  }
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "keywords": [
+    "video",
+    "heygen",
+    "synthesia",
+    "tutorial",
+    "storyboard",
+    "script",
+    "ai-video",
+    "claude-code",
+    "video-production",
+    "screencast",
+    "explainer"
+  ]
 }
