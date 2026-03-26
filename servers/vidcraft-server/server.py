@@ -45,10 +45,7 @@ from tools.state.indexer import StateCache, build_state, rebuild
 # Server setup
 # ---------------------------------------------------------------------------
 
-mcp = FastMCP(
-    "vidcraft-mcp",
-    version="0.1.0-dev",
-)
+mcp = FastMCP("vidcraft-mcp")
 
 _cache = StateCache()
 
