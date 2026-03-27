@@ -20,3 +20,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Production skills: heygen-engineer, synthesia-engineer
 - Utility skills: video-type-creator, help, configure, setup
 - Reference system: HeyGen, Synthesia, video-craft knowledge base
+
+[Unreleased]: https://github.com/markus-michalski/vidcraft/compare/HEAD
