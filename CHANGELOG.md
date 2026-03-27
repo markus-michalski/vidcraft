@@ -8,17 +8,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial plugin structure with `.claude-plugin/` manifest
-- MCP server skeleton with FastMCP (stdio transport)
-- Config system with `~/.vidcraft/config.yaml`
-- State management with JSON cache and schema migrations
-- Templates: project, episode, scene, script, storyboard
-- Video types: tutorial, installation-guide, product-demo (MVP)
-- Core skills: new-project, session-start, resume, next-step, project-dashboard
-- Writing skills: script-writer, script-reviewer
-- Visual skill: storyboard-creator
-- Production skills: heygen-engineer, synthesia-engineer
-- Utility skills: video-type-creator, help, configure, setup
-- Reference system: HeyGen, Synthesia, video-craft knowledge base
+- Nothing yet
 
-[Unreleased]: https://github.com/markus-michalski/vidcraft/compare/HEAD
+### Changed
+- Nothing yet
+
+### Deprecated
+- Nothing yet
+
+### Removed
+- Nothing yet
+
+### Fixed
+- Nothing yet
+
+### Security
+- Nothing yet
+
+## [1.0.0] - 2026-03-27
+
+### Added
+- multi-language support in config
+- Phase 4 — Review, Distribution, Polish
+- Phase 3 — Production Pipeline
+- Phase 2 — Content Intelligence
+- initial vidcraft plugin structure (MVP)
+
+### Fixed
+- add missing [Unreleased] comparison link to CHANGELOG.md
+- remove unsupported version param from FastMCP constructor
+- plugin.json schema — author as object, skills/mcpServers as paths
+- marketplace.json schema — add required owner and plugins fields
+
+[1.0.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.0
