@@ -5,6 +5,7 @@ Locates the correct Python venv and launches server.py with it.
 """
 
 import os
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -41,8 +42,8 @@ def main() -> None:
             [str(venv_python), str(server_path)],
         )
     else:
-        # Already in venv or no venv — run directly
-        exec(compile(server_path.read_text(encoding="utf-8"), str(server_path), "exec"))
+        # Already in venv or no venv — run as proper module so globals are accessible
+        runpy.run_path(str(server_path), run_name="__main__")
 
 
 if __name__ == "__main__":
