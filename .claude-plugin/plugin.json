@@ -1,7 +1,7 @@
 {
   "name": "vidcraft",
   "description": "AI video production pipeline: concept, script, storyboard, generation (HeyGen/Synthesia), review, and publishing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "markus-michalski"
   },

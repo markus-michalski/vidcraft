@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing yet
 
+## [1.0.1] - 2026-03-29
+
+### Fixed
+- flatten skills directory structure for plugin system compatibility
+
 ## [1.0.0] - 2026-03-27
 
 ### Added
@@ -41,3 +46,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - marketplace.json schema — add required owner and plugins fields
 
 [1.0.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.0
+[1.0.1]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.1
