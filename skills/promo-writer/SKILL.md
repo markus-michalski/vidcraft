@@ -76,11 +76,13 @@ Pick exactly ONE category from this list:
 - **Body:** 3-5 sentences, one clear CTA button
 - **Tone:** Personal, direct, matches brand voice
 
-### Blog/Website
+### Blog/Website / Wiki
 - **SEO title:** Include primary keyword, under 60 chars
 - **Meta description:** 150-160 chars, includes CTA
 - **Intro paragraph:** What the video covers and why it matters
 - **Embedded video + key takeaways as text (for SEO)
+- **Embed URL:** ALWAYS use `https://www.youtube-nocookie.com/embed/VIDEO_ID` (NOT `youtube.com`).
+  Reason: DSGVO — standard embeds set Google cookies immediately, nocookie variant only on play.
 
 ## Workflow
 
@@ -97,3 +99,4 @@ Pick exactly ONE category from this list:
 - Social media hooks must work WITHOUT the video (scroll-stopping text)
 - Always include a clear, single CTA per platform
 - Match the brand tone from project brief
+- ALL embed codes must use `youtube-nocookie.com` — never `youtube.com` (DSGVO)
