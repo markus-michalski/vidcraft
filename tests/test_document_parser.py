@@ -7,7 +7,6 @@ from pathlib import Path
 import pytest
 
 from tools.analysis.document_parser import (
-    DocumentSection,
     analyze_complexity,
     extract_key_points,
     parse_document,
@@ -165,7 +164,11 @@ class TestAnalyzeComplexity:
         result = analyze_complexity(doc)
         assert 0 <= result["complexity_score"] <= 100
         assert result["recommended_type"] in (
-            "tutorial", "installation-guide", "product-demo", "explainer", "training"
+            "tutorial",
+            "installation-guide",
+            "product-demo",
+            "explainer",
+            "training",
         )
         assert result["recommended_episodes"] >= 1
 

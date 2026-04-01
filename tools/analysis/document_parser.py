@@ -260,7 +260,9 @@ def _split_by_headings(text: str) -> list[DocumentSection]:
                         level=current_level,
                         content=content,
                         has_code="```" in content,
-                        has_list=bool(re.search(r"^[-*\d]+[.)]\s", content, re.MULTILINE)),
+                        has_list=bool(
+                            re.search(r"^[-*\d]+[.)]\s", content, re.MULTILINE)
+                        ),
                     )
                 )
 
@@ -286,7 +288,9 @@ def _split_by_headings(text: str) -> list[DocumentSection]:
     return sections
 
 
-def extract_key_points(doc: ParsedDocument, max_points: int = 10) -> list[dict[str, str]]:
+def extract_key_points(
+    doc: ParsedDocument, max_points: int = 10
+) -> list[dict[str, str]]:
     """Extract key points from a parsed document.
 
     Identifies the most important content blocks based on:
@@ -307,7 +311,9 @@ def extract_key_points(doc: ParsedDocument, max_points: int = 10) -> list[dict[s
                 "heading": section.heading,
                 "type": "topic",
                 "content": "",
-                "video_relevance": "high" if section.has_code or section.has_images else "medium",
+                "video_relevance": "high"
+                if section.has_code or section.has_images
+                else "medium",
             }
 
             # Get first meaningful paragraph as summary

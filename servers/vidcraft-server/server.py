@@ -23,23 +23,19 @@ _tools_path = str(Path(_plugin_root))
 if _tools_path not in sys.path:
     sys.path.insert(0, _tools_path)
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP  # noqa: E402
 
-from tools.shared.config import (
-    CONFIG_PATH,
+from tools.shared.config import (  # noqa: E402
     load_config,
     resolve_assets_path,
     resolve_project_path,
     resolve_video_path,
 )
-from tools.shared.paths import (
-    find_episodes,
-    find_projects,
+from tools.shared.paths import (  # noqa: E402
     resolve_episode_path,
-    resolve_scene_path,
     slugify,
 )
-from tools.state.indexer import StateCache, build_state, rebuild
+from tools.state.indexer import StateCache, rebuild  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Server setup
@@ -681,7 +677,9 @@ def check_readability(text: str) -> str:
     for s in sentences:
         wc = len(s.split())
         if wc > 20:
-            long_sentences.append({"text": s[:80] + "..." if len(s) > 80 else s, "words": wc})
+            long_sentences.append(
+                {"text": s[:80] + "..." if len(s) > 80 else s, "words": wc}
+            )
 
     verdict = "PASS" if flesch >= 60 else "WARN" if flesch >= 40 else "FAIL"
 
@@ -754,9 +752,7 @@ def validate_structure(
 
     # Check for visual direction
     no_visual = [
-        name
-        for name, s in scenes.items()
-        if not s.get("visual_direction", "").strip()
+        name for name, s in scenes.items() if not s.get("visual_direction", "").strip()
     ]
     if no_visual:
         issues.append(f"WARN: No visual direction in: {', '.join(no_visual)}")
@@ -799,7 +795,9 @@ def format_for_clipboard(
         if narration:
             if platform == "synthesia":
                 # Synthesia: one scene = one slide
-                lines.append(f"--- Scene {scene.get('number', '?')}: {scene.get('title', '')} ---")
+                lines.append(
+                    f"--- Scene {scene.get('number', '?')}: {scene.get('title', '')} ---"
+                )
                 lines.append(narration)
                 lines.append("")
             else:
@@ -895,7 +893,9 @@ def validate_platform_limits(
             f"(max {max_chars} chars/scene, max {limits['max_scenes']} scenes)"
         )
 
-    return f"# Platform Limit Check: {platform}\n\n" + "\n".join(f"- {i}" for i in issues)
+    return f"# Platform Limit Check: {platform}\n\n" + "\n".join(
+        f"- {i}" for i in issues
+    )
 
 
 @mcp.tool()
@@ -1102,7 +1102,11 @@ def list_required_assets(
                 }
             )
 
-        if assets_text and assets_text != "*List required assets: screenshots, images, logos, screen recordings.*":
+        if (
+            assets_text
+            and assets_text
+            != "*List required assets: screenshots, images, logos, screen recordings.*"
+        ):
             assets_needed.append(
                 {
                     "scene": name,
@@ -1188,14 +1192,14 @@ def run_pre_generation_gates(
         gates.append("PASS: All scenes have visual direction")
 
     # Gate 5: Timing check
-    total_words = sum(
-        len(s.get("narration", "").split()) for s in scenes.values()
-    )
+    total_words = sum(len(s.get("narration", "").split()) for s in scenes.values())
     config = load_config()
     wpm = config.get("defaults", {}).get("wpm", 140)
     est_seconds = int(total_words / wpm * 60)
     est_duration = f"{est_seconds // 60}:{est_seconds % 60:02d}"
-    gates.append(f"INFO: Estimated duration {est_duration} ({total_words} words @ {wpm} WPM)")
+    gates.append(
+        f"INFO: Estimated duration {est_duration} ({total_words} words @ {wpm} WPM)"
+    )
 
     # Summary
     verdict = "BLOCKED" if blocking else "READY"
@@ -1379,7 +1383,9 @@ def suggest_video_topics(file_path: str, max_topics: int = 5) -> str:
     code_sections = [s for s in doc.sections if s.has_code]
     list_sections = [s for s in doc.sections if s.has_list]
     concept_sections = [
-        s for s in doc.sections if not s.has_code and not s.has_list and s.word_count > 50
+        s
+        for s in doc.sections
+        if not s.has_code and not s.has_list and s.word_count > 50
     ]
 
     # Tutorial topic from code-heavy sections

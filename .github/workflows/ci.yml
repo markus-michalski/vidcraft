@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest ruff
+
+      - name: Lint with ruff
+        run: |
+          ruff check tools/ tests/ servers/
+
+      - name: Check formatting with ruff
+        run: |
+          ruff format --check tools/ tests/ servers/
+
+      - name: Run tests
+        run: |
+          python -m pytest tests/ -v
+
+  validate-skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate skill frontmatter
+        run: |
+          error=0
+          for skill_dir in skills/*/; do
+            skill_file="${skill_dir}SKILL.md"
+            if [ ! -f "$skill_file" ]; then
+              echo "FAIL: $skill_dir missing SKILL.md"
+              error=1
+              continue
+            fi
+            # Check required frontmatter fields
+            for field in name description user-invocable; do
+              if ! grep -q "^${field}:" "$skill_file"; then
+                echo "FAIL: $skill_file missing frontmatter field: $field"
+                error=1
+              fi
+            done
+            # Check no subdirectories in skill folder
+            subdirs=$(find "$skill_dir" -mindepth 1 -type d 2>/dev/null)
+            if [ -n "$subdirs" ]; then
+              echo "FAIL: $skill_dir contains subdirectories (skills must be flat)"
+              error=1
+            fi
+          done
+          if [ $error -ne 0 ]; then exit 1; fi
+          echo "All skills validated successfully"
+
+  validate-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          for f in README.md LICENSE CHANGELOG.md CLAUDE.md requirements.txt; do
+            if [ ! -f "$f" ]; then
+              echo "FAIL: Missing required file: $f"
+              exit 1
+            fi
+          done
+          echo "All required files present"
+
+      - name: Check video types have README
+        run: |
+          error=0
+          for type_dir in video-types/*/; do
+            if [ ! -f "${type_dir}README.md" ]; then
+              echo "FAIL: $type_dir missing README.md"
+              error=1
+            fi
+          done
+          if [ $error -ne 0 ]; then exit 1; fi
+          echo "All video types validated"

@@ -6,7 +6,6 @@ Locates the correct Python venv and launches server.py with it.
 
 import os
 import runpy
-import subprocess
 import sys
 from pathlib import Path
 
@@ -26,13 +25,7 @@ def main() -> None:
     if tools_path not in sys.path:
         sys.path.insert(0, tools_path)
 
-    # Find python executable
     venv_python = VENV_PATH / "bin" / "python3"
-    if venv_python.exists():
-        python_cmd = str(venv_python)
-    else:
-        python_cmd = sys.executable
-
     server_path = Path(__file__).resolve().parent / "server.py"
 
     # Re-exec with venv python if we're not already using it

@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from unittest.mock import patch
 
-import pytest
 
 from tools.state.indexer import SCHEMA_VERSION, StateCache, _scan_projects, build_state
 
