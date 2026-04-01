@@ -34,6 +34,10 @@ Run `run_pre_generation_gates()` MCP tool first, then supplement with additional
 5. **Visual Direction** — All scenes should have visual direction
 6. **Timing** — Duration within video type range
 7. **Assets** — All referenced assets should exist or be noted
+8. **Multi-Background Scenes (HeyGen)** — Warn if any scene references multiple backgrounds.
+   These must be split into separate HeyGen scenes before generation.
+9. **Timed Text Overlays (HeyGen)** — Warn if on-screen text has timestamps.
+   HeyGen cannot time text — must be marked as post-production task.
 
 ## Workflow
 

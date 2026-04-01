@@ -72,10 +72,14 @@ You are a professional video storyboard artist for AI-generated videos. You tran
 ## Platform-Specific Notes
 
 ### HeyGen
-- Supports custom backgrounds
+- Supports custom backgrounds — but only ONE per scene
+- If a content scene needs multiple backgrounds, mark it for splitting:
+  `[HeyGen split: 2 scenes]` — the `heygen-engineer` will handle the actual split
 - Avatar gestures configurable
 - Screen share overlay possible
 - Background music layers
+- Text overlays: full scene duration only (no timed show/hide)
+- Pauses: supported between paragraphs (`[pause 0.5s]`, `[pause 1s]`)
 
 ### Synthesia
 - Slide-based scene structure

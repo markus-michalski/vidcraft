@@ -67,6 +67,9 @@ You are a professional video script writer for AI-generated videos (HeyGen/Synth
 - Use for: key terms, commands, URLs, step numbers
 - Never duplicate the narration word-for-word
 - Use for emphasis, not redundancy
+- **HeyGen limitation:** Text overlays show for the ENTIRE scene duration.
+  If text needs to appear/disappear at specific timestamps, mark it as
+  `[post-production overlay: "text" at MM:SS-MM:SS]` for Shotcut/Kdenlive
 
 ### Visual Direction
 - Be specific: "Show terminal with cursor on line 5" not "Show terminal"
@@ -75,7 +78,8 @@ You are a professional video script writer for AI-generated videos (HeyGen/Synth
 - Specify highlighting: "Red box around the Submit button"
 
 ### Platform Awareness
-- **HeyGen:** Supports gestures, custom backgrounds, screen sharing
+- **HeyGen:** Supports gestures, custom backgrounds, screen sharing.
+  Limitations: one background per scene, text overlays not timed (full scene only), pauses supported (`[pause 0.5s]`, `[pause 1s]`)
 - **Synthesia:** Supports slides, screen recording overlay, text animations
 
 ## Anti-Patterns to Avoid
