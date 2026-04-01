@@ -57,10 +57,31 @@ Pick exactly ONE category from this list:
 - Educational explainers → **Bildung**
 - When in doubt, consider the PRIMARY audience intent
 
+### Facebook
+- **Post length:** 100-250 words
+- **Hook:** First 2 lines must grab attention (Facebook truncates after ~3 lines)
+- **Format:** Short paragraphs, conversational tone, line breaks for readability
+- **Video link:** At the end of the post
+- **Hashtags:** 3-5 relevant ones
+- **Emojis:** Moderate use — 2-3 per post, not every line
+- **CTA:** "Watch the full video:", "What do you think?", or question to drive comments
+
+### Instagram
+- **Caption length:** Max 2.200 characters
+- **Hook:** First line must work standalone (Instagram truncates after 125 chars)
+- **Format:** Short paragraphs with line breaks, storytelling approach
+- **CTA:** "Link in Bio" (Instagram doesn't allow clickable links in captions)
+- **Hashtags:** 15-25 at the end (mix of niche + broad)
+  - 5-8 niche hashtags (e.g., #ShopwarePlugin, #GitWorkflow)
+  - 5-8 medium hashtags (e.g., #WebDevelopment, #CodingTips)
+  - 5-8 broad hashtags (e.g., #Tech, #Developer, #Tutorial)
+- **Story variant:** Optional short teaser text (max 3 sentences) + "Swipe Up" / "Link in Bio" hint
+
 ### LinkedIn
 - **Post length:** 150-300 words
 - **Hook:** First line must stop the scroll (question or bold statement)
 - **Format:** Short paragraphs, line breaks, no walls of text
+- **Tone:** Professional but approachable — no corporate jargon
 - **CTA:** "Comment if..." or "Watch the full video: [link]"
 - **Hashtags:** 3-5 relevant ones at the end
 
@@ -87,10 +108,12 @@ Pick exactly ONE category from this list:
 ## Workflow
 
 1. Load project data — title, description, key messages, audience
-2. Ask user which platforms to write for (or write all)
+2. **Default: generate ALL platforms** (YouTube, Facebook, Instagram, LinkedIn, Twitter/X, Email, Wiki-Embed)
+   - If user specifies platforms via argument, only generate those: e.g., `promo-writer git-sync-all linkedin instagram`
 3. Write platform-specific copy
 4. For YouTube: include `## Kategorie` as a separate section with the recommended category and a one-line reasoning
-5. Save to `{project}/promo/` directory (one file per platform)
+5. Save to `{project}/promo/` directory — one file per platform:
+   - `youtube.md`, `facebook.md`, `instagram.md`, `linkedin.md`, `twitter.md`, `email.md`, `wiki-embed.md`
 
 ## Important
 
