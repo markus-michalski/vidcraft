@@ -37,6 +37,7 @@ When the user mentions or requests any of the following, route to the appropriat
 | "Timing prüfen" | `/vidcraft:timing-validator` |
 | "Release" / "Veröffentlichen" | `/vidcraft:release-director` |
 | "Promo Text" / "Social Media" | `/vidcraft:promo-writer` |
+| "Untertitel" / "Subtitles" / "Whisper" / "SRT" | `/vidcraft:subtitle-generator` |
 | "Thumbnail" | `/vidcraft:thumbnail-director` |
 | "Hilfe" / "Help" / "Was kann ich?" | `/vidcraft:help` |
 | "Setup" / "Einrichten" | `/vidcraft:setup` |
@@ -45,7 +46,7 @@ When the user mentions or requests any of the following, route to the appropriat
 ## Workflow Pipeline
 
 ```
-Concept → Script → Review → Storyboard → Assets → Pre-Gen Check → Generate → Review → Publish
+Concept → Script → Review → Storyboard → Assets → Pre-Gen Check → Generate → Review → Subtitles → Publish
 ```
 
 ### Standard Workflow
@@ -63,7 +64,9 @@ Concept → Script → Review → Storyboard → Assets → Pre-Gen Check → Ge
 6b. `/vidcraft:pre-generation-check` — Quality gates
 7. `/vidcraft:heygen-engineer` or `/vidcraft:synthesia-engineer` — Platform formatting
 7. [Manual] Generate in HeyGen/Synthesia
-8. Review and publish
+8. [Manual] Post-production in Shotcut (Intro/Outro, Schnitte)
+9. `/vidcraft:subtitle-generator` — Whisper SRT + English translation
+10. Review and publish
 
 ## Project Structure
 
