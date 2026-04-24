@@ -1509,10 +1509,16 @@ def get_ideas() -> str:
 @mcp.tool()
 def get_plugin_version() -> str:
     """Return the current VidCraft plugin version."""
+    plugin_json = Path(_plugin_root) / ".claude-plugin" / "plugin.json"
+    if plugin_json.exists():
+        data = json.loads(plugin_json.read_text(encoding="utf-8"))
+        version = data.get("version", "unknown")
+    else:
+        version = "unknown"
     return json.dumps(
         {
             "plugin": "vidcraft",
-            "version": "0.1.0-dev",
+            "version": version,
             "schema_version": "1.0.0",
         }
     )

@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import importlib.util
+import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -137,3 +140,42 @@ class TestToolModules:
 
     def test_document_parser_module(self) -> None:
         assert (PLUGIN_ROOT / "tools" / "analysis" / "document_parser.py").exists()
+
+
+class TestPluginVersion:
+    """Single source of truth: plugin.json version must match get_plugin_version()."""
+
+    def _load_server_module(self):
+        # Ensure tools/ is importable (server.py requires it at import time)
+        tools_path = str(PLUGIN_ROOT)
+        if tools_path not in sys.path:
+            sys.path.insert(0, tools_path)
+
+        server_path = PLUGIN_ROOT / "servers" / "vidcraft-server" / "server.py"
+        spec = importlib.util.spec_from_file_location(
+            "vidcraft_server_under_test", server_path
+        )
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def test_plugin_json_has_version(self) -> None:
+        plugin_json = PLUGIN_ROOT / ".claude-plugin" / "plugin.json"
+        data = json.loads(plugin_json.read_text(encoding="utf-8"))
+        assert "version" in data, "plugin.json must declare a 'version' field"
+        assert data["version"], "plugin.json 'version' must not be empty"
+
+    def test_mcp_tool_returns_plugin_json_version(self) -> None:
+        plugin_json = PLUGIN_ROOT / ".claude-plugin" / "plugin.json"
+        expected_version = json.loads(plugin_json.read_text(encoding="utf-8"))[
+            "version"
+        ]
+
+        server = self._load_server_module()
+        result = json.loads(server.get_plugin_version())
+
+        assert result["version"] == expected_version, (
+            f"get_plugin_version() returned '{result['version']}' but "
+            f"plugin.json declares '{expected_version}'. Single source of "
+            f"truth must be plugin.json."
+        )
