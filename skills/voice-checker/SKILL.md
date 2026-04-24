@@ -17,35 +17,16 @@ You are a linguistic authenticity auditor. You scan narration text for patterns 
 
 ## AI Language Red Flags
 
-### Tier 1: Hard Flags (almost always AI)
-- "In this comprehensive guide/tutorial/video"
-- "Let's delve into / dive deep into"
-- "Leverage" (instead of "use")
-- "Utilize" (instead of "use")
-- "It's important to note that"
-- "In today's digital landscape"
-- "Unlock the full potential"
-- "Seamlessly integrate"
-- "Robust and scalable"
-- "Take your X to the next level"
+The full Tier 1/2/3 list lives in [knowledge/ai-language-patterns.md](../../knowledge/ai-language-patterns.md).
+Read that file before scanning so you have the complete catalog and context exceptions.
 
-### Tier 2: Soft Flags (AI-likely in narration context)
-- "Furthermore" / "Moreover" (too formal for spoken narration)
-- "Cutting-edge" / "State-of-the-art"
-- "Streamline your workflow"
-- "Empower you to"
-- "Journey" (when not literal travel)
-- "Landscape" (when not geography)
-- "Navigate" (when not physical navigation)
-- "Elevate your"
-- Abstract noun chains: "the optimization of the implementation of the configuration"
+Tier summary:
 
-### Tier 3: Pattern Flags
-- **Tricolon abuse:** "fast, reliable, and scalable" (always three adjectives)
-- **Hedge stacking:** "might potentially help to possibly improve"
-- **Empty intensifiers:** "truly", "really", "incredibly", "absolutely"
-- **Generic openings:** every scene starts with "Now, let's..." or "Next, we'll..."
-- **Over-explanation:** explaining obvious things the viewer can see
+- **Tier 1 (Hard Flags):** always flag — almost always AI
+- **Tier 2 (Soft Flags):** flag if 2 or more per episode
+- **Tier 3 (Pattern Flags):** flag if the pattern repeats across scenes
+
+Context exceptions (e.g., "navigate" in UI tutorials, "leverage" in finance) are documented in the knowledge file.
 
 ## Workflow
 
