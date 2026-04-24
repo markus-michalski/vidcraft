@@ -52,3 +52,4 @@ You are a video type definition specialist. You create comprehensive video type 
 - Use the EXACT same README structure as existing types
 - Include HeyGen AND Synthesia considerations
 - Write in English (reference docs are always English)
+- When generating skill scaffolds for the new type, choose the `model:` in the YAML frontmatter according to the Model Strategy guideline in `CLAUDE.md`
