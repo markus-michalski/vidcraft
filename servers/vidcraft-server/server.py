@@ -286,7 +286,9 @@ def create_project_structure(
 
     template_path = Path(_plugin_root) / "templates" / "project.md"
     if not template_path.exists():
-        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+        return (
+            f"Template not found: {template_path}. Plugin installation may be corrupt."
+        )
     template = template_path.read_text(encoding="utf-8")
 
     project_dir.mkdir(parents=True, exist_ok=True)
@@ -343,7 +345,9 @@ def create_episode(
 
     template_path = Path(_plugin_root) / "templates" / "episode.md"
     if not template_path.exists():
-        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+        return (
+            f"Template not found: {template_path}. Plugin installation may be corrupt."
+        )
     template = template_path.read_text(encoding="utf-8")
 
     episodes_dir = project_dir / "episodes"
@@ -409,7 +413,9 @@ def create_scene(
 
     template_path = Path(_plugin_root) / "templates" / "scene.md"
     if not template_path.exists():
-        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+        return (
+            f"Template not found: {template_path}. Plugin installation may be corrupt."
+        )
     template = template_path.read_text(encoding="utf-8")
 
     scenes_dir = episode_dir / "scenes"
