@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet
+- inline Model Strategy guideline table in CLAUDE.md (#4)
+- Model Strategy reference in video-type-creator skill (#4)
 
 ### Changed
 - Nothing yet
@@ -17,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing yet
 
 ### Removed
-- Nothing yet
+- reference/model-strategy.md (drift-prone, unreferenced, 15 of 33 skills listed; YAML frontmatter remains single source of truth) (#4)
 
 ### Fixed
 - Nothing yet

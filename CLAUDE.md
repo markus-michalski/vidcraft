@@ -125,6 +125,20 @@ Each video type has specific conventions in `video-types/<type>/README.md`:
 
 More types can be created with `/vidcraft:video-type-creator`.
 
+## Model Strategy
+
+Each skill declares its model in YAML frontmatter (single source of truth). When creating new skills, choose the model based on the task profile:
+
+| Task Profile | Model | Rationale |
+|--------------|-------|-----------|
+| Creative writing (scripts, briefs, concepts) | Opus | Needs nuance, voice, natural language |
+| Research & synthesis | Opus | Complex source analysis |
+| Type creation (video-type, genre definitions) | Opus | Comprehensive creative definition |
+| Reviews & validation (checklists, QC) | Sonnet | Structured analysis, consistent output |
+| Platform formatting (HeyGen, Synthesia, YouTube) | Sonnet | Technical, rule-based |
+| Project management (state, routing, status) | Sonnet | State reading, workflow orchestration |
+| Quick lookups (help, timing checks) | Haiku | Fast, simple, informational |
+
 ## Code Style
 
 - Python code: English comments, type hints, PEP 8
