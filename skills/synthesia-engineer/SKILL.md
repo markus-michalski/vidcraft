@@ -11,7 +11,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__get_project_full
   - mcp__vidcraft-mcp__get_episode
   - mcp__vidcraft-mcp__list_scenes
-  - mcp__vidcraft-mcp__format_for_clipboard
+  - mcp__vidcraft-mcp__synthesia_format_script
   - mcp__vidcraft-mcp__analyze_timing
   - mcp__vidcraft-mcp__update_field
 ---

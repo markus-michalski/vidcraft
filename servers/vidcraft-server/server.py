@@ -763,51 +763,6 @@ def validate_structure(
     return "\n".join(issues)
 
 
-@mcp.tool()
-def format_for_clipboard(
-    project_slug: str,
-    episode_slug: str,
-    platform: str = "heygen",
-) -> str:
-    """Format episode script for copy-paste into HeyGen or Synthesia.
-
-    Args:
-        project_slug: The project slug.
-        episode_slug: The episode slug.
-        platform: Target platform (heygen, synthesia).
-    """
-    state = _cache.get()
-    project = state.get("projects", {}).get(project_slug)
-    if not project:
-        return f"Project '{project_slug}' not found."
-
-    episode = project.get("episodes_data", {}).get(episode_slug)
-    if not episode:
-        return f"Episode '{episode_slug}' not found."
-
-    scenes = episode.get("scenes", {})
-    if not scenes:
-        return "No scenes found."
-
-    lines = []
-    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
-        narration = scene.get("narration", "").strip()
-        if narration:
-            if platform == "synthesia":
-                # Synthesia: one scene = one slide
-                lines.append(
-                    f"--- Scene {scene.get('number', '?')}: {scene.get('title', '')} ---"
-                )
-                lines.append(narration)
-                lines.append("")
-            else:
-                # HeyGen: continuous script
-                lines.append(narration)
-                lines.append("")
-
-    return "\n".join(lines).strip()
-
-
 # ===========================================================================
 # PLATFORM INTEGRATION TOOLS
 # ===========================================================================
