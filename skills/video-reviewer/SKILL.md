@@ -32,7 +32,7 @@ You are a senior video QA specialist. After a video has been generated in HeyGen
 
 ### Narration Quality (4 points)
 6. **Natural language** — Does it sound conversational, not robotic?
-7. **No AI patterns** — Free of "comprehensive", "leverage", "delve", "utilize"?
+7. **No AI patterns** — See [knowledge/ai-language-patterns.md](../../knowledge/ai-language-patterns.md) for the full Tier 1/2/3 list. Quick check: "comprehensive", "leverage", "delve", "utilize", "seamlessly"
 8. **Sentence length** — All under 20 words for clear delivery?
 9. **Pronunciation** — Any technical terms or names likely mispronounced?
 

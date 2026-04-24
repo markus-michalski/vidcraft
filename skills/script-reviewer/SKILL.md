@@ -34,7 +34,7 @@ Review each point and mark as PASS, WARN, or FAIL:
 
 ### Writing Quality
 6. **Tone Consistency** — Same voice throughout all scenes
-7. **No AI Language** — No "comprehensive", "leverage", "utilize", "delve"
+7. **No AI Language** — See [knowledge/ai-language-patterns.md](../../knowledge/ai-language-patterns.md) for the full Tier 1/2/3 list. Quick check: "comprehensive", "leverage", "utilize", "delve", "seamlessly"
 8. **Sentence Length** — Max 20 words per sentence for narration
 9. **Active Voice** — Imperative mood for instructions
 
