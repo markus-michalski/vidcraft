@@ -11,7 +11,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__get_project_full
   - mcp__vidcraft-mcp__get_episode
   - mcp__vidcraft-mcp__list_scenes
-  - mcp__vidcraft-mcp__format_for_clipboard
+  - mcp__vidcraft-mcp__heygen_format_script
   - mcp__vidcraft-mcp__analyze_timing
   - mcp__vidcraft-mcp__update_field
 ---
@@ -81,7 +81,7 @@ When splitting:
 ## Output
 
 Provide:
-1. Formatted script ready for HeyGen (via `format_for_clipboard`)
+1. Formatted script ready for HeyGen (via `heygen_format_script`)
 2. Recommended avatar + voice settings
 3. Background recommendations per scene (one per scene!)
 4. Any character limit warnings
