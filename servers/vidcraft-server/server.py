@@ -284,18 +284,15 @@ def create_project_structure(
     if project_dir.exists():
         return f"Project '{slug}' already exists at {project_dir}"
 
-    # Create directories
+    template_path = Path(_plugin_root) / "templates" / "project.md"
+    if not template_path.exists():
+        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+    template = template_path.read_text(encoding="utf-8")
+
     project_dir.mkdir(parents=True, exist_ok=True)
     (project_dir / "episodes").mkdir(exist_ok=True)
     (project_dir / "assets").mkdir(exist_ok=True)
     (project_dir / "research").mkdir(exist_ok=True)
-
-    # Load and fill project template
-    template_path = Path(_plugin_root) / "templates" / "project.md"
-    if template_path.exists():
-        template = template_path.read_text(encoding="utf-8")
-    else:
-        template = _default_project_template()
 
     readme_content = template.replace("{{title}}", title)
     readme_content = readme_content.replace("{{slug}}", slug)
@@ -344,6 +341,11 @@ def create_episode(
     if not project_dir.exists():
         return f"Project '{project_slug}' not found."
 
+    template_path = Path(_plugin_root) / "templates" / "episode.md"
+    if not template_path.exists():
+        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+    template = template_path.read_text(encoding="utf-8")
+
     episodes_dir = project_dir / "episodes"
     episodes_dir.mkdir(exist_ok=True)
 
@@ -361,13 +363,6 @@ def create_episode(
     episode_dir.mkdir(parents=True, exist_ok=True)
     (episode_dir / "scenes").mkdir(exist_ok=True)
     (episode_dir / "assets").mkdir(exist_ok=True)
-
-    # Load and fill episode template
-    template_path = Path(_plugin_root) / "templates" / "episode.md"
-    if template_path.exists():
-        template = template_path.read_text(encoding="utf-8")
-    else:
-        template = _default_episode_template()
 
     content = template.replace("{{title}}", title)
     content = content.replace("{{number}}", str(number))
@@ -412,6 +407,11 @@ def create_scene(
     if not episode_dir.exists():
         return f"Episode '{episode_slug}' not found in project '{project_slug}'."
 
+    template_path = Path(_plugin_root) / "templates" / "scene.md"
+    if not template_path.exists():
+        return f"Template not found: {template_path}. Plugin installation may be corrupt."
+    template = template_path.read_text(encoding="utf-8")
+
     scenes_dir = episode_dir / "scenes"
     scenes_dir.mkdir(exist_ok=True)
 
@@ -425,13 +425,6 @@ def create_scene(
 
     if scene_file.exists():
         return f"Scene '{scene_slug}' already exists."
-
-    # Load and fill scene template
-    template_path = Path(_plugin_root) / "templates" / "scene.md"
-    if template_path.exists():
-        template = template_path.read_text(encoding="utf-8")
-    else:
-        template = _default_scene_template()
 
     content = template.replace("{{title}}", title)
     content = content.replace("{{number}}", str(number))
@@ -1477,103 +1470,6 @@ def get_plugin_version() -> str:
             "schema_version": "1.0.0",
         }
     )
-
-
-# ===========================================================================
-# Default templates (fallback if template files don't exist)
-# ===========================================================================
-
-
-def _default_project_template() -> str:
-    return """---
-title: "{{title}}"
-slug: "{{slug}}"
-video_type: "{{video_type}}"
-status: "Concept"
-platform: "{{platform}}"
-language: "{{language}}"
-target_audience: "{{target_audience}}"
-description: "{{description}}"
-created: "{{date}}"
-updated: "{{date}}"
----
-
-# {{title}}
-
-## Overview
-
-{{description}}
-
-## Target Audience
-
-{{target_audience}}
-
-## Episodes
-
-*No episodes created yet.*
-
-## Notes
-
-"""
-
-
-def _default_episode_template() -> str:
-    return """---
-title: "{{title}}"
-number: {{number}}
-slug: "{{slug}}"
-status: "Not Started"
-duration_target: "{{duration_target}}"
-platform: "{{platform}}"
-avatar: ""
-description: "{{description}}"
----
-
-# {{title}}
-
-## Description
-
-{{description}}
-
-## Scenes
-
-*No scenes created yet.*
-
-## Script Notes
-
-## Visual Notes
-
-"""
-
-
-def _default_scene_template() -> str:
-    return """---
-title: "{{title}}"
-number: {{number}}
-status: "Outline"
-visual_type: "{{visual_type}}"
-duration: "{{duration}}"
----
-
-# {{title}}
-
-## Narration
-
-*Write the spoken text for this scene here.*
-
-## On-Screen Text
-
-*Text overlays, titles, or captions shown on screen.*
-
-## Visual Direction
-
-*Describe what the viewer sees: avatar position, background, animations, transitions.*
-
-## Assets
-
-*List required assets: screenshots, images, logos, screen recordings.*
-
-"""
 
 
 # ===========================================================================
