@@ -81,7 +81,7 @@ jobs:
 
       - name: Check required files
         run: |
-          for f in README.md LICENSE CHANGELOG.md CLAUDE.md requirements.txt; do
+          for f in README.md LICENSE.md CHANGELOG.md CLAUDE.md requirements.txt; do
             if [ ! -f "$f" ]; then
               echo "FAIL: Missing required file: $f"
               exit 1
