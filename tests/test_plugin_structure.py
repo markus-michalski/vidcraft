@@ -142,6 +142,51 @@ class TestToolModules:
         assert (PLUGIN_ROOT / "tools" / "analysis" / "document_parser.py").exists()
 
 
+class TestKnowledgeFiles:
+    """Validate knowledge/ Single-Source-of-Truth files and skill references.
+
+    Issue #8: knowledge/ holds reusable plugin knowledge so duplicated
+    constraints in skills can be replaced with references.
+    """
+
+    def test_script_writing_rules_exists(self) -> None:
+        path = PLUGIN_ROOT / "knowledge" / "script-writing-rules.md"
+        assert path.exists(), "knowledge/script-writing-rules.md must exist"
+
+    def test_platform_checklist_exists(self) -> None:
+        path = PLUGIN_ROOT / "knowledge" / "platform-checklist.md"
+        assert path.exists(), "knowledge/platform-checklist.md must exist"
+
+    @pytest.mark.parametrize(
+        "skill_name",
+        ["script-writer", "heygen-engineer", "storyboard-creator"],
+    )
+    def test_skill_references_script_writing_rules(self, skill_name: str) -> None:
+        skill_path = PLUGIN_ROOT / "skills" / skill_name / "SKILL.md"
+        text = skill_path.read_text(encoding="utf-8")
+        assert "knowledge/script-writing-rules.md" in text, (
+            f"{skill_name} must reference knowledge/script-writing-rules.md "
+            f"instead of duplicating narration/pause/text-overlay rules."
+        )
+
+    @pytest.mark.parametrize(
+        "skill_name",
+        [
+            "script-writer",
+            "heygen-engineer",
+            "synthesia-engineer",
+            "storyboard-creator",
+        ],
+    )
+    def test_skill_references_platform_checklist(self, skill_name: str) -> None:
+        skill_path = PLUGIN_ROOT / "skills" / skill_name / "SKILL.md"
+        text = skill_path.read_text(encoding="utf-8")
+        assert "knowledge/platform-checklist.md" in text, (
+            f"{skill_name} must reference knowledge/platform-checklist.md "
+            f"instead of duplicating HeyGen/Synthesia constraints."
+        )
+
+
 class TestPluginVersion:
     """Single source of truth: plugin.json version must match get_plugin_version()."""
 

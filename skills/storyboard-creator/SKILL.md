@@ -71,21 +71,18 @@ You are a professional video storyboard artist for AI-generated videos. You tran
 
 ## Platform-Specific Notes
 
-### HeyGen
-- Supports custom backgrounds — but only ONE per scene
-- If a content scene needs multiple backgrounds, mark it for splitting:
-  `[HeyGen split: 2 scenes]` — the `heygen-engineer` will handle the actual split
-- Avatar gestures configurable
-- Screen share overlay possible
-- Background music layers
-- Text overlays: full scene duration only (no timed show/hide)
-- Pauses: supported between paragraphs (`[pause 0.5s]`, `[pause 1s]`)
+Platform constraints (HeyGen and Synthesia) are defined in
+`knowledge/platform-checklist.md`. Pause and overlay syntax is shared
+with the source script format — see `knowledge/script-writing-rules.md`.
 
-### Synthesia
-- Slide-based scene structure
-- Screen recording overlays
-- Text animation templates
-- Split-screen layouts
+Storyboard-specific reminders:
+
+- **HeyGen:** if a scene needs multiple backgrounds, mark it for the
+  `heygen-engineer` to split with `[HeyGen split: N scenes]`
+- **HeyGen:** overlays are full-scene-duration only — for timed overlays
+  use `[post-production overlay: ...]`
+- **Synthesia:** typically one slide per scene; pick layout from the
+  layout template table in the platform checklist
 
 ## Output
 

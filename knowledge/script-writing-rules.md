@@ -1,0 +1,79 @@
+# Script Writing Rules — Single Source of Truth
+
+These rules apply to all narration written for AI-generated videos
+(HeyGen, Synthesia, or any other avatar platform). Skills like
+`script-writer`, `script-reviewer`, `storyboard-creator`, and
+`heygen-engineer` reference this file instead of duplicating the rules.
+
+For platform-specific constraints (character limits, background rules,
+overlay timing) see [`platform-checklist.md`](platform-checklist.md).
+
+## Narration Rules
+
+| Rule | Why |
+|------|-----|
+| Max 20 words per sentence | Avatars sound unnatural in long sentences |
+| Use active voice ("Click the button") | Direct, viewer-focused |
+| Address the viewer with "you" | Builds connection |
+| Avoid filler words: "basically", "actually", "just", "really" | Cuts run-time without losing meaning |
+| Write for spoken delivery, not for reading | Punctuation = breath, not grammar |
+
+### Pause Syntax
+
+Both HeyGen and the storyboard format use the same pause markers in
+narration text. Keep them in the script source so all downstream tools
+(`heygen-engineer`, `storyboard-creator`) can interpret them.
+
+| Marker | Meaning |
+|--------|---------|
+| `[pause 0.5s]` | Short breath between paragraphs |
+| `[pause 1s]` | Standard pause between topics |
+| Paragraph break (blank line) | Implicit ~0.5s pause |
+
+`[pause]` without a duration is allowed for legacy scripts and is
+interpreted as 2 seconds. Prefer the explicit form in new scripts.
+
+## On-Screen Text Rules
+
+| Rule | Why |
+|------|-----|
+| Max 7 words per overlay | Readable in 2-3 seconds |
+| Use for: key terms, commands, URLs, step numbers | High signal density |
+| Never duplicate the narration verbatim | Wastes the visual channel |
+| Use for emphasis, not redundancy | If both channels say the same thing, drop one |
+
+### Timed Overlays (Post-Production Marker)
+
+HeyGen does not support overlays that appear/disappear at specific
+timestamps within a scene — overlays are visible for the entire scene
+duration (see [`platform-checklist.md`](platform-checklist.md#heygen)).
+
+If you need timed overlays, mark them in the scene script for
+post-production tools (Shotcut, Kdenlive):
+
+```
+[post-production overlay: "Save the file" at 00:12-00:15]
+```
+
+The `heygen-engineer` strips these markers before sending the script
+to HeyGen and surfaces them in the post-production task list.
+
+## Visual Direction Basics
+
+These apply to every scene file, regardless of visual type. The
+`storyboard-creator` enriches them with platform-specific details.
+
+- Be specific: "Show terminal with cursor on line 5", not "Show terminal"
+- Name transitions: "Fade from avatar to screencast"
+- Mention avatar gestures when intentional: "Avatar points right to
+  highlight the sidebar"
+- Specify highlights: "Red box around the Submit button", not
+  "highlight the button"
+
+## Anti-Patterns
+
+- AI-sounding language ("In this comprehensive guide", "Let's delve
+  into") — see [`ai-language-patterns.md`](ai-language-patterns.md)
+- Wall of text narration without visual changes
+- Missing CTA at the end of the episode
+- Inconsistent tone across scenes (set tone in project README, hold to it)
