@@ -2,7 +2,7 @@
 name: video-type-creator
 description: "Create new video type documentation files for the vidcraft type library. Use when adding a new video type like 'webinar', 'case-study', etc."
 argument-hint: "<video-type-name>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

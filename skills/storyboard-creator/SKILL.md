@@ -2,7 +2,7 @@
 name: storyboard-creator
 description: "Create scene-by-scene storyboards with visual directions, transitions, and screenshot positions. Use after script is approved."
 argument-hint: "<project-slug> <episode-slug>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

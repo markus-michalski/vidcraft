@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing yet
 
 ### Changed
-- Nothing yet
+- migrate 10 opus skills from `claude-opus-4-6` to `claude-opus-4-7` (#24, phase 1)
+- update test whitelist `valid_models` to accept `claude-opus-4-7`, drop `claude-opus-4-6`
 
 ### Deprecated
 - Nothing yet
@@ -24,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - Nothing yet
+
+### Notes
+- Frontmatter-only migration. Body-hardening for 4.7 default-shifts (verbosity,
+  tool-use, multi-turn) follows in a separate PR — see #24 phase 2.
 
 ## [1.2.0] - 2026-04-25
 

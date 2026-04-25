@@ -2,7 +2,7 @@
 name: audience-researcher
 description: "Deep-dive audience analysis: personas, pain points, knowledge levels, and content preferences. Use before brief creation to ground the project in real audience needs."
 argument-hint: "<project-slug-or-topic>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

@@ -2,7 +2,7 @@
 name: brief-creator
 description: "Create a creative brief from project requirements, document analysis, or user input. The brief defines goals, audience, tone, and constraints before script writing begins."
 argument-hint: "<project-slug>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read
