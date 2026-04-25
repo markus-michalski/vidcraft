@@ -65,6 +65,16 @@ Quick reminders:
 - Pauses: `[pause 0.5s]`, `[pause 1s]`
 - Timed overlays: mark as `[post-production overlay: "text" at MM:SS-MM:SS]`
 
+### Required scene length (hard floor)
+
+Write **80–150 words of narration per scene**. Below 80 words a scene feels
+clipped on screen and the avatar runs out of speaking time before the visual
+lands; above 150 the viewer disengages. Hit this band per scene — do not
+average across the episode.
+
+If you find yourself writing fewer than 80 words because "the topic is short",
+merge the scene with the next one instead of shipping a thin scene.
+
 ## Platform Awareness
 
 Platform-specific limits (HeyGen/Synthesia character limits, background

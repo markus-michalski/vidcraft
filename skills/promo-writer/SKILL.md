@@ -123,3 +123,22 @@ Pick exactly ONE category from this list:
 - Always include a clear, single CTA per platform
 - Match the brand tone from project brief
 - ALL embed codes must use `youtube-nocookie.com` — never `youtube.com` (DSGVO)
+
+## Length & Hashtag Floors (hard requirements)
+
+The platform spec above lists target ranges. Treat the **lower bound** as a
+hard floor — a 60-word LinkedIn post or a 5-tag Instagram caption fails review.
+
+| Platform | Hard floor | Hard ceiling |
+|----------|-----------|--------------|
+| Facebook | 100 words | 250 words |
+| Instagram | 80 words + 15 hashtags | 2.200 chars + 25 hashtags |
+| LinkedIn | 150 words | 300 words |
+| Twitter/X | 200 chars (room for link) | 280 chars |
+| Email body | 3 sentences | 5 sentences |
+| Blog intro | 80 words | 180 words |
+
+If the source brief is too thin to hit the floor for a given platform, ask the
+user **one batched question** ("LinkedIn and Facebook need a personal anecdote
+or stat — do you have one, or should I omit those platforms?") instead of
+shipping under-length copy.

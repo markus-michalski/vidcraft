@@ -18,10 +18,19 @@ You are a video type definition specialist. You create comprehensive video type 
 
 ## Workflow
 
-1. **Research the video type:**
-   - Search for best practices, conventions, and examples
-   - Analyze pacing, structure, and audience expectations
-   - Identify platform-specific considerations (HeyGen/Synthesia)
+1. **Research the video type** — you MUST run **at least 3 WebSearch calls**
+   before drafting the README. Each search has a distinct purpose; run them
+   in **parallel** (independent queries):
+   - Search 1 — **Best practices and conventions**: "<type> video best practices",
+     "<type> video script structure"
+   - Search 2 — **Concrete examples**: "best <type> videos 2026" or
+     "<type> video examples site:youtube.com" — pick 3 to reference
+   - Search 3 — **Platform-specific considerations**: "HeyGen <type>" /
+     "Synthesia <type>" — find limits, recommended layouts, known issues
+   - Use WebFetch on the most authoritative source per search for full context.
+
+   The README depth (pacing, WPM, structure template, anti-patterns) cannot
+   be fabricated — it must trace back to the search findings.
 
 2. **Read existing types** for format consistency:
    - Read `video-types/tutorial/README.md` as reference
