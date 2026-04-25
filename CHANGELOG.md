@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - researcher: ≥3 parallel WebSearches + ≥2 sources per finding + depth floor
   - doc-analyzer: ordered MCP tool execution (3+4+5 in parallel)
   - video-type-creator: ≥3 parallel WebSearches with distinct purposes
+- refactor `project-conceptualizer` from 5-phase multi-turn Q&A to one
+  batched discovery message + single concept-writing pass (#24, phase 2b,
+  Pattern C). Targeted clarification rounds only when the user explicitly
+  defers an item.
+- document effort-level decision in `CLAUDE.md`: accept the 4.7 platform
+  default `xhigh` globally, no per-skill pinning unless overridden (#24,
+  phase 2b, Pattern D)
 
 ### Deprecated
 - Nothing yet
@@ -37,11 +44,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing yet
 
 ### Notes
-- Phase 1 was frontmatter-only. Phase 2a addresses verbosity (Pattern A) and
-  tool-use frequency (Pattern B) per the 4.7 migration guide.
-- The multi-turn discovery refactor for `project-conceptualizer` (Pattern C)
-  and the effort-level decision (Pattern D) follow in a separate PR — see
-  #24 phase 2b.
+- The 4.7 migration is now feature-complete (#24 phases 1, 2a, 2b shipped).
+  Validation against fresh sample projects happens organically on the next
+  real video project — no separate validation pass.
 
 ## [1.2.0] - 2026-04-25
 
