@@ -10,9 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - inline Model Strategy guideline table in CLAUDE.md (#4)
 - Model Strategy reference in video-type-creator skill (#4)
+- `knowledge/script-writing-rules.md` — narration rules, pause syntax, on-screen text rules, post-production overlay markers (#8)
+- `knowledge/platform-checklist.md` — HeyGen and Synthesia constraints (backgrounds, character limits, pause support, layouts) (#8)
 
 ### Changed
 - consolidate avatar selection criteria — `heygen-engineer` references `avatar-selector` as single source of truth; full table (5 categories, age range) lives only in `avatar-selector` (#6)
+- `script-writer`, `heygen-engineer`, `synthesia-engineer`, `storyboard-creator` reference `knowledge/script-writing-rules.md` and `knowledge/platform-checklist.md` instead of duplicating narration rules and platform constraints (#8)
 
 ### Deprecated
 - Nothing yet
