@@ -1,5 +1,8 @@
 # VidCraft
 
+![GitHub Tag](https://img.shields.io/github/v/tag/markus-michalski/vidcraft?sort=semver&style=for-the-badge&logo=youtube)
+![License: PolyForm NC 1.0.0](https://img.shields.io/badge/license-PolyForm%20NC%201.0.0-red.svg?style=for-the-badge)
+
 AI Video Production Plugin for [Claude Code](https://claude.com/claude-code) — Create professional videos with HeyGen & Synthesia.
 
 ## What it does
@@ -130,4 +133,4 @@ defaults:
 
 ## License
 
-MIT
+[PolyForm Noncommercial License 1.0.0](LICENSE.md) — source-available, personal and non-commercial use only. Not OSI Open Source. Commercial use requires explicit permission; contact the maintainer.

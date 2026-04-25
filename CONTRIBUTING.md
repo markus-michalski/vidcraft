@@ -1,69 +1,179 @@
 # Contributing to VidCraft
 
-## Development Setup
+Thank you for your interest. This document explains how to contribute and what to expect.
+
+## Governance Model
+
+VidCraft follows a **Benevolent Dictator For Life (BDFL)** model. [Markus Michalski](https://github.com/markus-michalski) is the sole maintainer with final say on all changes, direction, and releases. Contributions are welcome within that structure.
+
+## License & CLA
+
+**Important — read this before opening a PR:**
+
+1. This project is licensed under the **[PolyForm Noncommercial License 1.0.0](LICENSE.md)**. It is source-available but **not** OSI Open Source. Commercial use is prohibited.
+2. All contributors must sign the **[Contributor License Agreement (CLA)](CLA.md)** before their PR can be merged. The [cla-assistant.io](https://cla-assistant.io/) bot will comment on your PR with a one-click signing link.
+
+Why a CLA? The CLA grants the maintainer the rights needed to keep the project viable (relicensing flexibility, legal protection). Without it, your contribution cannot be accepted.
+
+## Branch Model
+
+Single-branch model:
+
+- **`main`** — the only long-lived branch. Always in a releasable state.
+- **Feature branches** — short-lived, branched from `main`, merged via PR.
+
+Branch naming:
+
+- `feat/description` — new features
+- `fix/description` — bug fixes
+- `docs/description` — documentation
+- `chore/description` — maintenance
+- `refactor/description` — refactoring
+
+## Development Workflow
+
+### 1. Fork and Clone
 
 ```bash
-git clone https://github.com/markus-michalski/vidcraft.git
+git clone https://github.com/YOUR-USERNAME/vidcraft.git
 cd vidcraft
-
-# Install as Claude Code plugin
-claude plugin install ./vidcraft
-
-# Run first-time setup (in Claude Code)
-/vidcraft:setup
+git remote add upstream https://github.com/markus-michalski/vidcraft.git
 ```
 
-## Architecture
+### 2. Create a Feature Branch
 
-VidCraft is a Claude Code plugin with an MCP server and specialized skills:
-
-```
-skills/              # Claude Code skills (one .md per skill)
-mcp-server/          # Python MCP server
-  src/               # Server source code
-video-types/         # Video type definitions
-config/              # Configuration templates
+```bash
+git checkout main
+git pull upstream main
+git checkout -b feat/your-feature-name
 ```
 
-### Adding a New Skill
+### 3. Set Up Local Development
 
-1. Create `skills/your-skill/SKILL.md` with frontmatter (name, description, argument-hint, user-invocable)
-2. Skills must be flat — no subdirectories inside a skill folder
-3. Add a routing entry in `CLAUDE.md`
+```bash
+# Create venv for the MCP server
+python3 -m venv ~/.vidcraft/venv
+~/.vidcraft/venv/bin/pip install -r requirements.txt
 
-### Adding a New Video Type
+# Install dev dependencies
+~/.vidcraft/venv/bin/pip install pytest ruff
+```
 
-Use `/vidcraft:video-type-creator` or manually create `video-types/<type>/README.md` following the existing type structure.
+### 4. Make Your Changes
+
+Follow existing code patterns. For each change type:
+
+- **New skill**: Create `skills/your-skill/SKILL.md` with frontmatter (`name`, `description`, `argument-hint` if applicable, `user-invocable: true`). Add routing entry to `CLAUDE.md`. Add entry to `skills/help/SKILL.md`.
+- **New MCP tool**: Add to `servers/vidcraft-server/`. Export via the server's tool registry. Document in `CLAUDE.md` under "MCP Server" section.
+- **New template**: Add to `templates/`. Reference from the relevant skill.
+- **New video type**: Add to `video-types/{type}/README.md`. Update CLAUDE.md video type list.
+- **Knowledge reference**: Add to `knowledge/`. Update skill loading instructions in CLAUDE.md.
+
+### 5. Test Locally
+
+```bash
+# Run all tests
+~/.vidcraft/venv/bin/python -m pytest
+
+# Lint
+~/.vidcraft/venv/bin/python -m ruff check .
+
+# Format check
+~/.vidcraft/venv/bin/python -m ruff format --check .
+```
+
+### 6. Commit with Conventional Commits
+
+Format: `<type>(<scope>): <subject>`
+
+| Type | Version Bump |
+|------|--------------|
+| `feat:` | MINOR |
+| `fix:` | PATCH |
+| `feat!:` or `BREAKING CHANGE:` | MAJOR |
+| `docs:`, `chore:`, `refactor:`, `test:` | None |
+
+Examples:
+
+```
+feat(script-writer): add multi-language scene mode
+fix(mcp): handle missing video-type README gracefully
+docs(contributing): clarify CLA process
+chore(deps): bump ruff to 0.8.0
+```
+
+When working with Claude Code, include the co-author line:
+
+```
+Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+```
+
+### 7. Update the Changelog
+
+Add an entry under `[Unreleased]` in `CHANGELOG.md`:
+
+```markdown
+## [Unreleased]
+
+### Added
+- feature description (#issue-number)
+
+### Fixed
+- bug description (#issue-number)
+```
+
+### 8. Push and Open a PR
+
+```bash
+git push -u origin feat/your-feature-name
+```
+
+Open a PR via the GitHub UI or:
+
+```bash
+gh pr create --base main
+```
+
+The PR template will guide you through the checklist. The CLA bot will comment with a signing link on first contribution.
+
+## PR Review Process
+
+1. **Automated checks** must pass (pytest, ruff, JSON validation, CLA signed)
+2. **Maintainer review** — @markus-michalski reviews every PR personally. Expect feedback cycles.
+3. **Squash merge** — all PRs are squash-merged into `main` with a Conventional Commit message
+4. **Release** — the maintainer batches features into releases and cuts version tags
+
+## Release Process (maintainer only)
+
+1. Update `CHANGELOG.md`: move `[Unreleased]` entries to `[X.Y.Z] - YYYY-MM-DD`
+2. Bump version in `.claude-plugin/plugin.json`
+3. Commit: `chore: release X.Y.Z`
+4. Tag: `git tag -a vX.Y.Z -m "Release X.Y.Z" && git push --tags`
+5. Create GitHub Release from the tag
 
 ## Code Style
 
-- **Python:** PEP 8, type hints, English comments
-- **Markdown:** YAML frontmatter always present in project/episode/scene files
-- **Skills:** Flat structure, only `name`/`description`/`argument-hint`/`user-invocable` as frontmatter
+- **Python**: PEP 8, type hints, English comments. Ruff is the formatter and linter.
+- **Markdown**: English for reference docs, skill docs, templates. User-facing skill output may be German per user configuration.
+- **YAML frontmatter**: Required in all SKILL.md, project README.md, episode README.md, scene files.
+- **No emojis** in code comments, skill files, or internal documentation (UTF8MB4 issues in integrations).
 
-## Testing
+## What Does NOT Belong in a PR
 
-```bash
-cd mcp-server
-pip install -r requirements.txt
-# Run MCP server locally for testing
-python -m src.server
-```
+- Generated video projects or scripts (belongs in user's private repos)
+- HeyGen/Synthesia API keys, Anthropic tokens, or any secrets (see [SECURITY.md](.github/SECURITY.md))
+- Commented-out code blocks without justification
+- Unrelated refactoring bundled with a feature change
+- Documentation for features that haven't shipped yet
+- Changes to `LICENSE.md`, `CLA.md`, or `.github/CODEOWNERS` (maintainer-only)
 
-## Commits
+## Questions
 
-Use [Conventional Commits](https://www.conventionalcommits.org/):
+- **Usage questions** → [Documentation](https://faq.markus-michalski.net/en/plugins/vidcraft)
+- **Feature ideas** → Open a Feature Request issue
+- **Bug reports** → Open a Bug Report issue
+- **Security issues** → [Private Vulnerability Reporting](https://github.com/markus-michalski/vidcraft/security/advisories/new)
 
-```
-feat: add new skill or video type
-fix: correct a bug
-docs: update documentation
-refactor: restructure code
-```
+## Code of Conduct
 
-## Pull Requests
-
-1. Create a feature branch from `main`
-2. Make your changes
-3. Ensure the MCP server starts without errors
-4. Open a PR with a clear description
+Be civil. Disagreements about approach are welcome and encouraged; personal attacks, harassment, or bad-faith behavior are not. The maintainer reserves the right to close issues or block users that cross that line, without explanation.
