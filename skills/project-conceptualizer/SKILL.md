@@ -2,7 +2,7 @@
 name: project-conceptualizer
 description: "Multi-phase concept development for video projects. Defines narrative arc, episode structure, visual identity, and production approach through guided discovery."
 argument-hint: "<project-slug>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

@@ -2,7 +2,7 @@
 name: doc-analyzer
 description: "Analyze existing documentation (PDF, DOCX, Markdown) and extract structured content for video production. Suggests video structure, key points, and scene breakdown."
 argument-hint: "<file-path> [video-type]"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

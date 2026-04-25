@@ -2,7 +2,7 @@
 name: researcher
 description: "Research topics for video content: competitor videos, best practices, source material, and technical accuracy. Use when a project needs factual grounding."
 argument-hint: "<topic-or-project-slug>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

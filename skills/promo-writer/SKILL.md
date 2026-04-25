@@ -2,7 +2,7 @@
 name: promo-writer
 description: "Write platform-specific promotional text for video releases: YouTube descriptions, social media posts, email copy, and blog excerpts."
 argument-hint: "<project-slug> [platform]"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read

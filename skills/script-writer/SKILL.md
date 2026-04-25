@@ -2,7 +2,7 @@
 name: script-writer
 description: "Write video scripts with narration, on-screen text, and visual cues optimized for the video type. Use when writing new scripts or revising existing ones."
 argument-hint: "<project-slug> <episode-slug>"
-model: claude-opus-4-6
+model: claude-opus-4-7
 user-invocable: true
 allowed-tools:
   - Read
