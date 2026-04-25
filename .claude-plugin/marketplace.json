@@ -7,7 +7,7 @@
     {
       "name": "vidcraft",
       "description": "AI video production pipeline: concept, script, storyboard, generation (HeyGen/Synthesia), review, and publishing",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "./"
     }
   ]

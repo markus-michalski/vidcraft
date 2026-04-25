@@ -8,40 +8,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- inline Model Strategy guideline table in CLAUDE.md (#4)
-- Model Strategy reference in video-type-creator skill (#4)
-- `knowledge/script-writing-rules.md` — narration rules, pause syntax, on-screen text rules, post-production overlay markers (#8)
-- `knowledge/platform-checklist.md` — HeyGen and Synthesia constraints (backgrounds, character limits, pause support, layouts) (#8)
-- `LICENSE.md` (PolyForm Noncommercial 1.0.0) — replaces previous MIT license (#15)
-- `CLA.md` — Apache ICLA v2.2 adapted for PolyForm NC, signed via cla-assistant.io (#15)
-- `CONTRIBUTING.md` rewrite — BDFL governance model, single-branch workflow, CLA gate, release process (#15)
-- `.github/CODEOWNERS` — maintainer review required on all paths (#15)
-- `.github/SECURITY.md` — private vulnerability reporting, AI-dev safeguards, secret-handling policy (#15)
-- `.github/dependabot.yml` — weekly pip + GitHub Actions updates targeted at `main` (#15)
-- `.github/pull_request_template.md` — CLA gate + release checklist (#15)
-- `.github/ISSUE_TEMPLATE/` — bug, feature, config (blank issues disabled, docs link, security advisory link) (#15)
-- README license badge + landing-page rewrite that delegates full documentation to the wiki (#15)
+- Nothing yet
 
 ### Changed
-- consolidate avatar selection criteria — `heygen-engineer` references `avatar-selector` as single source of truth; full table (5 categories, age range) lives only in `avatar-selector` (#6)
-- `script-writer`, `heygen-engineer`, `synthesia-engineer`, `storyboard-creator` reference `knowledge/script-writing-rules.md` and `knowledge/platform-checklist.md` instead of duplicating narration rules and platform constraints (#8)
-- **License**: MIT → PolyForm Noncommercial 1.0.0. Source-available but non-OSI. Commercial use now requires explicit permission from the maintainer. Existing clones under MIT keep their MIT rights for that snapshot; new clones fall under PolyForm NC. (#15)
-- `.claude-plugin/plugin.json` license field now references `LICENSE.md` (#15)
-- README reduced to landing-page scope; full per-skill / per-video-type documentation lives at https://faq.markus-michalski.net/en/plugins/vidcraft (#15)
+- Nothing yet
 
 ### Deprecated
 - Nothing yet
 
 ### Removed
-- reference/model-strategy.md (drift-prone, unreferenced, 15 of 33 skills listed; YAML frontmatter remains single source of truth) (#4)
-- `LICENSE` (MIT) — replaced by `LICENSE.md` (PolyForm NC) (#15)
+- Nothing yet
 
 ### Fixed
 - Nothing yet
 
 ### Security
-- Private Vulnerability Reporting policy added (`.github/SECURITY.md`) (#15)
-- Dependabot now opens grouped weekly PRs for pip + GitHub Actions updates (#15)
+- Nothing yet
+
+## [1.2.0] - 2026-04-25
+
+### Added
+- add Facebook + Instagram to promo-writer, default all platforms (#722070)
+
+### Changed
+- bump the pip-all group with 6 updates (#22)
+- bump the actions-all group with 2 updates (#21)
+- update validate-structure to check LICENSE.md
+- reduce README to landing-page scope, document governance migration
+- add governance hardening (PolyForm NC license + CLA + templates)
+- add MCP tool layer integration tests (#9)
+- extract script-writing rules and platform constraints to knowledge/ (#8)
+- consolidate status-to-next-skill matrix (#7)
+- consolidate duplicated avatar selection criteria (#6)
+- extract AI language patterns to knowledge/ (#5)
+- remove model-strategy.md, inline guideline in CLAUDE.md (#4)
+- apply ruff format to server.py
+- remove dead-code default templates from server.py (#3)
+
+### Fixed
+- consolidate format tools into platform-specific variants (#2)
+- read plugin version dynamically from plugin.json (#1)
 
 ## [1.1.0] - 2026-04-01
 
@@ -81,3 +87,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.0
 [1.0.1]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.1
 [1.1.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.1.0
+[1.2.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.2.0
