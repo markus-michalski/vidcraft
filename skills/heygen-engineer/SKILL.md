@@ -58,14 +58,21 @@ Each scene in HeyGen needs:
 - **Voice** selection
 - **Speed** (0.8x - 1.2x)
 
-## Avatar Selection Guide
+## Avatar Selection
 
-| Audience | Recommended Style |
-|----------|-------------------|
-| Enterprise B2B | Professional, suit, neutral background |
-| Developer/Tech | Casual, hoodie/polo, modern office |
-| Consumer B2C | Friendly, approachable, bright background |
-| Education | Patient, clear speaking, clean background |
+For avatar recommendations based on audience, use `/vidcraft:avatar-selector` first.
+
+Quick reference (full criteria in `avatar-selector`):
+
+| Audience | Style |
+|----------|-------|
+| Enterprise B2B | Professional, suit, neutral |
+| Developer/Tech | Casual, modern office |
+| Consumer B2C | Friendly, bright |
+| Education | Patient, clean |
+| Internal | Warm, branded |
+
+After avatar is selected, document in episode README.
 
 ## Character Limit Optimization
 

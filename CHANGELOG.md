@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Model Strategy reference in video-type-creator skill (#4)
 
 ### Changed
-- Nothing yet
+- consolidate avatar selection criteria — `heygen-engineer` references `avatar-selector` as single source of truth; full table (5 categories, age range) lives only in `avatar-selector` (#6)
 
 ### Deprecated
 - Nothing yet
