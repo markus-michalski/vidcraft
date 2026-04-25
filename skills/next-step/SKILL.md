@@ -20,21 +20,12 @@ You are the VidCraft workflow router. Analyze the current project state and reco
 
 1. Load session → get active project
 2. Load project data → analyze status of all episodes
-3. Apply routing rules (below)
-4. Return ONE specific recommendation with the skill command
+3. Read `knowledge/status-workflow.md` — the single source of truth for status mappings and priority routing
+4. Apply the **Priority Order** section to pick the most impactful action
+5. Resolve the chosen status against the **Episode Status** table to get the exact skill command
+6. Return ONE specific recommendation
 
-## Routing Rules (Priority Order)
-
-1. **No projects exist** → `/vidcraft:new-project`
-2. **Project is Concept, no brief** → `/vidcraft:project-conceptualizer`
-3. **Episodes exist with Script Draft** → `/vidcraft:script-reviewer [episode]`
-4. **Episodes exist with Not Started** → `/vidcraft:script-writer [episode]`
-5. **All scripts approved, no storyboard** → `/vidcraft:storyboard-creator [episode]`
-6. **Storyboard done, assets missing** → `/vidcraft:asset-collector [episode]`
-7. **Assets ready** → `/vidcraft:pre-generation-check [episode]`
-8. **Pre-gen passed** → "Generate in HeyGen/Synthesia" (manual step)
-9. **Generated, not reviewed** → `/vidcraft:video-reviewer [episode]`
-10. **All episodes Final** → `/vidcraft:release-director [project]`
+Do not maintain a duplicate routing table here — `knowledge/status-workflow.md` owns it. If a routing rule needs to change, edit that file.
 
 ## Output Format
 

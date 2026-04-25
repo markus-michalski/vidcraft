@@ -27,16 +27,9 @@ You are the VidCraft project resumption specialist.
 
 ## Status-Based Recommendations
 
-| Project Status | Recommendation |
-|---------------|----------------|
-| Concept | Run `/vidcraft:project-conceptualizer` |
-| Brief Complete | Run `/vidcraft:script-writer` for first episode |
-| Script Draft | Run `/vidcraft:script-reviewer` |
-| Script Approved | Run `/vidcraft:storyboard-creator` |
-| Storyboard Done | Run `/vidcraft:screenshot-planner` |
-| Assets Ready | Run `/vidcraft:pre-generation-check` |
-| Generated | Run `/vidcraft:video-reviewer` |
-| Reviewed | Run `/vidcraft:release-director` |
+Read `knowledge/status-workflow.md` and apply the **Project Status** table to map the project's current status to the next skill. That file is the single source of truth — do not maintain a duplicate table here.
+
+When the same status has multiple rows (e.g. `Brief Complete`), use the Notes column to pick the right one for this project.
 
 ## Output Format
 
