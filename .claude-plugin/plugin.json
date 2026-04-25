@@ -7,7 +7,7 @@
   },
   "repository": "https://github.com/markus-michalski/vidcraft",
   "homepage": "https://github.com/markus-michalski/vidcraft#readme",
-  "license": "MIT",
+  "license": "SEE LICENSE.md",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "keywords": [

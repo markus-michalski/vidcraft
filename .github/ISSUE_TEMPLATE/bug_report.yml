@@ -1,0 +1,154 @@
+name: Bug Report
+description: Report something that isn't working correctly
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue. Fill out the sections below so this can be reproduced and fixed.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: What part of the plugin is affected?
+      options:
+        - Skill (slash command)
+        - MCP Server / MCP Tool
+        - Template (project / episode / scene)
+        - Hook (validation, pre-commit)
+        - Python Tool (state, analysis, export)
+        - Video Type System
+        - Reference Documentation (knowledge / video-types)
+        - CLAUDE.md Instructions
+        - Configuration / Setup
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill? (if applicable)
+      description: If this involves a specific skill, which one?
+      options:
+        - /vidcraft:new-project
+        - /vidcraft:resume
+        - /vidcraft:next-step
+        - /vidcraft:project-dashboard
+        - /vidcraft:project-conceptualizer
+        - /vidcraft:brief-creator
+        - /vidcraft:doc-analyzer
+        - /vidcraft:researcher
+        - /vidcraft:audience-researcher
+        - /vidcraft:script-writer
+        - /vidcraft:script-reviewer
+        - /vidcraft:storyboard-creator
+        - /vidcraft:screenshot-planner
+        - /vidcraft:asset-collector
+        - /vidcraft:shot-list-creator
+        - /vidcraft:avatar-selector
+        - /vidcraft:pre-generation-check
+        - /vidcraft:heygen-engineer
+        - /vidcraft:synthesia-engineer
+        - /vidcraft:video-reviewer
+        - /vidcraft:brand-checker
+        - /vidcraft:accessibility-checker
+        - /vidcraft:voice-checker
+        - /vidcraft:timing-validator
+        - /vidcraft:subtitle-generator
+        - /vidcraft:thumbnail-director
+        - /vidcraft:release-director
+        - /vidcraft:promo-writer
+        - /vidcraft:video-type-creator
+        - /vidcraft:help
+        - /vidcraft:setup
+        - /vidcraft:configure
+        - /vidcraft:session-start
+        - Other (specify in description)
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Clear description of the issue
+      placeholder: The script-writer ignored the video-type README and produced output exceeding the duration cap...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened?
+      placeholder: script-writer should have respected the duration constraint from the video-type README.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can this be reproduced?
+      placeholder: |
+        1. Create a new project with /vidcraft:new-project
+        2. Choose video type "explainer" (60-120s cap)
+        3. Run /vidcraft:script-writer
+        4. Observe duration overrun
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue type
+      description: What kind of problem is this?
+      options:
+        - Claude ignored instructions in CLAUDE.md
+        - Skill instructions are unclear or wrong
+        - Template is missing fields or structured incorrectly
+        - MCP tool crashes or returns wrong data
+        - Python tool script crashes or produces wrong output
+        - Hook misbehaves (validation, pre-commit)
+        - Documentation is incorrect or outdated
+        - Platform formatting (HeyGen / Synthesia) inaccurate
+        - Configuration doesn't load or resolve paths
+    validations:
+      required: true
+
+  - type: input
+    id: claude-model
+    attributes:
+      label: Claude model
+      description: Which Claude model were you using?
+      placeholder: claude-opus-4-7
+    validations:
+      required: false
+
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      description: Version from `.claude-plugin/plugin.json` or `git rev-parse --short HEAD`
+      placeholder: 1.1.0 or abc1234
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or conversation excerpts
+      description: Paste any error messages or relevant Claude conversation
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other context, screenshots, or files that might help
+    validations:
+      required: false

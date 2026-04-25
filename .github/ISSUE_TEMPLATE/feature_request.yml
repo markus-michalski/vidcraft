@@ -1,0 +1,116 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. This helps make the plugin better for everyone.
+
+        Remember: vidcraft is released under the **PolyForm Noncommercial License 1.0.0**. Proposals must be compatible with non-commercial use cases.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What type of enhancement is this?
+      options:
+        - New Skill (slash command)
+        - Skill Enhancement
+        - New MCP Tool
+        - MCP Tool Enhancement
+        - New Template
+        - Template Enhancement
+        - Workflow Improvement (phases, status, gates)
+        - Video Type System
+        - Platform Engineer (HeyGen / Synthesia / new platform)
+        - Reference Documentation
+        - Export / Subtitles / Promo
+        - Hook Behavior
+        - Configuration / Setup
+    validations:
+      required: true
+
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which skill? (if enhancing existing)
+      description: If this enhances a specific skill, which one?
+      options:
+        - /vidcraft:new-project
+        - /vidcraft:project-conceptualizer
+        - /vidcraft:brief-creator
+        - /vidcraft:script-writer
+        - /vidcraft:script-reviewer
+        - /vidcraft:storyboard-creator
+        - /vidcraft:screenshot-planner
+        - /vidcraft:asset-collector
+        - /vidcraft:shot-list-creator
+        - /vidcraft:avatar-selector
+        - /vidcraft:pre-generation-check
+        - /vidcraft:heygen-engineer
+        - /vidcraft:synthesia-engineer
+        - /vidcraft:video-reviewer
+        - /vidcraft:brand-checker
+        - /vidcraft:accessibility-checker
+        - /vidcraft:voice-checker
+        - /vidcraft:timing-validator
+        - /vidcraft:subtitle-generator
+        - /vidcraft:thumbnail-director
+        - /vidcraft:release-director
+        - /vidcraft:promo-writer
+        - /vidcraft:video-type-creator
+        - /vidcraft:doc-analyzer
+        - /vidcraft:researcher
+        - /vidcraft:audience-researcher
+        - N/A — this is for a new skill
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What problem does this solve? Why do you need it?
+      placeholder: |
+        When generating multi-language tutorials I want a single source script that produces both DE and EN HeyGen scripts so I don't drift between languages.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would this work?
+      placeholder: |
+        Add a multilang flag to script-writer that emits one master script with paired narration blocks per language; heygen-engineer consumes both in one pass.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Tried other approaches? Why don't they work?
+      placeholder: Currently I duplicate the project per language, which leads to scene-numbering drift.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Are you willing to help implement this?
+      options:
+        - label: I'd be willing to submit a PR for this feature (requires signing the CLA)
+        - label: I can help test if someone else implements it
+        - label: I can provide more detailed requirements if needed
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Examples, mockups, related issues, or anything else
+    validations:
+      required: false

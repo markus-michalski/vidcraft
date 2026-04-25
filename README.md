@@ -1,133 +1,58 @@
 # VidCraft
 
-AI Video Production Plugin for [Claude Code](https://claude.com/claude-code) — Create professional videos with HeyGen & Synthesia.
+![GitHub Tag](https://img.shields.io/github/v/tag/markus-michalski/vidcraft?sort=semver&style=for-the-badge&logo=youtube)
+![License: PolyForm NC 1.0.0](https://img.shields.io/badge/license-PolyForm%20NC%201.0.0-red.svg?style=for-the-badge)
 
-## What it does
+AI Video Production Plugin for Claude Code. 33 specialized skills, dual-platform formatting (HeyGen & Synthesia), 12 video types, quality gates — from concept to published video.
 
-VidCraft guides you through the entire video production pipeline:
+**📖 Full documentation:** [faq.markus-michalski.net/en/plugins/vidcraft](https://faq.markus-michalski.net/en/plugins/vidcraft)
 
-**Concept** → **Script** → **Review** → **Storyboard** → **Assets** → **Generate** → **Publish**
-
-It provides specialized AI agents for each phase, quality gates before generation, and platform-specific formatting for HeyGen and Synthesia.
-
-## Features
-
-- **15 specialized skills** for script writing, storyboarding, platform engineering, and more
-- **22 MCP tools** for project management, script analysis, quality gates, and ideas
-- **3 video types** out of the box: Tutorial, Installation Guide, Product Demo
-- **On-demand type creation** — create new video types with `/vidcraft:video-type-creator`
-- **14-point script quality checklist** with automated checks
-- **Pre-generation gates** that block until content is ready
-- **Dual platform support** — HeyGen and Synthesia formatting from day one
-
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/markus-michalski/vidcraft.git
-
-# Install as Claude Code plugin
-claude plugin install ./vidcraft
-
-# Run first-time setup
-# In Claude Code:
-/vidcraft:setup
-```
+The documentation covers every skill in detail, the complete production pipeline, all video types, configuration, templates, and troubleshooting. Start there.
 
 ## Quick Start
 
-```
-/vidcraft:new-project "OXID Gallery Tutorial" tutorial
-/vidcraft:script-writer oxid-gallery-tutorial 01-installation
-/vidcraft:script-reviewer oxid-gallery-tutorial 01-installation
-/vidcraft:storyboard-creator oxid-gallery-tutorial 01-installation
-/vidcraft:pre-generation-check oxid-gallery-tutorial 01-installation
-/vidcraft:heygen-engineer oxid-gallery-tutorial 01-installation
-```
+```bash
+# 1. Install the plugin
+claude plugin add vidcraft
 
-## Skills
+# 2. First-time setup
+/vidcraft:setup
 
-### Core
-| Skill | Description |
-|-------|-------------|
-| `new-project` | Create a new video project with structure |
-| `session-start` | Initialize session, verify setup |
-| `resume` | Continue working on a project |
-| `next-step` | Get recommended next action |
-| `project-dashboard` | Show progress overview |
+# 3. Create a new video project
+/vidcraft:new-project
 
-### Writing
-| Skill | Description |
-|-------|-------------|
-| `script-writer` | Write scripts with narration + visual cues |
-| `script-reviewer` | 14-point quality checklist review |
-
-### Visual
-| Skill | Description |
-|-------|-------------|
-| `storyboard-creator` | Scene-by-scene storyboard with visuals |
-
-### Production
-| Skill | Description |
-|-------|-------------|
-| `heygen-engineer` | Format for HeyGen generation |
-| `synthesia-engineer` | Format for Synthesia generation |
-| `pre-generation-check` | Quality gates before generation |
-
-### Utility
-| Skill | Description |
-|-------|-------------|
-| `video-type-creator` | Create new video type definitions |
-| `help` | Show available skills and workflows |
-| `configure` | Set up configuration |
-| `setup` | First-time setup |
-
-## Video Types
-
-| Type | Duration | Use Case |
-|------|----------|----------|
-| **tutorial** | 3-15 min | Step-by-step software instructions |
-| **installation-guide** | 2-8 min | Software/plugin installation |
-| **product-demo** | 2-5 min | Feature showcase and benefits |
-
-Create more with `/vidcraft:video-type-creator`.
-
-## Project Structure
-
-```
-~/video-projects/projects/{slug}/
-├── README.md              # Project metadata
-├── episodes/
-│   └── 01-getting-started/
-│       ├── README.md      # Episode metadata
-│       ├── scenes/
-│       │   ├── 01-intro.md
-│       │   └── 02-step-1.md
-│       └── assets/
-├── assets/
-└── research/
-```
-
-## Configuration
-
-Config lives at `~/.vidcraft/config.yaml`:
-
-```yaml
-paths:
-  content_root: "~/video-projects"
-  video_root: "~/video-projects/videos"
-  assets_root: "~/video-projects/assets"
-defaults:
-  language: ["de", "en"]   # single or list for multi-language
-  wpm: 140
-  platform: "heygen"
+# 4. See all available commands
+/vidcraft:help
 ```
 
 ## Requirements
 
+- Claude Code CLI
 - Python 3.10+
-- Claude Code 1.0+
+- HeyGen or Synthesia account (for video generation)
+- Whisper (optional, for subtitle generation)
+
+## Architecture
+
+```
+vidcraft/
+├── skills/       # 33 specialized skills (SKILL.md files)
+├── servers/      # FastMCP server (vidcraft-mcp)
+├── tools/        # Python backend (state, parsers, indexer, format)
+├── video-types/  # 12 video type definitions (tutorial, explainer, etc.)
+├── knowledge/    # Script-writing rules, platform constraints
+├── reference/    # Reference documentation
+├── templates/    # Markdown scaffolds for projects/episodes/scenes
+├── hooks/        # Validation hooks
+└── tests/        # pytest suite
+```
+
+## Contributing
+
+Contributions are welcome under a **Benevolent Dictator For Life (BDFL)** governance model. All PRs require signing the [CLA](CLA.md) (automated via [cla-assistant.io](https://cla-assistant.io/)).
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR. Bug reports and feature requests: use the [issue templates](https://github.com/markus-michalski/vidcraft/issues/new/choose). Security issues: [Private Vulnerability Reporting](https://github.com/markus-michalski/vidcraft/security/advisories/new).
 
 ## License
 
-MIT
+[PolyForm Noncommercial License 1.0.0](LICENSE.md) — source-available, personal and non-commercial use only. Not OSI Open Source. Commercial use requires explicit permission; contact the maintainer.
