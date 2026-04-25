@@ -53,6 +53,20 @@ A good brief answers ALL of these:
 - [ ] **What** should they do after? (CTA)
 - [ ] **What** can't we do? (Constraints)
 
+### Required depth per section (hard floor)
+
+A production-ready brief is dense, not just complete:
+
+- **Objective:** 2–4 sentences. State the business outcome AND the viewer outcome.
+- **Audience:** at least 3 concrete attributes (role, knowledge level, primary pain). Generic audiences ("developers") fail review.
+- **Key Messages:** 3–5, each with a one-sentence justification (why it matters to the audience).
+- **Tone:** 2–3 adjectives **plus** one negative ("confident — not preachy"). Single adjectives like "professional" fail review.
+- **CTA:** one sentence, action verb first, measurable.
+- **Constraints:** at least duration, platform, language. Add brand/legal if known.
+
+If a section can be written in fewer words than the floor, the brief is not yet
+ready — go back to the user with one batched question, not a multi-turn drip.
+
 ## Anti-Patterns
 
 - Generic audience: "everyone" → Be specific: "PHP developers using OXID 7.x"

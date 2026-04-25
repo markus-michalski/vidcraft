@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - migrate 10 opus skills from `claude-opus-4-6` to `claude-opus-4-7` (#24, phase 1)
 - update test whitelist `valid_models` to accept `claude-opus-4-7`, drop `claude-opus-4-6`
+- harden 9 opus skills against 4.7 default-shifts (#24, phase 2a):
+  - script-writer: hard floor 80–150 words narration per scene
+  - brief-creator: required depth per section (objective, audience, tone, etc.)
+  - promo-writer: explicit length/hashtag floors per platform
+  - storyboard-creator: no scene field may be left blank or "tbd"
+  - video-reviewer: notes-column depth requirements per PASS/WARN/FAIL
+  - audience-researcher: ≥3 parallel WebSearches + persona depth floor
+  - researcher: ≥3 parallel WebSearches + ≥2 sources per finding + depth floor
+  - doc-analyzer: ordered MCP tool execution (3+4+5 in parallel)
+  - video-type-creator: ≥3 parallel WebSearches with distinct purposes
 
 ### Deprecated
 - Nothing yet
@@ -27,8 +37,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing yet
 
 ### Notes
-- Frontmatter-only migration. Body-hardening for 4.7 default-shifts (verbosity,
-  tool-use, multi-turn) follows in a separate PR — see #24 phase 2.
+- Phase 1 was frontmatter-only. Phase 2a addresses verbosity (Pattern A) and
+  tool-use frequency (Pattern B) per the 4.7 migration guide.
+- The multi-turn discovery refactor for `project-conceptualizer` (Pattern C)
+  and the effort-level decision (Pattern D) follow in a separate PR — see
+  #24 phase 2b.
 
 ## [1.2.0] - 2026-04-25
 

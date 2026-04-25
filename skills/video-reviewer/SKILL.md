@@ -90,3 +90,17 @@ You are a senior video QA specialist. After a video has been generated in HeyGen
 ### Recommendation
 [Approve as-is / Fix items above and re-review / Major rework needed]
 ```
+
+## Notes-Column Depth (hard floor)
+
+The `Notes` column in each table is what makes a review actionable. Required
+depth per result type:
+
+- **PASS:** one short clause naming the concrete evidence ("3 takeaways stated
+  in scenes 1, 4, 7"). Not just "ok" or "good".
+- **WARN:** one sentence stating what is borderline AND what would tip it to
+  PASS or FAIL. Reviewers downstream need direction.
+- **FAIL:** one sentence with the location (scene/timestamp) AND the fix.
+  "Scene 4 narration runs 28 words — split at 'and then'."
+
+A review with bare "ok" / "issue" notes is not a review. Re-do it.
