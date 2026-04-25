@@ -11,25 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing yet
 
 ### Changed
-- migrate 10 opus skills from `claude-opus-4-6` to `claude-opus-4-7` (#24, phase 1)
-- update test whitelist `valid_models` to accept `claude-opus-4-7`, drop `claude-opus-4-6`
-- harden 9 opus skills against 4.7 default-shifts (#24, phase 2a):
-  - script-writer: hard floor 80–150 words narration per scene
-  - brief-creator: required depth per section (objective, audience, tone, etc.)
-  - promo-writer: explicit length/hashtag floors per platform
-  - storyboard-creator: no scene field may be left blank or "tbd"
-  - video-reviewer: notes-column depth requirements per PASS/WARN/FAIL
-  - audience-researcher: ≥3 parallel WebSearches + persona depth floor
-  - researcher: ≥3 parallel WebSearches + ≥2 sources per finding + depth floor
-  - doc-analyzer: ordered MCP tool execution (3+4+5 in parallel)
-  - video-type-creator: ≥3 parallel WebSearches with distinct purposes
-- refactor `project-conceptualizer` from 5-phase multi-turn Q&A to one
-  batched discovery message + single concept-writing pass (#24, phase 2b,
-  Pattern C). Targeted clarification rounds only when the user explicitly
-  defers an item.
-- document effort-level decision in `CLAUDE.md`: accept the 4.7 platform
-  default `xhigh` globally, no per-skill pinning unless overridden (#24,
-  phase 2b, Pattern D)
+- Nothing yet
 
 ### Deprecated
 - Nothing yet
@@ -43,10 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing yet
 
-### Notes
-- The 4.7 migration is now feature-complete (#24 phases 1, 2a, 2b shipped).
-  Validation against fresh sample projects happens organically on the next
-  real video project — no separate validation pass.
+## [1.3.0] - 2026-04-25
+
+### Changed
+- batched discovery for project-conceptualizer + effort-level doc (#24) (#27)
+- harden 9 opus skills for 4.7 default-shifts (#24) (#26)
+- migrate opus model pin claude-opus-4-6 to claude-opus-4-7 (#24) (#25)
 
 ## [1.2.0] - 2026-04-25
 
@@ -111,3 +95,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.1]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.0.1
 [1.1.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.1.0
 [1.2.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.2.0
+[1.3.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.0
