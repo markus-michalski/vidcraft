@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing yet
 
+## [1.3.1] - 2026-04-26
+
+### Changed
+- refactor(mcp)!: rename create_idea/get_ideas to create_video_idea/get_video_ideas
+
 ## [1.3.0] - 2026-04-25
 
 ### Changed
@@ -96,3 +101,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.1.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.1.0
 [1.2.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.2.0
 [1.3.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.0
+[1.3.1]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.1
