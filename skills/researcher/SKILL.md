@@ -13,7 +13,7 @@ allowed-tools:
   - WebFetch
   - mcp__vidcraft-mcp__get_project_full
   - mcp__vidcraft-mcp__resolve_path
-  - mcp__vidcraft-mcp__create_idea
+  - mcp__vidcraft-mcp__create_video_idea
 ---
 
 # Researcher

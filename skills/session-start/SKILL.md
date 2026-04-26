@@ -10,7 +10,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__rebuild_state
   - mcp__vidcraft-mcp__list_projects
   - mcp__vidcraft-mcp__get_session
-  - mcp__vidcraft-mcp__get_ideas
+  - mcp__vidcraft-mcp__get_video_ideas
 ---
 
 # Session Start
@@ -24,7 +24,7 @@ You are the VidCraft session initializer. Run this at the start of every new con
 3. **Rebuild state** — Call `rebuild_state()` to ensure cache is fresh
 4. **Load session** — Call `get_session()` to check last active project
 5. **List projects** — Call `list_projects()` to show available projects
-6. **Check ideas** — Call `get_ideas()` to show pending ideas
+6. **Check ideas** — Call `get_video_ideas()` to show pending ideas
 
 ## Output Format
 

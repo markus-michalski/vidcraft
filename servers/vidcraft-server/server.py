@@ -1412,8 +1412,11 @@ def suggest_video_topics(file_path: str, max_topics: int = 5) -> str:
 
 
 @mcp.tool()
-def create_idea(title: str, notes: str = "") -> str:
-    """Add a new video idea to the ideas tracker.
+def create_video_idea(title: str, notes: str = "") -> str:
+    """Add a new VIDEO idea to the vidcraft ideas tracker.
+
+    Renamed from `create_idea` to avoid bare-name collision with `storyforge-mcp.create_idea`
+    when both plugins are loaded simultaneously.
 
     Args:
         title: Idea title.
@@ -1442,13 +1445,18 @@ def create_idea(title: str, notes: str = "") -> str:
 
 
 @mcp.tool()
-def get_ideas() -> str:
-    """List all video ideas from the ideas tracker."""
+def get_video_ideas() -> str:
+    """List all VIDEO ideas from the vidcraft ideas tracker.
+
+    Renamed from `get_ideas` for symmetry with `create_video_idea` and to keep all
+    vidcraft idea-related tool names unambiguously namespaced when running alongside
+    `storyforge-mcp` / `mm-dev-toolkit-mcp`.
+    """
     state = _cache.get()
     ideas = state.get("ideas", [])
 
     if not ideas:
-        return "No ideas yet. Use create_idea() to add one."
+        return "No ideas yet. Use create_video_idea() to add one."
 
     lines = []
     for i, idea in enumerate(ideas, 1):

@@ -15,7 +15,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__analyze_complexity
   - mcp__vidcraft-mcp__suggest_video_topics
   - mcp__vidcraft-mcp__create_project_structure
-  - mcp__vidcraft-mcp__create_idea
+  - mcp__vidcraft-mcp__create_video_idea
 ---
 
 # Document Analyzer

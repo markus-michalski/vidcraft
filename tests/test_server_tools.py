@@ -88,8 +88,8 @@ EXPECTED_CORE_TOOLS: frozenset[str] = frozenset(
         "analyze_complexity",
         "suggest_video_topics",
         # Ideas
-        "create_idea",
-        "get_ideas",
+        "create_video_idea",
+        "get_video_ideas",
         # Meta
         "get_plugin_version",
     }
