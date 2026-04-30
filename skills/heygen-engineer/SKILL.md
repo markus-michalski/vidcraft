@@ -76,6 +76,30 @@ When splitting:
 2. Add a transition between the split scenes
 3. Maintain visual continuity
 
+## Variable Injection (Personalized Videos)
+
+When `{{variable}}` placeholders appear in the script, `heygen_format_script`
+automatically detects them and appends a **Variables Found** block to the output.
+
+Your job after receiving the formatter output:
+1. Review the Variables Found list
+2. Confirm each variable type (text / image / video / audio / avatar)
+3. Document the variable declaration block for the user to paste into HeyGen Template API:
+
+```json
+{
+  "variables": {
+    "first_name": { "type": "text", "properties": { "content": "Markus" } },
+    "company_name": { "type": "text", "properties": { "content": "Acme Corp" } }
+  }
+}
+```
+
+**Pre-generation warning:** every `{{variable}}` in the script must be declared before
+generating — undeclared variables render as literal `{{variable_name}}` on screen.
+
+See `knowledge/platform-checklist.md` → Variable Injection section for type reference.
+
 ## Voice Director
 
 For every scene, recommend a **Voice Director** setting from HeyGen AI Studio:

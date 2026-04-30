@@ -976,7 +976,25 @@ def heygen_format_script(
         )
         blocks.append("\n".join(block))
 
-    return "\n\n".join(blocks)
+    output = "\n\n".join(blocks)
+
+    # Collect all {{variable}} placeholders across all scenes
+    all_vars: set[str] = set()
+    for scene in scenes.values():
+        for field in ("narration", "on_screen_text"):
+            all_vars.update(re.findall(r"\{\{(\w+)\}\}", scene.get(field, "")))
+
+    if all_vars:
+        var_lines = [f"  - {{{{{v}}}}}" for v in sorted(all_vars)]
+        output += (
+            "\n\n=== Variables Found ===\n"
+            "Declare these in HeyGen Template API before generating:\n"
+            + "\n".join(var_lines)
+            + "\n\nVariable naming convention: {{snake_case}} — text, image, video, audio, or avatar type.\n"
+            "See knowledge/platform-checklist.md → Variable Injection section."
+        )
+
+    return output
 
 
 @mcp.tool()

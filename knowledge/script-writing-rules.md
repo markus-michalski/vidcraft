@@ -104,6 +104,24 @@ These apply to every scene file, regardless of visual type. The
 - Specify highlights: "Red box around the Submit button", not
   "highlight the button"
 
+## Variable Placeholders (HeyGen Personalized Videos)
+
+Use `{{snake_case}}` placeholders for dynamic content in personalized video campaigns.
+
+```
+{{first_name}}, welcome to {{company_name}}!
+Your plan: {{plan_name}} — renews on {{renewal_date}}.
+```
+
+**Rules:**
+- Always `{{snake_case}}` — no spaces, no camelCase, no hyphens
+- URLs in `{{variables}}` go **on-screen only** — never narrate a URL
+- All placeholders must be declared in HeyGen Template API before generating
+- `heygen_format_script` auto-detects and lists all `{{variables}}` found
+
+See [`platform-checklist.md`](platform-checklist.md#variable-injection) for
+variable types (text, image, video, audio, avatar) and naming conventions.
+
 ## SSML Prosody Markup (HeyGen, community-verified)
 
 Use SSML prosody tags sparingly and only when rewriting the sentence
