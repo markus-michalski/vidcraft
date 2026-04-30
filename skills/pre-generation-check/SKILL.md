@@ -38,6 +38,10 @@ Run `run_pre_generation_gates()` MCP tool first, then supplement with additional
    These must be split into separate HeyGen scenes before generation.
 9. **Timed Text Overlays (HeyGen)** — Warn if on-screen text has timestamps.
    HeyGen cannot time text — must be marked as post-production task.
+10. **SSML Prosody without Custom Voice (HeyGen)** — Warn if `<prosody>` or
+    `<emphasis>` tags appear in narration but the episode voice is from the
+    public HeyGen Voice Library. Community-verified SSML only works with
+    Custom Voices (voice clone, ElevenLabs, OpenAI Voice).
 
 ## Workflow
 

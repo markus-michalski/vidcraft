@@ -104,6 +104,32 @@ These apply to every scene file, regardless of visual type. The
 - Specify highlights: "Red box around the Submit button", not
   "highlight the button"
 
+## SSML Prosody Markup (HeyGen, community-verified)
+
+Use SSML prosody tags sparingly and only when rewriting the sentence
+does not solve the problem. These tags require **Custom Voice** and are
+community-verified — not officially documented by HeyGen.
+
+| Situation | Preferred fix | SSML fallback |
+|-----------|--------------|---------------|
+| Complex command sequence | Break into shorter sentences | `<prosody rate="slow">...</prosody>` |
+| Key term needs emphasis | Restructure sentence | `<emphasis level="strong">...</emphasis>` |
+| Section transition pause | Use paragraph break | `<p>...</p>` |
+| ALL-CAPS for emphasis | Never use ALL-CAPS in scripts | `<emphasis level="strong">...</emphasis>` |
+
+**Decision rule:** If you can fix it by rewriting the sentence → rewrite. Resort
+to SSML only when the structural fix would break the natural spoken flow.
+
+Always carry the disclaimer in output:
+
+```
+⚠️ Community-verified SSML — not in official HeyGen docs.
+   Requires Custom Voice. Test with a short scene first.
+```
+
+See [`platform-checklist.md`](platform-checklist.md#ssml-prosody-tags-community-verified)
+for the full supported tag list.
+
 ## Anti-Patterns
 
 - AI-sounding language ("In this comprehensive guide", "Let's delve
