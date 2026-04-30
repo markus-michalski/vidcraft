@@ -28,13 +28,31 @@ Choose avatars that match or resonate with your target audience:
 | **Small overlay** | During screencast — bottom-right corner |
 | **Hidden** | Pure screencast or text-only slides |
 
-## Gestures (HeyGen-specific)
+## Avatar IV — Motion Prompts (May 2025)
 
-HeyGen avatars support configurable gestures:
-- **Neutral:** Default stance, minimal movement
-- **Pointing:** Direct attention to on-screen elements
-- **Open hands:** Welcoming, explaining concepts
-- **Nodding:** Affirming, agreeing with viewer's experience
+HeyGen Avatar IV uses a Diffusion-inspired audio-to-expression engine. Custom gesture control is done via **Motion Prompts** — natural language sentences set per scene.
+
+**Syntax:** `[Body part] + [Action] + [Emotion/Intensity]`
+
+```
+"Right arm raises to wave enthusiastically."
+"Nods gently to emphasize agreement."
+"Points forward with confidence."
+"Looks surprised and raises eyebrows."
+"Avatar smiles softly while raising a hand."
+```
+
+**Rules:**
+- One short sentence — no compound actions per prompt
+- Available verbs: point, nod, turn, wave, smile, look surprised, smile gently
+- Set in HeyGen AI Studio → Avatar → Motion Prompt (per scene)
+- Only available for Avatar IV avatars — verify avatar generation before committing
+
+**Legacy gesture styles** (pre-Avatar IV) are still available as broad categories:
+- **Neutral** — Default stance, minimal movement
+- **Pointing** — Direct attention to on-screen elements
+- **Open hands** — Welcoming, explaining concepts
+- **Nodding** — Affirming tone
 
 ## Background Recommendations
 

@@ -2,11 +2,21 @@
 
 ## Avatar Types
 
-### Express Avatars
+### Express-1 Avatars
 - AI-generated, available immediately
 - 150+ options across demographics
 - Support 130+ languages natively
-- Best for: standard content, quick turnaround
+- Support inline `[gesture:tag]` syntax for manual gesture control
+- Best for: standard content, quick turnaround, gesture-heavy scripts
+
+### Express-2 Avatars (September 2025)
+- Diffusion Transformer-based model — significant upgrade over Express-1
+- **Automatic gestures:** Generated from script semantics — no `[gesture:tag]` needed
+- **Full-body movement:** Not limited to upper-body like Express-1
+- **Better expressions:** Co-speech micro-expressions and body language
+- Best for: natural-looking content where script quality drives avatar behavior
+- **Script requirement:** Use active voice and concrete actions — passive/abstract language produces stiff output
+- Note: `[gesture:tag]` syntax is ignored by Express-2 avatars
 
 ### Studio Avatars
 - Recorded from real actors

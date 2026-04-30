@@ -74,6 +74,41 @@ Authorization: Bearer {api_key}
 
 API key from: HeyGen Dashboard → Settings → API
 
+## Voice Director (2025)
+
+HeyGen's Voice Director feature controls vocal tone via emotion presets or free-form natural language prompts.
+
+### Emotion Presets
+
+| Preset | Use Case |
+|--------|----------|
+| `Excited` | High energy, product launches, CTAs |
+| `Casual` | Developer tutorials, onboarding, informal demos |
+| `Calm` | Support content, reassuring explanations |
+| `Cool` | Confident brand messaging, thought leadership |
+| `Serious` | Compliance training, authoritative announcements |
+| `Funny` | Playful content, light-hearted social videos |
+| `Angry` | Firm/forceful tone — use very sparingly |
+| `Sarcastic` | Ironic delivery — use with caution |
+
+### Natural Language Prompts
+
+Free-form prompts describe the desired delivery style:
+
+```
+"Speak in a calm, steady tone with a warm, encouraging vibe."
+"Enthusiastic but professional — like presenting at a conference."
+"Friendly and approachable, as if talking to a colleague."
+```
+
+**Usage:** Set in HeyGen AI Studio under Voice → Voice Director when configuring a scene.
+
+**Recommendation:** Match preset to video type:
+- Tutorial/How-To → `Casual` or `Calm`
+- Product Demo → `Excited` or `Cool`
+- Training/Compliance → `Serious`
+- Onboarding → `Friendly` (via natural language prompt)
+
 ## Rate Limits
 
 - 100 requests/minute for listing endpoints
