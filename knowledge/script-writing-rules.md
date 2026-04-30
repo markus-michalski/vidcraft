@@ -33,6 +33,40 @@ narration text. Keep them in the script source so all downstream tools
 `[pause]` without a duration is allowed for legacy scripts and is
 interpreted as 2 seconds. Prefer the explicit form in new scripts.
 
+## Expressive Avatar Emotion Cues (Synthesia)
+
+Synthesia Expressive Avatars (Express-1 and Express-2) analyse script
+sentiment automatically. Punctuation and word choice directly drive
+avatar expression — use this intentionally.
+
+| Trigger | Avatar Effect |
+|---------|--------------|
+| `!` | Enthusiasm, positive energy, eyebrow lift |
+| `?` | Inquisitive expression, slight head tilt |
+| `...` | Thoughtful pause, reflective look |
+| `:)` | Subtle smile, warm expression |
+| `:(` | Concern, serious expression |
+| Strong positive words: "Fantastic!", "Great job!" | Micro-smile |
+| Negative words: "Unfortunately", "Problem" | Subtle frown, concern |
+
+**Express-2:** same triggers, but with stronger full-body reinforcement
+(see [`platform-checklist.md`](platform-checklist.md) for Express-2 details).
+
+### Usage guidelines
+
+- Use `!` at key reveals, success moments, and call-to-actions
+- Use `?` when introducing a problem or posing a question to the viewer
+- Use `...` for dramatic pauses before reveals
+- Avoid flatline scripts: >60 seconds of narration with zero `!` or `?`
+  will make the avatar appear expressionless
+- Emoticons (`:)` `:(`): note these are processed by Synthesia — use
+  sparingly and only when tone warrants it
+
+### HeyGen note
+
+HeyGen avatars do **not** use punctuation-based sentiment analysis.
+These cues are Synthesia-specific.
+
 ## On-Screen Text Rules
 
 | Rule | Why |

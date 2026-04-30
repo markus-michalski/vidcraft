@@ -47,13 +47,18 @@ Review each point and mark as PASS, WARN, or FAIL:
 ### Completeness
 14. **Summary/Recap** — Tutorials and installation guides have closing recap
 
+### Platform-Specific (Synthesia only)
+15. **Expression Range** — If platform is Synthesia with Expressive Avatars:
+    no segment longer than 60s should have zero `!` or `?`; flag emoticons
+    (`:)` `:(`): they trigger avatar reactions — note their position
+
 ## Workflow
 
 1. Load project, episode, and all scene files
 2. Load video type README for type-specific rules
 3. Run `analyze_timing()` and `check_readability()` MCP tools
 4. Run `validate_structure()` for structural checks
-5. Read each scene and check all 14 points
+5. Read each scene and check all 14 points (+ point 15 for Synthesia)
 6. Generate a review report with PASS/WARN/FAIL per point
 7. If all PASS: Update episode status to "Script Reviewed"
 8. If any FAIL: List specific issues with fix suggestions
