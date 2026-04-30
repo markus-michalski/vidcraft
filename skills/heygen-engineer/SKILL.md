@@ -13,6 +13,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__list_scenes
   - mcp__vidcraft-mcp__heygen_format_script
   - mcp__vidcraft-mcp__analyze_timing
+  - mcp__vidcraft-mcp__check_pronunciation
   - mcp__vidcraft-mcp__update_field
 ---
 
@@ -158,6 +159,12 @@ benefit from rate/emphasis changes, suggest community-verified SSML tags:
 
 See `knowledge/platform-checklist.md` → SSML Prosody Tags section for the
 full supported tag list and examples.
+
+## Pronunciation Pre-Check
+
+Before generating the final output, run `check_pronunciation()` on the
+combined narration text. If issues are found, include them in the output
+under a **Pronunciation Warnings** section. Advisory only — do not auto-replace.
 
 ## Output
 
