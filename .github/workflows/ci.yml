@@ -41,9 +41,9 @@ jobs:
         run: |
           ruff format --check tools/ tests/ servers/
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: |
-          python -m pytest tests/ -v
+          python -m pytest tests/ -v --cov=tools --cov=servers --cov-fail-under=70
 
   validate-skills:
     runs-on: ubuntu-latest
