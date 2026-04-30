@@ -2,5 +2,6 @@
 -r requirements.txt
 
 pytest
+pytest-cov
 ruff
 pip-audit

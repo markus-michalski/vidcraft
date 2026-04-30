@@ -31,7 +31,9 @@ PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 SERVER_PATH = PLUGIN_ROOT / "servers" / "vidcraft-server" / "server.py"
 
 
-def _load_server(monkeypatch: pytest.MonkeyPatch, content_root: Path | None = None) -> Any:
+def _load_server(
+    monkeypatch: pytest.MonkeyPatch, content_root: Path | None = None
+) -> Any:
     """Load server.py dynamically with config mocking.
 
     Args:
@@ -130,9 +132,7 @@ MOCK_STATE = {
 class TestStateRetrievalTools:
     """Tests for state retrieval and session management tools."""
 
-    def test_list_projects_with_projects(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_list_projects_with_projects(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """list_projects returns formatted list when projects exist."""
         server = _load_server(monkeypatch)
         monkeypatch.setattr(server._cache, "get", lambda: MOCK_STATE)
@@ -219,9 +219,7 @@ class TestStateRetrievalTools:
         assert data["episode_count"] == 1
         assert "01-getting-started" in data["episodes_data"]
 
-    def test_get_project_full_not_found(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_get_project_full_not_found(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """get_project_full returns error message when project not found."""
         server = _load_server(monkeypatch)
         monkeypatch.setattr(server._cache, "get", lambda: MOCK_STATE)
@@ -311,9 +309,7 @@ class TestStateRetrievalTools:
 class TestScriptAnalysisTools:
     """Tests for script analysis: timing, readability, structure validation."""
 
-    def test_analyze_timing_short_text(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_analyze_timing_short_text(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """analyze_timing calculates correct duration for short text."""
         server = _load_server(monkeypatch)
 
@@ -724,9 +720,7 @@ class TestPlatformLimits:
         server = _load_server(monkeypatch)
         monkeypatch.setattr(server._cache, "get", lambda: MOCK_STATE)
 
-        result = server.validate_platform_limits(
-            "test-tutorial", "01-getting-started"
-        )
+        result = server.validate_platform_limits("test-tutorial", "01-getting-started")
         # Should auto-detect 'heygen' from project
         assert "heygen" in result.lower() or "PASS" in result
 
@@ -983,9 +977,7 @@ class TestPathResolution:
         """resolve_path includes episode in path when specified."""
         server = _load_server(monkeypatch, tmp_path)
 
-        result = server.resolve_path(
-            "test-project", "content", "01-getting-started"
-        )
+        result = server.resolve_path("test-project", "content", "01-getting-started")
         assert "episodes" in result
         assert "01-getting-started" in result
 
@@ -1007,26 +999,22 @@ class TestPathResolution:
 class TestSessionManagement:
     """Tests for session state management and updates."""
 
-    def test_update_session_last_project(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_update_session_last_project(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """update_session updates last_project in state."""
         server = _load_server(monkeypatch)
         monkeypatch.setattr(server._cache, "get", lambda: MOCK_STATE.copy())
         monkeypatch.setattr(
-            server, "_write_state", lambda s: None
+            "tools.state.indexer._write_state", lambda s: None
         )  # Mock state write
 
         result = server.update_session(last_project="new-project")
         assert "Session updated" in result
 
-    def test_update_session_last_phase(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_update_session_last_phase(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """update_session updates last_phase in state."""
         server = _load_server(monkeypatch)
         monkeypatch.setattr(server._cache, "get", lambda: MOCK_STATE.copy())
-        monkeypatch.setattr(server, "_write_state", lambda s: None)
+        monkeypatch.setattr("tools.state.indexer._write_state", lambda s: None)
 
         result = server.update_session(last_phase="generation")
         assert "Session updated" in result
