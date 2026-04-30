@@ -109,6 +109,7 @@ class TestSkillsReferencePlatformFormatters:
 # SSML auto-conversion (#37)
 # ---------------------------------------------------------------------------
 
+
 def _make_state_with_narration(narration: str) -> dict[str, Any]:
     """Minimal in-memory state for formatter tests."""
     return {
@@ -147,10 +148,10 @@ class TestConvertPausesToSsml:
     @pytest.mark.parametrize(
         "raw, expected",
         [
-            ("[pause 1s]", "<break time=\"1s\"/>"),
-            ("[pause 0.5s]", "<break time=\"0.5s\"/>"),
-            ("[pause 2s]", "<break time=\"2s\"/>"),
-            ("[pause 1.5s]", "<break time=\"1.5s\"/>"),
+            ("[pause 1s]", '<break time="1s"/>'),
+            ("[pause 0.5s]", '<break time="0.5s"/>'),
+            ("[pause 2s]", '<break time="2s"/>'),
+            ("[pause 1.5s]", '<break time="1.5s"/>'),
         ],
     )
     def test_single_pause_converted(self, raw: str, expected: str) -> None:
@@ -161,8 +162,8 @@ class TestConvertPausesToSsml:
         server = _load_server_module()
         text = "Click Save. [pause 1s] Now open the next step. [pause 0.5s] Done."
         result = server._convert_pauses_to_ssml(text)
-        assert "<break time=\"1s\"/>" in result
-        assert "<break time=\"0.5s\"/>" in result
+        assert '<break time="1s"/>' in result
+        assert '<break time="0.5s"/>' in result
         assert "[pause" not in result
 
     def test_no_pause_unchanged(self) -> None:
@@ -183,8 +184,8 @@ class TestSynthesiaFormatterSsmlConversion:
             server._cache, "get", lambda: _make_state_with_narration(narration)
         )
         result = server.synthesia_format_script("test-proj", "ep-01")
-        assert "<break time=\"1s\"/>" in result, (
-            "synthesia_format_script must convert [pause Xs] to <break time=\"Xs\"/>"
+        assert '<break time="1s"/>' in result, (
+            'synthesia_format_script must convert [pause Xs] to <break time="Xs"/>'
         )
         assert "[pause 1s]" not in result, (
             "Raw [pause Xs] must not appear in synthesia output"
@@ -199,8 +200,8 @@ class TestSynthesiaFormatterSsmlConversion:
             server._cache, "get", lambda: _make_state_with_narration(narration)
         )
         result = server.synthesia_format_script("test-proj", "ep-01")
-        assert "<break time=\"0.5s\"/>" in result
-        assert "<break time=\"2s\"/>" in result
+        assert '<break time="0.5s"/>' in result
+        assert '<break time="2s"/>' in result
         assert "[pause" not in result
 
 
@@ -220,8 +221,8 @@ class TestHeyGenFormatterSsmlConversion:
             server._cache, "get", lambda: _make_state_with_narration(narration)
         )
         result = server.heygen_format_script("test-proj", "ep-01")
-        assert "<break time=\"1s\"/>" in result, (
-            "heygen_format_script must convert [pause Xs] to <break time=\"Xs\"/>"
+        assert '<break time="1s"/>' in result, (
+            'heygen_format_script must convert [pause Xs] to <break time="Xs"/>'
         )
         assert "[pause 1s]" not in result, (
             "Raw [pause Xs] must not appear in HeyGen output"
@@ -241,9 +242,7 @@ class TestHeyGenFormatterSsmlConversion:
             "SSML break tags are present"
         )
 
-    def test_no_caveat_when_no_pauses(
-        self, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_no_caveat_when_no_pauses(self, monkeypatch: pytest.MonkeyPatch) -> None:
         server = _load_server_module()
         narration = "Hello world. This is a clean script without pauses."
         monkeypatch.setattr(
