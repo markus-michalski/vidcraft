@@ -61,6 +61,20 @@ Context exceptions (e.g., "navigate" in UI tutorials, "leverage" in finance) are
 Overall: Sounds [natural / mostly natural / AI-generated]
 ```
 
+## Expression Range Check (Synthesia Expressive Avatars)
+
+Run this as an **additional pass** when the project platform is Synthesia
+with Expressive Avatars (Express-1 or Express-2):
+
+- Scan for segments >60s with zero `!` or `?` → WARN: "Avatar may appear
+  expressionless — add emotional punctuation"
+- Flag emoticons (`:)` `:(`): they drive avatar reactions, confirm intent
+- Note strong positive words ("Fantastic", "Great job") and negative words
+  ("Unfortunately", "Problem") — both trigger micro-expressions
+
+This check is **complementary** to the AI language audit — a script can be
+free of AI patterns but still feel flat on screen because of punctuation monotony.
+
 ## Important
 
 - This is ADVISORY — flag and suggest, never auto-rewrite

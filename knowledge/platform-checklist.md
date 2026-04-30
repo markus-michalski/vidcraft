@@ -70,6 +70,78 @@ Kdenlive / Premiere:
 Mark these in scene scripts using the `[post-production ...]` syntax
 (see [`script-writing-rules.md`](script-writing-rules.md#timed-overlays-post-production-marker)).
 
+### Variable Injection
+
+HeyGen Template API supports personalized video generation via `{{variable_name}}` placeholders.
+
+**Syntax in script:**
+```
+{{first_name}}, welcome to {{company_name}}!
+Your plan: {{plan_name}} — renews on {{renewal_date}}.
+```
+
+**Variable types (Template API):**
+
+| Type | Use case |
+|------|----------|
+| `text` | Names, dates, plan names, any dynamic text |
+| `image` | Logo, product shot per recipient |
+| `video` | Personalized intro clip |
+| `audio` | Custom greeting |
+| `avatar` | Different avatar per recipient |
+
+**Naming convention:** always `{{snake_case}}` — no spaces, no camelCase.
+
+| Variable | Convention |
+|----------|-----------|
+| `{{first_name}}` | Personal |
+| `{{company_name}}` | Business |
+| `{{product_name}}` | Product |
+| `{{renewal_date}}` | Dates (ISO format) |
+| `{{cta_url}}` | URLs (on-screen only — never narrated) |
+
+**Important:** `heygen_format_script` automatically detects `{{variables}}` and
+lists them in the output. Declare all found variables in HeyGen Template API
+before generating. All variables in the script must be declared — undeclared
+variables render as literal `{{variable_name}}` text on screen.
+
+### SSML Prosody Tags (Community-Verified)
+
+> ⚠️ **Community-verified only — NOT in official HeyGen documentation.**
+> Works with: Custom Voice Clones, ElevenLabs, OpenAI Voices.
+> **Test with a short scene before applying to full video.**
+
+The following SSML subset has been verified by the community to work in HeyGen (2025):
+
+```xml
+<prosody rate="x-slow">...</prosody>   <!-- Speed: x-slow, slow, medium, fast, x-fast -->
+<prosody pitch="high">...</prosody>    <!-- Pitch: x-low, low, medium, high, x-high -->
+<prosody volume="loud">...</prosody>   <!-- Volume: silent, x-soft, soft, medium, loud, x-loud -->
+<emphasis level="strong">...</emphasis>  <!-- Emphasis: strong, moderate, reduced -->
+<p>...</p>                             <!-- Paragraph pause (~400-800ms) -->
+<s>...</s>                             <!-- Sentence pause (~200-400ms) -->
+```
+
+**Not supported:** `<phoneme>`, `<audio>`, `<lang>` (partial).
+
+**Use cases:**
+```xml
+<!-- Slow down for technical or complex content -->
+<prosody rate="slow">Run the command: docker compose up -d.</prosody>
+
+<!-- Emphasize a key point (preferred over ALL-CAPS) -->
+This is <emphasis level="strong">critical</emphasis> — do not skip this step.
+
+<!-- Section break -->
+<p>That covers installation.</p><p>Now let's look at configuration.</p>
+```
+
+**Rules:**
+- Do NOT auto-convert — user must explicitly opt in
+- Always include the community disclaimer in output when these tags are used
+- Only works with **Custom Voices** — the pre-generation check will warn otherwise
+- Use `<emphasis>` instead of ALL-CAPS for emphasis (more portable, cleaner script)
+
 ### Voice Director
 
 Control vocal tone per scene via **emotion presets** or natural language prompts (HeyGen AI Studio → Voice → Voice Director).

@@ -13,6 +13,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__list_scenes
   - mcp__vidcraft-mcp__heygen_format_script
   - mcp__vidcraft-mcp__analyze_timing
+  - mcp__vidcraft-mcp__check_pronunciation
   - mcp__vidcraft-mcp__update_field
 ---
 
@@ -76,6 +77,30 @@ When splitting:
 2. Add a transition between the split scenes
 3. Maintain visual continuity
 
+## Variable Injection (Personalized Videos)
+
+When `{{variable}}` placeholders appear in the script, `heygen_format_script`
+automatically detects them and appends a **Variables Found** block to the output.
+
+Your job after receiving the formatter output:
+1. Review the Variables Found list
+2. Confirm each variable type (text / image / video / audio / avatar)
+3. Document the variable declaration block for the user to paste into HeyGen Template API:
+
+```json
+{
+  "variables": {
+    "first_name": { "type": "text", "properties": { "content": "Markus" } },
+    "company_name": { "type": "text", "properties": { "content": "Acme Corp" } }
+  }
+}
+```
+
+**Pre-generation warning:** every `{{variable}}` in the script must be declared before
+generating — undeclared variables render as literal `{{variable_name}}` on screen.
+
+See `knowledge/platform-checklist.md` → Variable Injection section for type reference.
+
 ## Voice Director
 
 For every scene, recommend a **Voice Director** setting from HeyGen AI Studio:
@@ -112,6 +137,34 @@ See full syntax in `reference/heygen/avatar-guide.md`.
 `heygen_format_script`. SSML break tags only work with **Custom Voices**
 (voice clone, ElevenLabs, OpenAI Voice) — the formatter adds a caveat note
 automatically when breaks are present.
+
+## SSML Prosody Tags (opt-in, community-verified)
+
+> ⚠️ **Not auto-converted.** User must explicitly request prosody tags.
+
+When the user asks for prosody control or when technical content would
+benefit from rate/emphasis changes, suggest community-verified SSML tags:
+
+- `<prosody rate="slow">...</prosody>` — for command sequences, complex steps
+- `<emphasis level="strong">...</emphasis>` — preferred over ALL-CAPS for emphasis
+- `<p>...</p>` / `<s>...</s>` — explicit paragraph/sentence pause
+
+**Always add this disclaimer to your output when these tags appear:**
+
+```
+⚠️  Community-verified SSML — not in official HeyGen docs.
+    Requires Custom Voice (clone, ElevenLabs, OpenAI). Test with a short
+    scene before applying to full video.
+```
+
+See `knowledge/platform-checklist.md` → SSML Prosody Tags section for the
+full supported tag list and examples.
+
+## Pronunciation Pre-Check
+
+Before generating the final output, run `check_pronunciation()` on the
+combined narration text. If issues are found, include them in the output
+under a **Pronunciation Warnings** section. Advisory only — do not auto-replace.
 
 ## Output
 

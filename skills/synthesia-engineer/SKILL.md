@@ -13,6 +13,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__list_scenes
   - mcp__vidcraft-mcp__synthesia_format_script
   - mcp__vidcraft-mcp__analyze_timing
+  - mcp__vidcraft-mcp__check_pronunciation
   - mcp__vidcraft-mcp__update_field
 ---
 
@@ -56,10 +57,29 @@ Key constraints to enforce here:
 
 See `reference/synthesia/api-reference.md` for the full gesture tag list and `reference/synthesia/avatar-guide.md` for Express-1 vs. Express-2 differences.
 
+## Expressive Avatar Expression Check
+
+After formatting, scan each slide for emotional flatline:
+
+- If a slide contains **60+ seconds of narration** and has **no `!` or `?`**,
+  add a note: `⚠️ Expression: slide may appear flat — consider adding emotional
+  punctuation or rephrasing a sentence`
+- If emoticons (`:)` `:(`) appear in narration, note them in the output:
+  `ℹ️ Emoticon at slide X — Expressive Avatar will react to this`
+
+This check only applies to **Expressive Avatar (Express-1 / Express-2)**
+projects. Skip for standard avatar types.
+
 ## SSML Pauses
 
 `[pause Xs]` in narration is auto-converted to `<break time="Xs"/>` by the
 `synthesia_format_script` tool — no manual conversion needed.
+
+## Pronunciation Pre-Check
+
+Before generating the final output, run `check_pronunciation()` on the
+combined narration text. Include any flags in the output under a
+**Pronunciation Warnings** section. Advisory only — do not auto-replace.
 
 ## Output
 

@@ -82,8 +82,11 @@ rules, overlay timing) are in `knowledge/platform-checklist.md`.
 
 Quick reminders:
 
-- **HeyGen:** one background per scene, no timed overlays, 5000 chars/scene API limit (Studio auto-splits at ~1000); pauses only work with custom voices
-- **Synthesia:** slide-based, ~1000 chars per slide, 130+ languages
+- **HeyGen:** one background per scene, no timed overlays, 5000 chars/scene API limit (Studio auto-splits at ~1000); pauses only work with custom voices;
+  use `{{snake_case}}` placeholders for personalized videos (declare in Template API before generating)
+- **Synthesia:** slide-based, ~1000 chars per slide, 130+ languages; Expressive
+  Avatars react to `!`, `?`, `...`, emoticons — use punctuation for emotional range
+  (see `knowledge/script-writing-rules.md` → Expressive Avatar Emotion Cues section)
 
 ## Anti-Patterns to Avoid
 
