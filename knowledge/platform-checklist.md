@@ -70,6 +70,41 @@ Kdenlive / Premiere:
 Mark these in scene scripts using the `[post-production ...]` syntax
 (see [`script-writing-rules.md`](script-writing-rules.md#timed-overlays-post-production-marker)).
 
+### Variable Injection
+
+HeyGen Template API supports personalized video generation via `{{variable_name}}` placeholders.
+
+**Syntax in script:**
+```
+{{first_name}}, welcome to {{company_name}}!
+Your plan: {{plan_name}} — renews on {{renewal_date}}.
+```
+
+**Variable types (Template API):**
+
+| Type | Use case |
+|------|----------|
+| `text` | Names, dates, plan names, any dynamic text |
+| `image` | Logo, product shot per recipient |
+| `video` | Personalized intro clip |
+| `audio` | Custom greeting |
+| `avatar` | Different avatar per recipient |
+
+**Naming convention:** always `{{snake_case}}` — no spaces, no camelCase.
+
+| Variable | Convention |
+|----------|-----------|
+| `{{first_name}}` | Personal |
+| `{{company_name}}` | Business |
+| `{{product_name}}` | Product |
+| `{{renewal_date}}` | Dates (ISO format) |
+| `{{cta_url}}` | URLs (on-screen only — never narrated) |
+
+**Important:** `heygen_format_script` automatically detects `{{variables}}` and
+lists them in the output. Declare all found variables in HeyGen Template API
+before generating. All variables in the script must be declared — undeclared
+variables render as literal `{{variable_name}}` text on screen.
+
 ### SSML Prosody Tags (Community-Verified)
 
 > ⚠️ **Community-verified only — NOT in official HeyGen documentation.**

@@ -251,3 +251,71 @@ class TestHeyGenFormatterSsmlConversion:
         result = server.heygen_format_script("test-proj", "ep-01")
         # No SSML injected → no caveat needed
         assert "<break" not in result
+
+
+# ---------------------------------------------------------------------------
+# Variable injection (#36)
+# ---------------------------------------------------------------------------
+
+
+class TestHeyGenVariableExtraction:
+    """heygen_format_script must detect {{variable}} placeholders and list them."""
+
+    def test_single_variable_listed_in_summary(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        server = _load_server_module()
+        narration = "Hey {{first_name}}, welcome to the platform!"
+        monkeypatch.setattr(
+            server._cache, "get", lambda: _make_state_with_narration(narration)
+        )
+        result = server.heygen_format_script("test-proj", "ep-01")
+        assert "=== Variables Found ===" in result, (
+            "heygen_format_script must include a Variables Found section"
+        )
+        assert "first_name" in result.split("=== Variables Found ===")[1], (
+            "first_name must appear in the Variables Found section"
+        )
+
+    def test_multiple_variables_all_in_summary(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        server = _load_server_module()
+        narration = "Hello {{first_name}}, your plan is {{plan_name}}. Renews on {{renewal_date}}."
+        monkeypatch.setattr(
+            server._cache, "get", lambda: _make_state_with_narration(narration)
+        )
+        result = server.heygen_format_script("test-proj", "ep-01")
+        assert "=== Variables Found ===" in result
+        summary = result.split("=== Variables Found ===")[1]
+        for var in ("first_name", "plan_name", "renewal_date"):
+            assert var in summary, f"Variable '{var}' must appear in Variables Found"
+
+    def test_duplicate_variables_listed_once_in_summary(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        server = _load_server_module()
+        narration = "Hi {{first_name}}! Great to see you, {{first_name}}."
+        monkeypatch.setattr(
+            server._cache, "get", lambda: _make_state_with_narration(narration)
+        )
+        result = server.heygen_format_script("test-proj", "ep-01")
+        assert "=== Variables Found ===" in result
+        summary = result.split("=== Variables Found ===")[1]
+        # deduplicated — only one entry
+        assert summary.count("first_name") == 1, (
+            "Duplicate variables must be listed only once in the summary"
+        )
+
+    def test_no_variables_no_variable_block(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        server = _load_server_module()
+        narration = "Hello world. This script has no variables."
+        monkeypatch.setattr(
+            server._cache, "get", lambda: _make_state_with_narration(narration)
+        )
+        result = server.heygen_format_script("test-proj", "ep-01")
+        assert "=== Variables Found ===" not in result, (
+            "No variable block should appear when script has no {{placeholders}}"
+        )
