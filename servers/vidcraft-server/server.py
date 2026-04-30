@@ -76,6 +76,23 @@ def _convert_pauses_to_ssml(text: str) -> str:
     return _PAUSE_RE.sub(lambda m: f'<break time="{m.group(1)}"/>', text)
 
 
+def _assert_within_content_root(file_path: str) -> Path:
+    """Resolve file_path and verify it is inside the configured content_root.
+
+    Uses Path.is_relative_to() (Python 3.9+) after resolving both sides so
+    that path-traversal sequences and symlinks that escape the root are caught.
+
+    Raises:
+        ValueError: if the resolved path is not under content_root.
+    """
+    config = load_config()
+    content_root = Path(config["paths"]["content_root"]).resolve()
+    path = Path(file_path).resolve()
+    if not path.is_relative_to(content_root):
+        raise ValueError(f"Path outside content root: {file_path}")
+    return path
+
+
 # ===========================================================================
 # STATE MANAGEMENT TOOLS
 # ===========================================================================
@@ -547,7 +564,10 @@ def update_field(
         field: The frontmatter field name to update.
         value: The new value for the field.
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -615,7 +635,10 @@ def extract_section(file_path: str, heading: str) -> str:
         file_path: Absolute path to the markdown file.
         heading: The heading text to extract (without # prefix).
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -1252,7 +1275,10 @@ def analyze_document(file_path: str) -> str:
     Args:
         file_path: Absolute path to the document file (.md, .pdf, .docx).
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -1278,7 +1304,10 @@ def extract_key_points(file_path: str, max_points: int = 10) -> str:
         file_path: Absolute path to the document file.
         max_points: Maximum number of key points to extract (default 10).
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -1306,7 +1335,10 @@ def suggest_video_structure(file_path: str, video_type: str = "tutorial") -> str
         file_path: Absolute path to the source document.
         video_type: Target video type (tutorial, installation-guide, product-demo, etc.).
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -1330,7 +1362,10 @@ def analyze_complexity(file_path: str) -> str:
     Args:
         file_path: Absolute path to the document file.
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
@@ -1358,7 +1393,10 @@ def suggest_video_topics(file_path: str, max_topics: int = 5) -> str:
         file_path: Absolute path to the source document.
         max_topics: Maximum number of topic suggestions (default 5).
     """
-    path = Path(file_path)
+    try:
+        path = _assert_within_content_root(file_path)
+    except ValueError as e:
+        return str(e)
     if not path.exists():
         return f"File not found: {file_path}"
 
