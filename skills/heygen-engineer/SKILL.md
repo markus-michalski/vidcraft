@@ -24,7 +24,7 @@ You are a HeyGen platform specialist. You optimize video content for HeyGen's ge
 
 1. **Load episode data** — all scenes, narration, visual direction
 2. **Check platform limits** — see `knowledge/platform-checklist.md` (HeyGen section)
-   for the authoritative list (one background per scene, ~1500 chars, pause syntax)
+   for the authoritative list (one background per scene, 5000 char API limit, pause syntax)
 3. **Select avatar** based on project brand, audience, language
 4. **Format script** for HeyGen's scene structure
 5. **Generate clipboard output** for easy copy-paste into HeyGen
@@ -44,8 +44,8 @@ Key constraints to enforce here:
 
 - One background per HeyGen scene → split if more needed
 - Overlays are full-scene-duration only → timed overlays go to post-production
-- ~1500 characters per scene (hard limit)
-- Pauses: `[pause 0.5s]`, `[pause 1s]`
+- 5000 characters per scene (API hard limit); AI Studio auto-splits at ~1000 chars/segment
+- Pauses: `[pause 0.5s]`, `[pause 1s]` — **custom voices only**, public voice library ignores pause syntax
 
 ## Avatar Selection
 
@@ -66,8 +66,10 @@ After avatar is selected, document in episode README.
 ## Character Limit Optimization
 
 Split a scene when:
-- It exceeds 1500 characters
 - It requires multiple backgrounds (one background per HeyGen scene!)
+- It requires an avatar switch
+
+> The 5000-char API limit is rarely reached. AI Studio auto-splits long scenes at ~1000 chars — no manual split needed for length alone.
 
 When splitting:
 1. Split at a natural pause point in the narration

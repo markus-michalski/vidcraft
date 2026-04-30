@@ -16,19 +16,25 @@ see [`script-writing-rules.md`](script-writing-rules.md).
 |------------|--------|
 | One background per scene | One image, video, or color per HeyGen scene. Multiple backgrounds = split into multiple scenes. |
 | No timed text overlays | Overlays are visible for the entire scene duration. Timed overlays must be done in post-production. |
-| Max ~1500 characters per scene | Hard limit; split at natural pauses if exceeded. |
+| Max 5000 characters per scene | Hard API limit. AI Studio (copy/paste) auto-splits at ~1000 chars/segment — no manual splitting needed for length. Only split manually for background or avatar changes. |
 | Max scenes per video | Plan-dependent. Check current HeyGen plan. |
 | One avatar per scene | No multi-avatar scenes. |
 
 ### Pause Support
 
-HeyGen supports manual pauses inside narration:
+> **Important:** Pause markers and SSML tags only work with **Custom Voices** (voice clones,
+> ElevenLabs, OpenAI Voices). The public HeyGen Voice Library silently ignores all pause syntax.
 
-| Marker | HeyGen behavior |
-|--------|-----------------|
-| `[pause 0.5s]` | 0.5 second pause |
-| `[pause 1s]` | 1 second pause |
-| Paragraph break | ~0.5 second pause (default) |
+| Marker | HeyGen behavior | Requirement |
+|--------|-----------------|-------------|
+| `[pause 0.5s]` | 0.5 second pause | Custom Voice only |
+| `[pause 1s]` | 1 second pause | Custom Voice only |
+| Paragraph break | ~0.5 second pause (default) | All voices |
+
+**Fallback for public voices:** Use punctuation-based pacing instead:
+- `,` → short pause (~300ms)
+- `.` → longer pause (~600ms) with falling intonation
+- `-` → syllable break for pronunciation clarity
 
 The same syntax is used in the source scripts (see
 [`script-writing-rules.md`](script-writing-rules.md#pause-syntax)).
@@ -37,9 +43,11 @@ The same syntax is used in the source scripts (see
 
 Split a content scene when:
 
-- It exceeds 1500 characters
 - It needs more than one background
 - It needs to switch avatar
+
+> The 5000-char API limit is rarely hit in practice. AI Studio auto-splits long segments at ~1000
+> chars — no manual intervention needed for length alone.
 
 When splitting:
 
@@ -80,7 +88,7 @@ Each scene needs:
 | Constraint | Detail |
 |------------|--------|
 | Max ~1000 characters per slide | Slide-based; split at sentence boundary if exceeded. |
-| Max slides per video | 50+ (plan-dependent). |
+| Max scenes per video | 150 (PowerPoint import: also 150 slides). |
 | Languages | 130+ supported. |
 | Slide-based scene structure | 1 scene typically maps to 1 slide. |
 

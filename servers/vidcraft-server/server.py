@@ -770,7 +770,7 @@ def validate_structure(
 # Platform character limits
 _PLATFORM_LIMITS = {
     "heygen": {
-        "max_chars_per_scene": 1500,
+        "max_chars_per_scene": 5000,
         "max_scenes": 100,
         "supported_formats": ["mp4"],
         "min_resolution": "720p",
@@ -779,7 +779,7 @@ _PLATFORM_LIMITS = {
     },
     "synthesia": {
         "max_chars_per_scene": 1000,
-        "max_scenes": 50,
+        "max_scenes": 150,
         "supported_formats": ["mp4"],
         "min_resolution": "720p",
         "max_resolution": "1080p",
@@ -953,7 +953,7 @@ def heygen_format_script(
             block.append(f"Text Overlay: {on_screen}")
 
         block.append(f"\nScript:\n{narration}")
-        block.append(f"\nChars: {len(narration)}/1500")
+        block.append(f"\nChars: {len(narration)}/5000 (API limit) — AI Studio auto-splits at ~1000 chars/segment")
         blocks.append("\n".join(block))
 
     return "\n\n".join(blocks)
