@@ -21,7 +21,9 @@ def _load_server_module():
     tools_path = str(PLUGIN_ROOT)
     if tools_path not in sys.path:
         sys.path.insert(0, tools_path)
-    spec = importlib.util.spec_from_file_location("vidcraft_server_pronunciation", SERVER_PATH)
+    spec = importlib.util.spec_from_file_location(
+        "vidcraft_server_pronunciation", SERVER_PATH
+    )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -91,7 +93,11 @@ class TestAcronymDetection:
         # "I" alone is not an acronym in this context
         result = server.check_pronunciation("I am the user.")
         # Single-letter "I" should not produce an Acronym flag
-        assert result.count("Acronym") == 0 or "I" not in result.split("Acronym")[1] if "Acronym" in result else True
+        assert (
+            result.count("Acronym") == 0 or "I" not in result.split("Acronym")[1]
+            if "Acronym" in result
+            else True
+        )
 
 
 class TestLatinAbbreviationDetection:

@@ -1525,7 +1525,9 @@ def check_pronunciation(text: str) -> str:
         century = int(year[:2])
         decade = int(year[2:])
         if century == 19:
-            suggestion = f"nineteen {_tens_word(decade)}" if decade else "nineteen hundred"
+            suggestion = (
+                f"nineteen {_tens_word(decade)}" if decade else "nineteen hundred"
+            )
         else:
             suggestion = f"twenty {_tens_word(decade)}" if decade else "two thousand"
         issues.append(("Year", year, suggestion))
@@ -1573,10 +1575,29 @@ def _tens_word(n: int) -> str:
     """Return spoken form for the last two digits of a year (0-99)."""
     ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     teens = [
-        "ten", "eleven", "twelve", "thirteen", "fourteen",
-        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen",
     ]
-    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+    tens = [
+        "",
+        "",
+        "twenty",
+        "thirty",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety",
+    ]
     if n == 0:
         return "hundred"
     if n < 10:
