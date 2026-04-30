@@ -953,7 +953,9 @@ def heygen_format_script(
             block.append(f"Text Overlay: {on_screen}")
 
         block.append(f"\nScript:\n{narration}")
-        block.append(f"\nChars: {len(narration)}/5000 (API limit) — AI Studio auto-splits at ~1000 chars/segment")
+        block.append(
+            f"\nChars: {len(narration)}/5000 (API limit) — AI Studio auto-splits at ~1000 chars/segment"
+        )
         blocks.append("\n".join(block))
 
     return "\n\n".join(blocks)
