@@ -82,7 +82,7 @@ rules, overlay timing) are in `knowledge/platform-checklist.md`.
 
 Quick reminders:
 
-- **HeyGen:** one background per scene, no timed overlays, ~1500 chars per scene
+- **HeyGen:** one background per scene, no timed overlays, 5000 chars/scene API limit (Studio auto-splits at ~1000); pauses only work with custom voices
 - **Synthesia:** slide-based, ~1000 chars per slide, 130+ languages
 
 ## Anti-Patterns to Avoid
