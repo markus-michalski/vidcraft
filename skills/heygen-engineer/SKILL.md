@@ -76,12 +76,50 @@ When splitting:
 2. Add a transition between the split scenes
 3. Maintain visual continuity
 
+## Voice Director
+
+For every scene, recommend a **Voice Director** setting from HeyGen AI Studio:
+
+| Video Type | Recommended Preset |
+|-----------|-------------------|
+| Tutorial / How-To | `Casual` |
+| Step-by-step explanation | `Calm` |
+| Product demo / CTA | `Excited` |
+| Compliance / Training | `Serious` |
+| Thought leadership | `Cool` |
+
+Alternatively use a natural language prompt: `"Warm and encouraging, like a patient instructor."`
+
+Document the Voice Director choice in the episode README under platform settings.
+See full preset list in `reference/heygen/api-reference.md`.
+
+## Avatar IV Motion Prompts
+
+When the project uses Avatar IV avatars, add a **Motion Prompt** per scene where gestures would enhance delivery:
+
+```
+"Points forward with confidence."      — during CTAs or key steps
+"Nods gently to emphasize agreement."  — when confirming something
+"Right arm raises to wave."            — intro/outro scenes
+```
+
+One sentence per prompt, no compound actions. Set in HeyGen AI Studio → Avatar → Motion Prompt.
+See full syntax in `reference/heygen/avatar-guide.md`.
+
+## SSML Pauses
+
+`[pause Xs]` in narration is auto-converted to `<break time="Xs"/>` by
+`heygen_format_script`. SSML break tags only work with **Custom Voices**
+(voice clone, ElevenLabs, OpenAI Voice) — the formatter adds a caveat note
+automatically when breaks are present.
+
 ## Output
 
 Provide:
 1. Formatted script ready for HeyGen (via `heygen_format_script`)
 2. Recommended avatar + voice settings
 3. Background recommendations per scene (one per scene!)
-4. Any character limit warnings
-5. **Post-Production Tasks** — timed text overlays with timestamps for Shotcut/Kdenlive
-6. Pause markers with second values (`[pause 0.5s]`, `[pause 1s]`)
+4. **Voice Director** preset or prompt per scene
+5. **Motion Prompts** per scene (Avatar IV only, where appropriate)
+6. Any character limit warnings
+7. **Post-Production Tasks** — timed text overlays with timestamps for Shotcut/Kdenlive

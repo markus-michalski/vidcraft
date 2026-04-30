@@ -65,6 +65,17 @@ def _now_utc() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+_PAUSE_RE = re.compile(r"\[pause\s+([\d.]+s)\]")
+
+
+def _convert_pauses_to_ssml(text: str) -> str:
+    """Replace [pause Xs] markers with SSML <break time="Xs"/> tags.
+
+    Both Synthesia and HeyGen (custom voice only) accept this SSML subset.
+    """
+    return _PAUSE_RE.sub(lambda m: f'<break time="{m.group(1)}"/>', text)
+
+
 # ===========================================================================
 # STATE MANAGEMENT TOOLS
 # ===========================================================================
@@ -929,7 +940,7 @@ def heygen_format_script(
 
     blocks: list[str] = []
     for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
-        narration = scene.get("narration", "").strip()
+        narration = _convert_pauses_to_ssml(scene.get("narration", "").strip())
         visual_type = scene.get("visual_type", "avatar")
         visual_dir = scene.get("visual_direction", "").strip()
         on_screen = scene.get("on_screen_text", "").strip()
@@ -951,6 +962,13 @@ def heygen_format_script(
 
         if on_screen:
             block.append(f"Text Overlay: {on_screen}")
+
+        if "<break" in narration:
+            block.append(
+                "Note: SSML <break> tags require a Custom Voice "
+                "(voice clone, ElevenLabs, or OpenAI Voice). "
+                "Public HeyGen Voice Library ignores them silently."
+            )
 
         block.append(f"\nScript:\n{narration}")
         block.append(
@@ -989,7 +1007,7 @@ def synthesia_format_script(
 
     slides: list[str] = []
     for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
-        narration = scene.get("narration", "").strip()
+        narration = _convert_pauses_to_ssml(scene.get("narration", "").strip())
         visual_type = scene.get("visual_type", "avatar")
         on_screen = scene.get("on_screen_text", "").strip()
         assets = scene.get("assets", "").strip()

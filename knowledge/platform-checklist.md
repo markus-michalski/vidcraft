@@ -70,6 +70,42 @@ Kdenlive / Premiere:
 Mark these in scene scripts using the `[post-production ...]` syntax
 (see [`script-writing-rules.md`](script-writing-rules.md#timed-overlays-post-production-marker)).
 
+### Voice Director
+
+Control vocal tone per scene via **emotion presets** or natural language prompts (HeyGen AI Studio → Voice → Voice Director).
+
+| Preset | Best For |
+|--------|----------|
+| `Casual` | Tutorials, developer content |
+| `Calm` | Support, step-by-step explanations |
+| `Excited` | Product launches, CTAs |
+| `Serious` | Compliance, authoritative content |
+| `Cool` | Thought leadership, brand |
+
+Free-form alternative: `"Speak in a warm, encouraging tone."` — set as a natural language prompt.
+
+Recommendation: always set Voice Director explicitly; the default neutral tone rarely matches the content mood.
+
+### Avatar IV — Motion Prompts
+
+HeyGen Avatar IV (May 2025) supports custom gesture control via natural language **Motion Prompts**.
+
+**Syntax:** `[Body part] + [Action] + [Emotion/Intensity]`
+
+```
+"Right arm raises to wave enthusiastically."
+"Nods gently to emphasize agreement."
+"Points forward with confidence."
+"Looks surprised and raises eyebrows."
+"Avatar smiles softly while raising a hand."
+```
+
+**Rules:**
+- One short sentence per prompt — no compound actions
+- Available verbs: point, nod, turn, wave, smile, look surprised, smile gently
+- Set in HeyGen AI Studio → Avatar → Motion Prompt field (per scene)
+- Only available for Avatar IV avatars — check avatar generation when selecting
+
 ### HeyGen Scene Format
 
 Each scene needs:
@@ -78,8 +114,9 @@ Each scene needs:
 - **Avatar** selection (see `/vidcraft:avatar-selector`)
 - **Background** — exactly one per scene
 - **Avatar position** — left, center, or right
-- **Voice** selection
+- **Voice** selection + **Voice Director** preset or prompt
 - **Speed** — 0.8x to 1.2x
+- **Motion Prompt** (Avatar IV only, optional)
 
 ## Synthesia
 
@@ -110,6 +147,39 @@ Split a slide when it exceeds 1000 characters:
 1. Cut at a natural sentence break
 2. Use a transition slide for continuity
 3. Keep related content on adjacent slides
+
+### Gesture Tags (Express-1 avatars only)
+
+Embed inline gesture tags in script text to trigger avatar animations:
+
+```
+[gesture:nod]        — Nod (agreement)
+[gesture:headyes]    — Head up/down twice
+[gesture:headno]     — Head left/right (disagreement)
+[gesture:eyebrowsup] — Raised eyebrows (surprise/emphasis)
+[gesture:increase]   — Arm gesture for growth/expansion
+```
+
+Example: `"We are seeing [gesture:increase] huge growth this quarter."`
+
+**Important:** Gesture tags are only for **Express-1** avatars. Express-2 generates gestures automatically — do not add gesture tags to Express-2 scripts.
+
+### Express-2 Avatars (September 2025)
+
+Synthesia released Express-2 — a Diffusion Transformer-based model that changes how gestures and expressions work.
+
+| Feature | Express-1 | Express-2 |
+|---------|-----------|-----------|
+| Gestures | Manual `[gesture:tag]` syntax | Automatic from script context |
+| Expressions | Sentiment-driven | Full-body co-speech gestures |
+| Body language | Upper-body only | Full-body movement |
+| Script requirements | Explicit gesture tags | Strong verbs + concrete actions |
+
+**Writing for Express-2:**
+- No gesture tags needed — they will be ignored
+- Use active, concrete language: strong verbs and specific actions trigger gestures naturally
+- Passive/abstract scripts produce no gestures — avatar appears stiff
+- Example: "Click the button" (good) vs. "The button should be clicked" (stiff)
 
 ### Layout Templates
 

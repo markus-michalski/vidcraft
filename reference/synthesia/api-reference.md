@@ -69,9 +69,43 @@ Synthesia provides a REST API (STUDIO API) for programmatic video creation. Whil
 
 Each element in `input[]` is one slide:
 - Max ~1000 characters per slide script
-- Max 50 slides per video
+- Max 150 slides per video
 - Slides can have different avatars and backgrounds
 - Transitions are automatic (cut between slides)
+
+## Gesture Tags (Express-1 avatars)
+
+Inline gesture tags can be embedded directly in `scriptText` to trigger avatar gestures at specific points.
+
+```
+[gesture:nod]          — Avatar nods (agreement/confirmation)
+[gesture:headyes]      — Head up/down twice
+[gesture:headno]       — Head left/right twice (disagreement)
+[gesture:eyebrowsup]   — Raised eyebrows (surprise/emphasis)
+[gesture:increase]     — Arm/hand gesture for growth/expansion
+```
+
+**Usage:**
+```
+"We are seeing [gesture:increase] huge growth this quarter."
+"Let me [gesture:nod] confirm that this is the correct approach."
+```
+
+**Constraints:**
+- Gesture tags only work with **Express-1 avatars** — Express-2 generates gestures automatically from script context, so gesture tags are neither needed nor supported
+- Use gestures sparingly — one per sentence at most
+- Tags are stripped from the final audio; they only trigger animation
+
+## SSML Support
+
+Synthesia supports a subset of SSML for fine-grained speech control:
+
+```xml
+<break time="1s"/>     — Pause for 1 second
+<break time="0.5s"/>   — Pause for 500ms
+```
+
+VidCraft formatters auto-convert `[pause Xs]` markers to `<break time="Xs"/>` — no manual conversion needed.
 
 ## Authentication
 
