@@ -141,15 +141,9 @@ Each skill declares its model in YAML frontmatter (single source of truth). When
 
 ### Effort Level
 
-VidCraft skills do **not** pin an `effort` field in frontmatter. As of Claude 4.7
-the platform default is `xhigh` (raised from `high` in 4.6). We accept this
-default globally — the quality gain on long-form creative output (scripts,
-briefs, concepts) outweighs the additional token spend for the projects this
-plugin runs.
-
-If a future skill needs to override (e.g. a high-volume batch utility where
-quality matters less than throughput), pin `effort: high` explicitly in that
-skill's frontmatter and document the reason in the skill body.
+VidCraft skills do **not** pin an `effort` field in frontmatter. The platform
+default (`high`) is sufficient for all current use cases. Only pin `effort`
+explicitly if a specific skill needs to deviate and document the reason.
 
 ## Code Style
 
