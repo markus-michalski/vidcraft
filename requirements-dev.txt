@@ -1,0 +1,6 @@
+# Dev dependencies (not required at runtime)
+-r requirements.txt
+
+pytest
+ruff
+pip-audit
