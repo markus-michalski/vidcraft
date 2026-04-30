@@ -148,6 +148,30 @@ Always carry the disclaimer in output:
 See [`platform-checklist.md`](platform-checklist.md#ssml-prosody-tags-community-verified)
 for the full supported tag list.
 
+## Pronunciation Guide (TTS)
+
+TTS engines on both HeyGen and Synthesia struggle with numbers and acronyms.
+Use `check_pronunciation()` to scan before finalizing. Rules:
+
+| Pattern | Problem | Fix |
+|---------|---------|-----|
+| Year: `2025` | "two thousand twenty-five" | "twenty twenty-five" |
+| Year: `1990` | "one thousand nine hundred ninety" | "nineteen ninety" |
+| Acronym: `API` | "appi" | "A P I" (spell out) or "Application Programming Interface (API)" on first use |
+| Acronym: `HTTPS` | "huh-tips" | "H T T P S" |
+| `e.g.` | "ee gee" | "for example" |
+| `i.e.` | "eye ee" | "that is" |
+| `etc.` | "et-see" | "and so on" |
+| `v2.1` | context-dependent | usually fine — test first |
+| `100,000` | "one hundred thousand" | usually fine |
+
+**Rule:** `check_pronunciation()` flags issues, user approves each fix.
+Never auto-replace — context determines the right spoken form.
+
+Platforms also offer built-in pronunciation tools:
+- **HeyGen:** Brand Glossary (workspace-wide custom pronunciations)
+- **Synthesia Enterprise:** Pronunciation Dictionary
+
 ## Anti-Patterns
 
 - AI-sounding language ("In this comprehensive guide", "Let's delve

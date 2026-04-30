@@ -1507,6 +1507,87 @@ def get_video_ideas() -> str:
 
 
 @mcp.tool()
+def check_pronunciation(text: str) -> str:
+    """Scan narration text for TTS-unfriendly numbers and acronyms.
+
+    Flags patterns that commonly cause mispronunciation on HeyGen/Synthesia
+    TTS engines: years, acronyms, Latin abbreviations, and decimal numbers.
+    Advisory only — does NOT auto-replace. User must approve each suggestion.
+
+    Args:
+        text: Narration text to analyse.
+    """
+    issues: list[tuple[str, str, str]] = []  # (type, matched_text, suggestion)
+
+    # Years (1900-2099)
+    for m in re.finditer(r"\b(19[0-9]{2}|20[0-9]{2})\b", text):
+        year = m.group(1)
+        century = int(year[:2])
+        decade = int(year[2:])
+        if century == 19:
+            suggestion = f"nineteen {_tens_word(decade)}" if decade else "nineteen hundred"
+        else:
+            suggestion = f"twenty {_tens_word(decade)}" if decade else "two thousand"
+        issues.append(("Year", year, suggestion))
+
+    # Acronyms: 2-5 uppercase letters, not preceded by uppercase (avoids mid-word)
+    for m in re.finditer(r"(?<![A-Z])([A-Z]{2,5})(?![A-Z])", text):
+        acr = m.group(1)
+        spelled = " ".join(list(acr))
+        issues.append(("Acronym", acr, spelled))
+
+    # Latin abbreviations
+    _latin = {
+        "e.g.": "for example",
+        "i.e.": "that is",
+        "etc.": "and so on",
+        "vs.": "versus",
+        "cf.": "compare",
+    }
+    for abbrev, expansion in _latin.items():
+        if abbrev in text:
+            issues.append(("Latin abbrev", abbrev, expansion))
+
+    if not issues:
+        return "## Pronunciation Check\n\nNo issues found. Script is TTS-friendly."
+
+    lines = [
+        "## Pronunciation Check",
+        "",
+        f"### Issues Found: {len(issues)}",
+        "",
+        "| # | Type | Text | Suggestion |",
+        "|---|------|------|-----------|",
+    ]
+    for i, (issue_type, matched, suggestion) in enumerate(issues, 1):
+        lines.append(f"| {i} | {issue_type} | `{matched}` | {suggestion} |")
+
+    lines += [
+        "",
+        "> Advisory only — do NOT auto-replace. Review each suggestion and approve manually.",
+    ]
+    return "\n".join(lines)
+
+
+def _tens_word(n: int) -> str:
+    """Return spoken form for the last two digits of a year (0-99)."""
+    ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    teens = [
+        "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+    ]
+    tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+    if n == 0:
+        return "hundred"
+    if n < 10:
+        return f"oh {ones[n]}"
+    if n < 20:
+        return teens[n - 10]
+    t, o = divmod(n, 10)
+    return tens[t] + ("-" + ones[o] if o else "")
+
+
+@mcp.tool()
 def get_plugin_version() -> str:
     """Return the current VidCraft plugin version."""
     plugin_json = Path(_plugin_root) / ".claude-plugin" / "plugin.json"

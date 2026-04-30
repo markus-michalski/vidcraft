@@ -90,6 +90,8 @@ EXPECTED_CORE_TOOLS: frozenset[str] = frozenset(
         # Ideas
         "create_video_idea",
         "get_video_ideas",
+        # Script quality
+        "check_pronunciation",
         # Meta
         "get_plugin_version",
     }

@@ -13,6 +13,7 @@ allowed-tools:
   - mcp__vidcraft-mcp__list_scenes
   - mcp__vidcraft-mcp__synthesia_format_script
   - mcp__vidcraft-mcp__analyze_timing
+  - mcp__vidcraft-mcp__check_pronunciation
   - mcp__vidcraft-mcp__update_field
 ---
 
@@ -73,6 +74,12 @@ projects. Skip for standard avatar types.
 
 `[pause Xs]` in narration is auto-converted to `<break time="Xs"/>` by the
 `synthesia_format_script` tool — no manual conversion needed.
+
+## Pronunciation Pre-Check
+
+Before generating the final output, run `check_pronunciation()` on the
+combined narration text. Include any flags in the output under a
+**Pronunciation Warnings** section. Advisory only — do not auto-replace.
 
 ## Output
 
