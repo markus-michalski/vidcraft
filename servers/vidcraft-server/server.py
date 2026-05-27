@@ -938,6 +938,56 @@ def get_platform_capabilities(platform: str) -> str:
     return _safe_json(info)
 
 
+_HEYGEN_AVATAR_POSITIONS = {
+    "avatar": "Avatar: Center, facing camera",
+    "screencast": "Avatar: Hidden (or small overlay bottom-right)",
+    "split": "Avatar: Left third, screencast right two-thirds",
+}
+
+
+def _format_heygen_scene(name: str, scene: dict[str, Any]) -> str:
+    """Build the formatted block string for a single HeyGen scene."""
+    narration = _convert_pauses_to_ssml(scene.get("narration", "").strip())
+    visual_type = scene.get("visual_type", "avatar")
+    visual_dir = scene.get("visual_direction", "").strip()
+    on_screen = scene.get("on_screen_text", "").strip()
+
+    block = [
+        f"=== Scene {scene.get('number', '?')}: {scene.get('title', name)} ===",
+        f"Type: {visual_type}",
+    ]
+
+    avatar_line = _HEYGEN_AVATAR_POSITIONS.get(visual_type)
+    if avatar_line:
+        block.append(avatar_line)
+
+    if visual_dir:
+        block.append(f"Background: {visual_dir[:100]}")
+    if on_screen:
+        block.append(f"Text Overlay: {on_screen}")
+    if "<break" in narration:
+        block.append(
+            "Note: SSML <break> tags require a Custom Voice "
+            "(voice clone, ElevenLabs, or OpenAI Voice). "
+            "Public HeyGen Voice Library ignores them silently."
+        )
+
+    block.append(f"\nScript:\n{narration}")
+    block.append(
+        f"\nChars: {len(narration)}/5000 (API limit) — AI Studio auto-splits at ~1000 chars/segment"
+    )
+    return "\n".join(block)
+
+
+def _collect_heygen_variables(scenes: dict[str, Any]) -> set[str]:
+    """Collect all {{variable}} placeholder names across narration and on_screen_text."""
+    variables: set[str] = set()
+    for scene in scenes.values():
+        for field in ("narration", "on_screen_text"):
+            variables.update(re.findall(r"\{\{(\w+)\}\}", scene.get(field, "")))
+    return variables
+
+
 @mcp.tool()
 def heygen_format_script(
     project_slug: str,
@@ -965,52 +1015,13 @@ def heygen_format_script(
     if not scenes:
         return "No scenes found."
 
-    blocks: list[str] = []
-    for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0)):
-        narration = _convert_pauses_to_ssml(scene.get("narration", "").strip())
-        visual_type = scene.get("visual_type", "avatar")
-        visual_dir = scene.get("visual_direction", "").strip()
-        on_screen = scene.get("on_screen_text", "").strip()
-
-        block = [
-            f"=== Scene {scene.get('number', '?')}: {scene.get('title', name)} ===",
-            f"Type: {visual_type}",
-        ]
-
-        if visual_type == "avatar":
-            block.append("Avatar: Center, facing camera")
-        elif visual_type == "screencast":
-            block.append("Avatar: Hidden (or small overlay bottom-right)")
-        elif visual_type == "split":
-            block.append("Avatar: Left third, screencast right two-thirds")
-
-        if visual_dir:
-            block.append(f"Background: {visual_dir[:100]}")
-
-        if on_screen:
-            block.append(f"Text Overlay: {on_screen}")
-
-        if "<break" in narration:
-            block.append(
-                "Note: SSML <break> tags require a Custom Voice "
-                "(voice clone, ElevenLabs, or OpenAI Voice). "
-                "Public HeyGen Voice Library ignores them silently."
-            )
-
-        block.append(f"\nScript:\n{narration}")
-        block.append(
-            f"\nChars: {len(narration)}/5000 (API limit) — AI Studio auto-splits at ~1000 chars/segment"
-        )
-        blocks.append("\n".join(block))
-
+    blocks = [
+        _format_heygen_scene(name, scene)
+        for name, scene in sorted(scenes.items(), key=lambda x: x[1].get("number", 0))
+    ]
     output = "\n\n".join(blocks)
 
-    # Collect all {{variable}} placeholders across all scenes
-    all_vars: set[str] = set()
-    for scene in scenes.values():
-        for field in ("narration", "on_screen_text"):
-            all_vars.update(re.findall(r"\{\{(\w+)\}\}", scene.get(field, "")))
-
+    all_vars = _collect_heygen_variables(scenes)
     if all_vars:
         var_lines = [f"  - {{{{{v}}}}}" for v in sorted(all_vars)]
         output += (
