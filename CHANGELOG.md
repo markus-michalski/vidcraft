@@ -25,6 +25,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing yet
 
+## [1.3.2] - 2026-05-27
+
+### Added
+- Phase 3 — Polish & Extended Platform Intelligence (#33 #36 #38 #39) (#44)
+- platform feature parity — SSML, gestures, Express-2, Voice Director, Avatar IV (#42)
+
+### Changed
+- add server.py size gate — warn at 2000 lines (#65)
+- hygiene bundle — hooks/ in ruff, stderr for hook output (#62)
+- reduce heygen_format_script complexity to ~5 branches (#64)
+- move lazy imports to top-level in server.py (#63)
+- add mypy to venv and CI (#61)
+- bump pypdf from 6.11.0 to 6.12.1 in the pip-all group (#60)
+- bump the pip-all group with 2 updates (#59)
+- raise server.py coverage 43% → 75%, add coverage gate (#58)
+- add tests/smoke/ — 4 mandatory smoke tests (#57)
+- correct effort-level default — high not xhigh
+
+### Fixed
+- sync venv and add requirements-dev.txt with pip-audit (#55)
+- add coverage and HTML coverage directories to .gitignore
+- correct platform limits and HeyGen pause caveat (#41)
+
+### Security
+- validate file_path params against content_root (#56)
+
 ## [1.3.1] - 2026-04-26
 
 ### Changed
@@ -102,3 +128,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.2.0
 [1.3.0]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.0
 [1.3.1]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.1
+[1.3.2]: https://github.com/markus-michalski/vidcraft/releases/tag/v1.3.2
