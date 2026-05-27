@@ -15,6 +15,8 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 # Ensure tools are importable
 _plugin_root = os.environ.get(
     "CLAUDE_PLUGIN_ROOT", str(Path(__file__).resolve().parent.parent.parent)
@@ -35,7 +37,13 @@ from tools.shared.paths import (  # noqa: E402
     resolve_episode_path,
     slugify,
 )
-from tools.state.indexer import StateCache, rebuild  # noqa: E402
+from tools.state.indexer import StateCache, _write_state, rebuild  # noqa: E402
+from tools.analysis.document_parser import (  # noqa: E402
+    analyze_complexity as _analyze_complexity,
+    extract_key_points as _extract_key_points,
+    parse_document,
+    suggest_structure,
+)
 
 # ---------------------------------------------------------------------------
 # Server setup
@@ -242,8 +250,6 @@ def update_session(
         session["last_phase"] = last_phase
 
     state["session"] = session
-
-    from tools.state.indexer import _write_state
 
     _write_state(state)
     _cache.invalidate()
@@ -577,8 +583,6 @@ def update_field(
     match = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
     if not match:
         return "No YAML frontmatter found in file."
-
-    import yaml
 
     try:
         meta = yaml.safe_load(match.group(1)) or {}
@@ -1283,14 +1287,10 @@ def analyze_document(file_path: str) -> str:
         return f"File not found: {file_path}"
 
     try:
-        from tools.analysis.document_parser import parse_document
-
         doc = parse_document(path)
         return _safe_json(doc.to_dict())
     except ValueError as e:
         return str(e)
-    except ImportError as e:
-        return f"Missing dependency: {e}"
 
 
 @mcp.tool()
@@ -1312,15 +1312,10 @@ def extract_key_points(file_path: str, max_points: int = 10) -> str:
         return f"File not found: {file_path}"
 
     try:
-        from tools.analysis.document_parser import (
-            extract_key_points as _extract,
-            parse_document,
-        )
-
         doc = parse_document(path)
-        points = _extract(doc, max_points=max_points)
+        points = _extract_key_points(doc, max_points=max_points)
         return _safe_json(points)
-    except (ValueError, ImportError) as e:
+    except ValueError as e:
         return str(e)
 
 
@@ -1343,12 +1338,10 @@ def suggest_video_structure(file_path: str, video_type: str = "tutorial") -> str
         return f"File not found: {file_path}"
 
     try:
-        from tools.analysis.document_parser import parse_document, suggest_structure
-
         doc = parse_document(path)
         structure = suggest_structure(doc, video_type=video_type)
         return _safe_json(structure)
-    except (ValueError, ImportError) as e:
+    except ValueError as e:
         return str(e)
 
 
@@ -1370,15 +1363,10 @@ def analyze_complexity(file_path: str) -> str:
         return f"File not found: {file_path}"
 
     try:
-        from tools.analysis.document_parser import (
-            analyze_complexity as _analyze,
-            parse_document,
-        )
-
         doc = parse_document(path)
-        result = _analyze(doc)
+        result = _analyze_complexity(doc)
         return _safe_json(result)
-    except (ValueError, ImportError) as e:
+    except ValueError as e:
         return str(e)
 
 
@@ -1401,10 +1389,8 @@ def suggest_video_topics(file_path: str, max_topics: int = 5) -> str:
         return f"File not found: {file_path}"
 
     try:
-        from tools.analysis.document_parser import parse_document
-
         doc = parse_document(path)
-    except (ValueError, ImportError) as e:
+    except ValueError as e:
         return str(e)
 
     topics: list[dict[str, Any]] = []
