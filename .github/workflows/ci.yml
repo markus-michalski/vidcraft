@@ -41,6 +41,10 @@ jobs:
         run: |
           ruff format --check tools/ tests/ servers/
 
+      - name: Type check with mypy
+        run: |
+          mypy tools/ servers/ hooks/ --ignore-missing-imports
+
       - name: Run tests with coverage
         run: |
           python -m pytest tests/ -v --cov=tools --cov=servers --cov-fail-under=70

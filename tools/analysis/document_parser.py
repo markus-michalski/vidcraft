@@ -157,7 +157,7 @@ def _parse_docx(path: Path) -> ParsedDocument:
     except ImportError:
         raise ImportError("python-docx required: pip install python-docx")
 
-    doc = Document(path)
+    doc = Document(str(path))
     metadata: dict[str, Any] = {}
 
     if doc.core_properties:
@@ -173,7 +173,7 @@ def _parse_docx(path: Path) -> ParsedDocument:
     has_list = False
 
     for para in doc.paragraphs:
-        style_name = (para.style.name or "").lower()
+        style_name = ((para.style.name or "") if para.style else "").lower()
 
         # Detect headings
         if style_name.startswith("heading"):
@@ -441,7 +441,7 @@ def analyze_complexity(doc: ParsedDocument) -> dict[str, Any]:
 
     # Complexity score (0-100)
     complexity = 0
-    complexity += min(doc.total_words / 50, 30)  # Length factor
+    complexity += min(doc.total_words // 50, 30)  # Length factor
     complexity += code_sections * 10  # Code factor
     complexity += min(total_sections * 3, 20)  # Depth factor
     complexity += 10 if avg_section_words > 200 else 0  # Dense sections
