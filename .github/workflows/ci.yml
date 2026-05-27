@@ -35,11 +35,11 @@ jobs:
 
       - name: Lint with ruff
         run: |
-          ruff check tools/ tests/ servers/
+          ruff check tools/ tests/ servers/ hooks/
 
       - name: Check formatting with ruff
         run: |
-          ruff format --check tools/ tests/ servers/
+          ruff format --check tools/ tests/ servers/ hooks/
 
       - name: Run tests with coverage
         run: |
