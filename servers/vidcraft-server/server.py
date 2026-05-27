@@ -802,7 +802,7 @@ def validate_structure(
 
 
 # Platform character limits
-_PLATFORM_LIMITS = {
+_PLATFORM_LIMITS: dict[str, dict[str, Any]] = {
     "heygen": {
         "max_chars_per_scene": 5000,
         "max_scenes": 100,
