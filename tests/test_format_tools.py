@@ -326,45 +326,94 @@ class TestFormatHeygenSceneHelper:
 
     def test_avatar_type_adds_center_position(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "Intro", "narration": "Hello.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "Intro",
+            "narration": "Hello.",
+            "visual_type": "avatar",
+            "visual_direction": "",
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01-intro", scene)
         assert "Avatar: Center, facing camera" in result
 
     def test_screencast_type_hides_avatar(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "Demo", "narration": "Watch this.", "visual_type": "screencast", "visual_direction": "", "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "Demo",
+            "narration": "Watch this.",
+            "visual_type": "screencast",
+            "visual_direction": "",
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01-demo", scene)
         assert "Avatar: Hidden" in result
 
     def test_split_type_positions_avatar_left(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "Split", "narration": "Left right.", "visual_type": "split", "visual_direction": "", "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "Split",
+            "narration": "Left right.",
+            "visual_type": "split",
+            "visual_direction": "",
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01-split", scene)
         assert "Avatar: Left third" in result
 
     def test_visual_dir_truncated_to_100_chars(self) -> None:
         server = _load_server_module()
         long_dir = "x" * 200
-        scene = {"number": 1, "title": "T", "narration": "N.", "visual_type": "avatar", "visual_direction": long_dir, "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "T",
+            "narration": "N.",
+            "visual_type": "avatar",
+            "visual_direction": long_dir,
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01", scene)
         assert f"Background: {'x' * 100}" in result
         assert "x" * 101 not in result
 
     def test_on_screen_text_included(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "T", "narration": "N.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": "Click here"}
+        scene = {
+            "number": 1,
+            "title": "T",
+            "narration": "N.",
+            "visual_type": "avatar",
+            "visual_direction": "",
+            "on_screen_text": "Click here",
+        }
         result = server._format_heygen_scene("01", scene)
         assert "Text Overlay: Click here" in result
 
     def test_break_tag_triggers_caveat(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "T", "narration": 'Go.<break time="1s"/>Done.', "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "T",
+            "narration": 'Go.<break time="1s"/>Done.',
+            "visual_type": "avatar",
+            "visual_direction": "",
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01", scene)
         assert "Custom Voice" in result
 
     def test_no_break_no_caveat(self) -> None:
         server = _load_server_module()
-        scene = {"number": 1, "title": "T", "narration": "Simple narration.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        scene = {
+            "number": 1,
+            "title": "T",
+            "narration": "Simple narration.",
+            "visual_type": "avatar",
+            "visual_direction": "",
+            "on_screen_text": "",
+        }
         result = server._format_heygen_scene("01", scene)
         assert "Custom Voice" not in result
 
