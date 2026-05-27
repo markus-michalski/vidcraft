@@ -45,6 +45,16 @@ jobs:
         run: |
           mypy tools/ servers/ hooks/ --ignore-missing-imports
 
+      - name: Check server.py size
+        run: |
+          lines=$(wc -l < servers/vidcraft-server/server.py)
+          threshold=2000
+          if [ "$lines" -gt "$threshold" ]; then
+            echo "::error file=servers/vidcraft-server/server.py::server.py has $lines lines (threshold: $threshold). Time to split document-analysis tools into tools/analysis/server_tools.py"
+            exit 1
+          fi
+          echo "server.py size OK: $lines / $threshold lines"
+
       - name: Run tests with coverage
         run: |
           python -m pytest tests/ -v --cov=tools --cov=servers --cov-fail-under=70
