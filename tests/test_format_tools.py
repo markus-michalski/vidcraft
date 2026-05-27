@@ -319,3 +319,82 @@ class TestHeyGenVariableExtraction:
         assert "=== Variables Found ===" not in result, (
             "No variable block should appear when script has no {{placeholders}}"
         )
+
+
+class TestFormatHeygenSceneHelper:
+    """Unit tests for the extracted _format_heygen_scene helper."""
+
+    def test_avatar_type_adds_center_position(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "Intro", "narration": "Hello.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        result = server._format_heygen_scene("01-intro", scene)
+        assert "Avatar: Center, facing camera" in result
+
+    def test_screencast_type_hides_avatar(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "Demo", "narration": "Watch this.", "visual_type": "screencast", "visual_direction": "", "on_screen_text": ""}
+        result = server._format_heygen_scene("01-demo", scene)
+        assert "Avatar: Hidden" in result
+
+    def test_split_type_positions_avatar_left(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "Split", "narration": "Left right.", "visual_type": "split", "visual_direction": "", "on_screen_text": ""}
+        result = server._format_heygen_scene("01-split", scene)
+        assert "Avatar: Left third" in result
+
+    def test_visual_dir_truncated_to_100_chars(self) -> None:
+        server = _load_server_module()
+        long_dir = "x" * 200
+        scene = {"number": 1, "title": "T", "narration": "N.", "visual_type": "avatar", "visual_direction": long_dir, "on_screen_text": ""}
+        result = server._format_heygen_scene("01", scene)
+        assert f"Background: {'x' * 100}" in result
+        assert "x" * 101 not in result
+
+    def test_on_screen_text_included(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "T", "narration": "N.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": "Click here"}
+        result = server._format_heygen_scene("01", scene)
+        assert "Text Overlay: Click here" in result
+
+    def test_break_tag_triggers_caveat(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "T", "narration": 'Go.<break time="1s"/>Done.', "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        result = server._format_heygen_scene("01", scene)
+        assert "Custom Voice" in result
+
+    def test_no_break_no_caveat(self) -> None:
+        server = _load_server_module()
+        scene = {"number": 1, "title": "T", "narration": "Simple narration.", "visual_type": "avatar", "visual_direction": "", "on_screen_text": ""}
+        result = server._format_heygen_scene("01", scene)
+        assert "Custom Voice" not in result
+
+
+class TestCollectHeygenVariablesHelper:
+    """Unit tests for the extracted _collect_heygen_variables helper."""
+
+    def test_collects_variables_from_narration(self) -> None:
+        server = _load_server_module()
+        scenes = {"s1": {"narration": "Hello {{first_name}}!", "on_screen_text": ""}}
+        result = server._collect_heygen_variables(scenes)
+        assert result == {"first_name"}
+
+    def test_collects_variables_from_on_screen_text(self) -> None:
+        server = _load_server_module()
+        scenes = {"s1": {"narration": "", "on_screen_text": "Welcome {{company}}"}}
+        result = server._collect_heygen_variables(scenes)
+        assert result == {"company"}
+
+    def test_deduplicates_across_scenes(self) -> None:
+        server = _load_server_module()
+        scenes = {
+            "s1": {"narration": "Hi {{name}}", "on_screen_text": ""},
+            "s2": {"narration": "Bye {{name}} and {{team}}", "on_screen_text": ""},
+        }
+        result = server._collect_heygen_variables(scenes)
+        assert result == {"name", "team"}
+
+    def test_returns_empty_set_when_no_variables(self) -> None:
+        server = _load_server_module()
+        scenes = {"s1": {"narration": "No vars here.", "on_screen_text": ""}}
+        result = server._collect_heygen_variables(scenes)
+        assert result == set()
