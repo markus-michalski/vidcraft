@@ -81,7 +81,7 @@ def main() -> None:
 
     if issues:
         for issue in issues:
-            print(issue)
+            sys.stderr.write(issue + "\n")
         # Exit 0 — hooks should warn, not block
         sys.exit(0)
 
