@@ -26,3 +26,6 @@ Thumbs.db
 # Plugin runtime (lives outside repo)
 # ~/.vidcraft/cache/
 # ~/.vidcraft/config.yaml
+
+# git-workflow skill scratch state (never commit)
+.git-workflow/

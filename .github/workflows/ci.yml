@@ -59,6 +59,26 @@ jobs:
         run: |
           python -m pytest tests/ -v --cov=tools --cov=servers --cov-fail-under=70
 
+  test-windows:
+    name: Tests (Windows, Python 3.12)
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run smoke tests
+        run: pytest tests/smoke/ -v --timeout=30
+
+      - name: Run unit tests
+        run: pytest tests/ --ignore=tests/smoke/ -v --timeout=30
+
   validate-skills:
     runs-on: ubuntu-latest
     steps:

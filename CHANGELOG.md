@@ -8,10 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet
+- Windows compatibility: OS-agnostic `bin/run-server`/`run-server.cmd` MCP launch wrapper, `.gitattributes` EOL pinning, `py -3` interpreter fallback and write-then-run pattern in `/vidcraft:setup`, `tests/smoke/test_cross_platform.py` regression suite, `windows-latest` CI job
 
 ### Changed
-- Nothing yet
+- `.mcp.json` now launches via `bin/run-server` instead of a hardcoded POSIX venv path
 
 ### Deprecated
 - Nothing yet
