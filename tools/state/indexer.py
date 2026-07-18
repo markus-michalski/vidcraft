@@ -228,6 +228,5 @@ def _write_state(state: dict[str, Any]) -> None:
     """Write state to cache file."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     STATE_PATH.write_text(
-        json.dumps(state, indent=2, ensure_ascii=False, default=str),
-        encoding="utf-8",
+        json.dumps(state, indent=2, ensure_ascii=False, default=str), encoding="utf-8"
     )

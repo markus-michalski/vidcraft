@@ -2,7 +2,7 @@
   "mcpServers": {
     "vidcraft-mcp": {
       "type": "stdio",
-      "command": "${HOME}/.vidcraft/venv/bin/python3",
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/run-server",
       "args": ["${CLAUDE_PLUGIN_ROOT}/servers/vidcraft-server/run.py"]
     }
   }

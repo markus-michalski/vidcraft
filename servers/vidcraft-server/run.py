@@ -10,6 +10,9 @@ import sys
 from pathlib import Path
 
 VENV_PATH = Path.home() / ".vidcraft" / "venv"
+VENV_PYTHON = VENV_PATH / (
+    "Scripts/python.exe" if sys.platform == "win32" else "bin/python3"
+)
 
 
 def main() -> None:
@@ -25,7 +28,7 @@ def main() -> None:
     if tools_path not in sys.path:
         sys.path.insert(0, tools_path)
 
-    venv_python = VENV_PATH / "bin" / "python3"
+    venv_python = VENV_PYTHON
     server_path = Path(__file__).resolve().parent / "server.py"
 
     # Re-exec with venv python if we're not already using it
