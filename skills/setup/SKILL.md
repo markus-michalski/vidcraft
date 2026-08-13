@@ -133,8 +133,8 @@ Also create `~/.vidcraft/cache/` if it doesn't exist:
 
 Use the venv's own interpreter (not `<PY>`):
 
-- POSIX: `~/.vidcraft/venv/bin/python3 -c "from mcp.server.fastmcp import FastMCP; print('MCP OK')"`
-- Windows: `& "$env:USERPROFILE\.vidcraft\venv\Scripts\python.exe" -c "from mcp.server.fastmcp import FastMCP; print('MCP OK')"`
+- POSIX: `~/.vidcraft/venv/bin/python3 -c "from mcp.server.mcpserver import MCPServer; print('MCP OK')"`
+- Windows: `& "$env:USERPROFILE\.vidcraft\venv\Scripts\python.exe" -c "from mcp.server.mcpserver import MCPServer; print('MCP OK')"`
 
 ### Step 7: Run Configure
 
@@ -169,4 +169,5 @@ Run `/vidcraft:session-start` to begin!
   where the user can't install software themselves, suggest contacting IT to
   confirm the Python install location or add it to `PATH`.
 - `pip install` fails: Show the exact error and suggest running manually
-- MCP import fails: Check `mcp[cli]` is installed
+- MCP import fails with `ModuleNotFoundError: No module named 'mcp.server.mcpserver'`: the venv has an old `mcp[cli]` (<2.0.0) installed — re-run `pip install -r requirements.txt` to pick up the pinned version
+- MCP import fails otherwise: Check `mcp[cli]` is installed
