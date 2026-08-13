@@ -59,7 +59,7 @@ def parse_project_readme(path: Path) -> dict[str, Any]:
 def parse_episode_readme(path: Path) -> dict[str, Any]:
     """Parse an episode README.md into structured data."""
     text = path.read_text(encoding="utf-8")
-    meta, body = parse_frontmatter(text)
+    meta, _body = parse_frontmatter(text)
 
     return {
         "slug": path.parent.name,

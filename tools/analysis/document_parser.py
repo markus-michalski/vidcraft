@@ -465,9 +465,7 @@ def analyze_complexity(doc: ParsedDocument) -> dict[str, Any]:
         reason = "Mixed content — product demo format"
 
     # Estimate episode count
-    if doc.total_words < 800:
-        episodes = 1
-    elif doc.total_words < 2000:
+    if doc.total_words < 2000:
         episodes = 1
     elif doc.total_words < 5000:
         episodes = max(2, total_sections // 3)

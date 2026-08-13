@@ -31,7 +31,7 @@ class TestParseFrontmatter:
 
     def test_invalid_yaml(self) -> None:
         text = "---\n: invalid: yaml: [broken\n---\n\nBody"
-        meta, body = parse_frontmatter(text)
+        meta, _body = parse_frontmatter(text)
         assert meta == {}
 
     def test_empty_frontmatter(self) -> None:

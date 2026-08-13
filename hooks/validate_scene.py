@@ -21,7 +21,7 @@ def validate_scene(file_path: str) -> list[str]:
         return []
 
     # Only validate scene files (in scenes/ directories)
-    if "/scenes/" not in str(path) or not path.suffix == ".md":
+    if "/scenes/" not in str(path) or path.suffix != ".md":
         return []
 
     text = path.read_text(encoding="utf-8")
