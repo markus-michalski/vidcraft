@@ -12,7 +12,7 @@ Design notes:
 - Subset semantics: EXPECTED_CORE_TOOLS is a minimum guarantee — adding
   new tools never breaks the test, but removing one does.
 - Source-level extraction is preferred over runtime introspection for the
-  tool inventory: faster, no shared state, no FastMCP private API surface.
+  tool inventory: faster, no shared state, no MCPServer private API surface.
 - Runtime import is reserved for behavioural tests (version, list_projects,
   create_project_structure) where actually executing the tool is the point.
 """

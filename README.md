@@ -37,7 +37,7 @@ claude plugin add vidcraft
 ```
 vidcraft/
 ├── skills/       # 33 specialized skills (SKILL.md files)
-├── servers/      # FastMCP server (vidcraft-mcp)
+├── servers/      # MCP server (vidcraft-mcp)
 ├── tools/        # Python backend (state, parsers, indexer, format)
 ├── video-types/  # 12 video type definitions (tutorial, explainer, etc.)
 ├── knowledge/    # Script-writing rules, platform constraints

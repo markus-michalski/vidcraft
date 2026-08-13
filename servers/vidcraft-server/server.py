@@ -25,7 +25,7 @@ _tools_path = str(Path(_plugin_root))
 if _tools_path not in sys.path:
     sys.path.insert(0, _tools_path)
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from tools.analysis.document_parser import (
     analyze_complexity as _analyze_complexity,
@@ -53,7 +53,17 @@ from tools.state.indexer import StateCache, _write_state, rebuild
 # Server setup
 # ---------------------------------------------------------------------------
 
-mcp = FastMCP("vidcraft-mcp")
+
+def _read_plugin_version() -> str:
+    """Read the plugin version from .claude-plugin/plugin.json, or 'unknown'."""
+    plugin_json = Path(_plugin_root) / ".claude-plugin" / "plugin.json"
+    if plugin_json.exists():
+        data = json.loads(plugin_json.read_text(encoding="utf-8"))
+        return data.get("version", "unknown")
+    return "unknown"
+
+
+mcp = MCPServer("vidcraft-mcp", version=_read_plugin_version())
 
 _cache = StateCache()
 
@@ -1650,12 +1660,7 @@ def _tens_word(n: int) -> str:
 @mcp.tool()
 def get_plugin_version() -> str:
     """Return the current VidCraft plugin version."""
-    plugin_json = Path(_plugin_root) / ".claude-plugin" / "plugin.json"
-    if plugin_json.exists():
-        data = json.loads(plugin_json.read_text(encoding="utf-8"))
-        version = data.get("version", "unknown")
-    else:
-        version = "unknown"
+    version = _read_plugin_version()
     return json.dumps(
         {
             "plugin": "vidcraft",
