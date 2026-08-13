@@ -204,7 +204,7 @@ def test_run_server_wrapper_actually_launches_python():
             cmd = [str(RUN_SERVER), "-c", "print('OK')"]
 
         result = subprocess.run(
-            cmd, env=env, capture_output=True, text=True, timeout=10
+            cmd, env=env, capture_output=True, text=True, timeout=10, check=False
         )
         assert result.returncode == 0, f"wrapper failed: {result.stderr}"
         assert "OK" in result.stdout
@@ -225,7 +225,11 @@ def _resolve_venv_python_for_platform(platform: str) -> str:
         "print(mod.VENV_PYTHON.as_posix())"
     )
     result = subprocess.run(
-        [sys.executable, "-c", script], capture_output=True, text=True, timeout=10
+        [sys.executable, "-c", script],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=False,
     )
     assert result.returncode == 0, (
         f"run.py import failed for platform={platform}: {result.stderr}"

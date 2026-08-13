@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import patch
 
-
 from tools.state.indexer import SCHEMA_VERSION, StateCache, _scan_projects, build_state
 
 

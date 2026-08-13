@@ -66,7 +66,7 @@ class TestStateCrudRoundtrip:
     def test_list_projects_after_create(
         self, setup, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        server, content_root = setup
+        server, _content_root = setup
         server.create_project_structure("List Test Project", "tutorial")
 
         state = {
@@ -103,7 +103,7 @@ class TestStateCrudRoundtrip:
     def test_rebuild_state_runs_without_error(
         self, setup, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        server, content_root = setup
+        server, _content_root = setup
         server.create_project_structure("Rebuild Test Project", "tutorial")
 
         captured = {}

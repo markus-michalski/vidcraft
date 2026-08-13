@@ -18,7 +18,7 @@ _SERVER_DIR = Path(__file__).resolve().parent.parent / "servers" / "vidcraft-ser
 if str(_SERVER_DIR) not in sys.path:
     sys.path.insert(0, str(_SERVER_DIR))
 
-import server  # noqa: E402
+import server
 
 
 @pytest.fixture

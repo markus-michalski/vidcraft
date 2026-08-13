@@ -11,7 +11,7 @@ import json
 import os
 import re
 import sys
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -25,25 +25,29 @@ _tools_path = str(Path(_plugin_root))
 if _tools_path not in sys.path:
     sys.path.insert(0, _tools_path)
 
-from mcp.server.fastmcp import FastMCP  # noqa: E402
+from mcp.server.fastmcp import FastMCP
 
-from tools.shared.config import (  # noqa: E402
+from tools.analysis.document_parser import (
+    analyze_complexity as _analyze_complexity,
+)
+from tools.analysis.document_parser import (
+    extract_key_points as _extract_key_points,
+)
+from tools.analysis.document_parser import (
+    parse_document,
+    suggest_structure,
+)
+from tools.shared.config import (
     load_config,
     resolve_assets_path,
     resolve_project_path,
     resolve_video_path,
 )
-from tools.shared.paths import (  # noqa: E402
+from tools.shared.paths import (
     resolve_episode_path,
     slugify,
 )
-from tools.state.indexer import StateCache, _write_state, rebuild  # noqa: E402
-from tools.analysis.document_parser import (  # noqa: E402
-    analyze_complexity as _analyze_complexity,
-    extract_key_points as _extract_key_points,
-    parse_document,
-    suggest_structure,
-)
+from tools.state.indexer import StateCache, _write_state, rebuild
 
 # ---------------------------------------------------------------------------
 # Server setup
@@ -65,7 +69,7 @@ def _safe_json(data: Any) -> str:
 
 def _today() -> str:
     """Return today's date as ISO string."""
-    return date.today().isoformat()
+    return datetime.now().astimezone().date().isoformat()
 
 
 def _now_utc() -> str:
