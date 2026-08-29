@@ -1,9 +1,9 @@
 # MCP Server
-mcp[cli]==2.0.0
+mcp[cli]==2.1.1
 pyyaml==6.0.3
 
 # Document Analysis
-pypdf==6.16.1
+pypdf==6.16.2
 pdfplumber==0.11.10
 python-docx==1.2.0
 
