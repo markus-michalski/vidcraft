@@ -4,6 +4,6 @@
 pytest
 pytest-cov
 pytest-timeout
-ruff==0.16.6
+ruff==0.16.9
 pip-audit
 mypy
